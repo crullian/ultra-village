@@ -37,17 +37,18 @@ class App extends Component {
     const uniqueItems = [];
     items.forEach(function(item) {
       if(uniqueItems.indexOf(item['artist_name'].join(', ')) < 0) {
-        console.log('SDF', item['artist_name'].join(', '))
         uniqueItems.push(item['artist_name'].join(', '));
       }
     });
     return uniqueItems.sort((a, b) => {
-      var a_artist = a.replace('The ', '');
-      var b_artist = b.replace('The ', '');
+      const a_artist = a.replace('The ', '');
+      const b_artist = b.replace('The ', '');
       if (a_artist < b_artist) {
         return -1;
       } else if (a_artist > b_artist) {
         return 1;
+      } else {
+        return 0
       }
     });
   }
