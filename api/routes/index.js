@@ -2,14 +2,19 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 
-router.get('/', (req, res, next) => {
-  models.Page.find({}, (err, docs) => {
-    res.send({
-      title: "Welcome To Ultra Village",
-      docs: docs
-    });
+router.get('/artists', (req, res, next) => {
+  models.Artist.find({}, (err, docs) => {
+    if (err) return next(err);
+    res.send(docs);
   });
 });
+
+router.get('/pages', (req, res, next) => {
+  models.Page.find({}, (err, docs) => {
+    if (err) return next(err);
+    res.send(docs);
+  })
+})
 
 router.get('/about', (req, res, next) => {
   res.send({'title': 'about_us'});
@@ -20,7 +25,6 @@ router.get('/wiki/:url_name', (req, res, next) => {
   models.Page.findOne({
     url_name: url_name
   }, (err, doc) => {
-    // if (err) return next(err)
     if (!doc) return next(err)
     res.send(doc);
   });
