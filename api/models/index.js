@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/ultra-village');
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'mongodb connection error:'));
+// mongoose.connect('mongodb://localhost/ultra-village');
+// const db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'mongodb connection error:'));
 
 let Artist;
 let Page;
@@ -24,7 +24,8 @@ const artistSchema = new Schema({
 
 const pageSchema = new Schema({ // Schema describes the model 
   artist_name: [{ 
-    type: String
+    type: String,
+    required: true
   }],
   title: {
     type: String,
@@ -58,9 +59,13 @@ const userSchema = new Schema({
   isAdmin: Boolean
 });
 
-pageSchema.virtual('full_route').get(function() { //what is .get
-  return "/wiki/" + this.url_name; // why add wiki?
+pageSchema.virtual('full_route').get(function() {
+  return "/wiki/" + this.url_name;
 });
+
+// pageSchema.virtual('userNameString').get(() => {
+//   return this.username.join(', ');
+// });
 
 // pageSchema.virtual('humanReadableDate').get(function() {
 //   console.log('VIRT', this.date)
