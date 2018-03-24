@@ -11,10 +11,7 @@ const Schema = mongoose.Schema;
 
 const artistSchema = new Schema({
   artist_name: {
-    type:[String],
-    get: artist_name => {
-      return artist_name.join(", ");
-    }
+    type:[String]
   },
   pages: [{ 
     type: Schema.Types.ObjectId,
