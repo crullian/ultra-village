@@ -9,15 +9,16 @@ class App extends Component {
       title: '',
       items: null
     }
-    this.initialFetch = this.initialFetch.bind(this);
+    this.initialFetchPages = this.initialFetchPages.bind(this);
+    this.getUniqueArtistNames = this.getUniqueArtistNames.bind(this);
   }
 
   componentWillMount() {
-    this.initialFetch();
+    this.initialFetchPages();
   }
 
-  initialFetch() {
-    fetch('/api').then(res => {
+  initialFetchPages() {
+    fetch('/api/pages').then(res => {
       if (res.ok) {
         return res.json();
       } else {
@@ -25,25 +26,44 @@ class App extends Component {
       }
     }).then(json => {
       this.setState({
-        title: json.title,
-        items: json.docs
+        items: json
       });
     }).catch(error => {
       console.error(`There was a problem with your fetch operation: ${error.message}`)
     });
   }
 
+  getUniqueArtistNames(items) {
+    const uniqueItems = [];
+    items.forEach(function(item) {
+      if(uniqueItems.indexOf(item['artist_name'].join(', ')) < 0) {
+        console.log('SDF', item['artist_name'].join(', '))
+        uniqueItems.push(item['artist_name'].join(', '));
+      }
+    });
+    return uniqueItems.sort((a, b) => {
+      var a_artist = a.replace('The ', '');
+      var b_artist = b.replace('The ', '');
+      if (a_artist < b_artist) {
+        return -1;
+      } else if (a_artist > b_artist) {
+        return 1;
+      }
+    });
+  }
+
   render() {
-    const {title, items} = this.state;
+    const {items} = this.state;
+
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">{title}</h1>
+          <h1 className="App-title">Welcome to Ultra Village</h1>
         </header>
         <ul>
-        {items && items.map(item => (
-          <li key={item._id}>{item.title}</li>
+        {items && this.getUniqueArtistNames(items).map(item => (
+          <li key={item}>{item}</li>
         ))}
         </ul>
       </div>
