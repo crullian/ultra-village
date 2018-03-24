@@ -7,6 +7,12 @@
 const app = require('./app');
 // const debug = require('debug')('ultra-village:server');
 const http = require('http');
+const path = require('path');
+const mongoose = require('mongoose');
+
+const DATABASE_URI = require(path.join(__dirname, './env')).DATABASE_URI;
+
+mongoose.connect(DATABASE_URI);
 
 /**
  * Get port from environment and store in Express.
@@ -81,6 +87,11 @@ function onListening() {
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+mongoose.connection.once('open', function() {
+  console.log('Mongoose connected..')
+  server.listen(port, function() {
+    console.log('Server started on port: ', port);
+  });
+});
 server.on('error', onError);
 // server.on('listening', onListening);
