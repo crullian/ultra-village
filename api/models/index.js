@@ -34,6 +34,7 @@ const pageSchema = new Schema({ // Schema describes the model
     type: String,
     required: true
   },
+  year: String,
   created_date: {
     type: Date,
     default: Date.now
@@ -56,9 +57,9 @@ const userSchema = new Schema({
   isAdmin: Boolean
 });
 
-pageSchema.virtual('full_route').get(function() {
-  return "/wiki/" + this.url_name;
-});
+// pageSchema.virtual('full_route').get(function() {
+//   return "/wiki/" + this.url_name;
+// });
 
 // pageSchema.virtual('userNameString').get(() => {
 //   return this.username.join(', ');
