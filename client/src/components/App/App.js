@@ -4,6 +4,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+import firebase from '../../firebase.js';
 
 import ArtistList from '../ArtistList/';
 import ArtistPage from '../ArtistPage/';
@@ -20,30 +21,40 @@ class App extends Component {
       title: '',
       items: null
     }
-    this.initialFetchPages = this.initialFetchPages.bind(this);
+    // this.initialFetchPages = this.initialFetchPages.bind(this);
     this.getUniqueArtistNames = this.getUniqueArtistNames.bind(this);
 
   }
 
   componentWillMount() {
-    this.initialFetchPages();
-  }
+    
+    // this.initialFetchPages();
 
-  initialFetchPages() {
-    fetch('/api/pages').then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        console.error(`Network response was not ok: ${res}`);
-      }
-    }).then(json => {
+    const itemsRef = firebase.database().ref('/pages');
+    itemsRef.on('value', (snapshot) => {
+      let items = snapshot.val();      
+
       this.setState({
-        items: json
+        items: items
       });
-    }).catch(error => {
-      console.error(`There was a problem with your fetch: ${error.message}`);
     });
   }
+
+  // initialFetchPages() {
+  //   fetch('/api/pages').then(res => {
+  //     if (res.ok) {
+  //       return res.json();
+  //     } else {
+  //       console.error(`Network response was not ok: ${res}`);
+  //     }
+  //   }).then(json => {
+  //     this.setState({
+  //       items: json
+  //     });
+  //   }).catch(error => {
+  //     console.error(`There was a problem with your fetch: ${error.message}`);
+  //   });
+  // }
 
   getUniqueArtistNames(items) {
     const uniqueItems = [];
