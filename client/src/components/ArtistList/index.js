@@ -5,7 +5,7 @@ const ArtistList = ({items}) => (
   <ul>
     {items && items.map(item => (
       <li key={item}>
-        <Link to={`/${item.toLowerCase().replace(' ', '_')}`}>
+        <Link to={`/${item.toLowerCase().replace(/[\. ,:-]+/g, "-")}`}>
           {item}
         </Link>
       </li>

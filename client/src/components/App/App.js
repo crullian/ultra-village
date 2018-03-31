@@ -22,6 +22,7 @@ class App extends Component {
     }
     this.initialFetchPages = this.initialFetchPages.bind(this);
     this.getUniqueArtistNames = this.getUniqueArtistNames.bind(this);
+
   }
 
   componentWillMount() {
@@ -51,7 +52,11 @@ class App extends Component {
         uniqueItems.push(item['artist_name'].join(', '));
       }
     });
-    return uniqueItems.sort((a, b) => {
+    return this.sortByArtistName(uniqueItems);
+  }
+
+  sortByArtistName = (artistNamesArr) => {
+    return artistNamesArr.sort((a, b) => {
       const a_artist = a.replace('The ', '');
       const b_artist = b.replace('The ', '');
       if (a_artist < b_artist) {
@@ -61,7 +66,7 @@ class App extends Component {
       } else {
         return 0
       }
-    });
+    })
   }
 
   render() {
@@ -90,27 +95,27 @@ class App extends Component {
                   <Route
                     exact
                     key={item.toLowerCase().replace(' ', '_')}
-                    path={`/${item.toLowerCase().replace(' ', '_')}`}
+                    path={`/${item.toLowerCase().replace(/[\. ,:-]+/g, "-")}`}
                     render={props => (
                       <ArtistPage
+                        {...props}
                         artist={item}
                         records={items.filter(record => record.artist_name.join(', ') === item)}
-                        {...props}
                       />
                     )}
                   />
                 ))}
 
-                {items.map(record => (
+                {/*items.map(record => (
                   <Route
                     exact
                     key={record._id}
-                    path={`/${record.artist_name.join(', ').toLowerCase().replace(' ', '_')}/${record.title.toLowerCase().replace(' ', '_')}`}
+                    path={`/${record.artist_name.join(', ').toLowerCase().replace(/[\. ,:-]+/g, "-")}/${record.title.toLowerCase().replace(' ', '_')}`}
                     render={props => (
                       <RecordPage {...props} record={record} />
                     )}
                   />
-                ))}
+                ))*/}
               </Switch>
             </main>
           }

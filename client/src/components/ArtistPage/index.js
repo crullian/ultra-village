@@ -8,9 +8,9 @@ const ArtistPage = (props) => (
     {props.records.map(record => {
       return (
         <li key={record._id}>
-          <Link to={`${props.match.url}/${record.title.toLowerCase().replace(' ', '_')}`}>
+          {/*<Link to={`${props.match.url}/${record.title.toLowerCase().replace(' ', '_')}`}>*/}
             {record.title}
-          </Link>
+          {/*</Link>*/}
         </li>
       );
     })}
