@@ -1,81 +1,81 @@
 [
-{
-"artist_name": [
-"Talk Talk"
-],
-"tags": [],
-"created_date": "2018-03-25T00:33:56.359Z",
-"_id": "5ab6ee74a797de49bf7a396e",
-"title": "It's My Life",
-"body": "Lorem Ipsum It's My Life",
-"url_name": "its_my_life",
-"year": "1984",
-"__v": 0
-},
-{
-"artist_name": [
-"Roxy Music"
-],
-"tags": [],
-"created_date": "2018-03-25T00:33:56.365Z",
-"_id": "5ab6ee74a797de49bf7a396f",
-"title": "Avalon",
-"body": "Lorem Ipsum Avalon",
-"url_name": "avalon",
-"year": "1982",
-"__v": 0
-},
-{
-"artist_name": [
-"Roxy Music"
-],
-"tags": [],
-"created_date": "2018-03-25T00:33:56.366Z",
-"_id": "5ab6ee74a797de49bf7a3970",
-"title": "Stranded",
-"body": "Lorem Ipsum Stranded",
-"url_name": "stranded",
-"year": "1973",
-"__v": 0
-},
-{
-"artist_name": [
-"Harold Budd",
-"Brian Eno"
-],
-"tags": [],
-"created_date": "2018-03-25T00:33:56.368Z",
-"_id": "5ab6ee74a797de49bf7a3971",
-"title": "The Pearl",
-"body": "Lorem Ipsum The Pearl",
-"url_name": "the_pearl",
-"year": "1984",
-"__v": 0
-},
-{
-"artist_name": [
-"The The"
-],
-"tags": [],
-"created_date": "2018-03-25T00:33:56.412Z",
-"_id": "5ab6ee74a797de49bf7a3972",
-"title": "Soul Mining",
-"body": "New wave banger, AS IS",
-"url_name": "soul_mining",
-"year": "1983",
-"__v": 0
-},
-{
-"artist_name": [
-"The Cure"
-],
-"tags": [],
-"created_date": "2018-03-25T00:33:56.413Z",
-"_id": "5ab6ee74a797de49bf7a3973",
-"title": "Disintegration",
-"body": "I loved it, much better than Love Cats",
-"url_name": "disintegration",
-"year": "1989",
-"__v": 0
-}
+  {
+    "artist_name": [
+      "Talk Talk"
+    ],
+    "tags": [],
+    "created_date": "2018-03-25T00:33:56.359Z",
+    "_id": "5ab6ee74a797de49bf7a396e",
+    "title": "It's My Life",
+    "body": "Lorem Ipsum It's My Life",
+    "url_name": "its_my_life",
+    "year": "1984",
+    "__v": 0
+  },
+  {
+    "artist_name": [
+      "Roxy Music"
+    ],
+    "tags": [],
+    "created_date": "2018-03-25T00:33:56.365Z",
+    "_id": "5ab6ee74a797de49bf7a396f",
+    "title": "Avalon",
+    "body": "Lorem Ipsum Avalon",
+    "url_name": "avalon",
+    "year": "1982",
+    "__v": 0
+  },
+  {
+    "artist_name": [
+      "Roxy Music"
+    ],
+    "tags": [],
+    "created_date": "2018-03-25T00:33:56.366Z",
+    "_id": "5ab6ee74a797de49bf7a3970",
+    "title": "Stranded",
+    "body": "Lorem Ipsum Stranded",
+    "url_name": "stranded",
+    "year": "1973",
+    "__v": 0
+  },
+  {
+    "artist_name": [
+      "Harold Budd",
+      "Brian Eno"
+    ],
+    "tags": [],
+    "created_date": "2018-03-25T00:33:56.368Z",
+    "_id": "5ab6ee74a797de49bf7a3971",
+    "title": "The Pearl",
+    "body": "Lorem Ipsum The Pearl",
+    "url_name": "the_pearl",
+    "year": "1984",
+    "__v": 0
+  },
+  {
+    "artist_name": [
+      "The The"
+    ],
+    "tags": [],
+    "created_date": "2018-03-25T00:33:56.412Z",
+    "_id": "5ab6ee74a797de49bf7a3972",
+    "title": "Soul Mining",
+    "body": "New wave banger, AS IS",
+    "url_name": "soul_mining",
+    "year": "1983",
+    "__v": 0
+  },
+  {
+    "artist_name": [
+      "The Cure"
+    ],
+    "tags": [],
+    "created_date": "2018-03-25T00:33:56.413Z",
+    "_id": "5ab6ee74a797de49bf7a3973",
+    "title": "Disintegration",
+    "body": "I loved it, much better than Love Cats",
+    "url_name": "disintegration",
+    "year": "1989",
+    "__v": 0
+  }
 ]
