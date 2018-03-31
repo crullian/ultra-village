@@ -4,6 +4,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+import firebase from '../../firebase.js';
 
 import ArtistList from '../ArtistList/';
 import ArtistPage from '../ArtistPage/';
@@ -17,56 +18,62 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
       items: null
     }
-    this.initialFetchPages = this.initialFetchPages.bind(this);
-    this.getUniqueArtistNames = this.getUniqueArtistNames.bind(this);
+    // this.initialFetchPages = this.initialFetchPages.bind(this);
+    // this.getUniqueArtistNames = this.getUniqueArtistNames.bind(this);
 
   }
 
   componentWillMount() {
-    this.initialFetchPages();
-  }
+    // this.initialFetchPages();
 
-  initialFetchPages() {
-    fetch('/api/pages').then(res => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        console.error(`Network response was not ok: ${res}`);
-      }
-    }).then(json => {
+    const itemsRef = firebase.database().ref('/pages');
+    itemsRef.on('value', (snapshot) => {
+      let items = snapshot.val();      
+
       this.setState({
-        items: json
+        items: items
       });
-    }).catch(error => {
-      console.error(`There was a problem with your fetch: ${error.message}`);
     });
   }
 
-  getUniqueArtistNames(items) {
-    const uniqueItems = [];
-    items.forEach(function(item) {
-      if(uniqueItems.indexOf(item['artist_name'].join(', ')) < 0) {
-        uniqueItems.push(item['artist_name'].join(', '));
-      }
-    });
-    return this.sortByArtistName(uniqueItems);
-  }
+  // initialFetchPages() {
+  //   fetch('/api/pages').then(res => {
+  //     if (res.ok) {
+  //       return res.json();
+  //     } else {
+  //       console.error(`Network response was not ok: ${res}`);
+  //     }
+  //   }).then(json => {
+  //     this.setState({
+  //       items: json
+  //     });
+  //   }).catch(error => {
+  //     console.error(`There was a problem with your fetch: ${error.message}`);
+  //   });
+  // }
 
-  sortByArtistName = (artistNamesArr) => {
-    return artistNamesArr.sort((a, b) => {
-      const a_artist = a.replace('The ', '');
-      const b_artist = b.replace('The ', '');
-      if (a_artist < b_artist) {
-        return -1;
-      } else if (a_artist > b_artist) {
-        return 1;
-      } else {
-        return 0
-      }
-    })
+  // getUniqueArtistNames(items) {
+  //   const uniqueItems = [];
+  //   items.forEach(function(item) {
+  //     if(uniqueItems.indexOf(item['artist_name'].join(', ')) < 0) {
+  //       uniqueItems.push(item['artist_name'].join(', '));
+  //     }
+  //   });
+  //   return this.sortByArtistName(uniqueItems);
+  // }
+
+  sortByArtistName = (a, b) => {
+    const a_artist = a.artist_name.replace('The ', '');
+    const b_artist = b.artist_name.replace('The ', '');
+    if (a_artist < b_artist) {
+      return -1;
+    } else if (a_artist > b_artist) {
+      return 1;
+    } else {
+      return 0
+    }
   }
 
   render() {
@@ -87,20 +94,19 @@ class App extends Component {
                   path="/"
                   exact
                   render={props => (
-                    <ArtistList items={this.getUniqueArtistNames(items)} />
+                    <ArtistList items={items.sort(this.sortByArtistName)} />
                   )}
                 />
 
-                {this.getUniqueArtistNames(items).map(item => (
+                {items.map(item => (
                   <Route
                     exact
-                    key={item.toLowerCase().replace(' ', '_')}
-                    path={`/${item.toLowerCase().replace(/[\. ,:-]+/g, "-")}`}
+                    key={item._id}
+                    path={`/${item.artist_name.toLowerCase().replace(/[\. ,:-]+/g, "-")}`}
                     render={props => (
                       <ArtistPage
                         {...props}
                         artist={item}
-                        records={items.filter(record => record.artist_name.join(', ') === item)}
                       />
                     )}
                   />
