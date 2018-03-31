@@ -1,22 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const ArtistPage = (props) => (
+const ArtistPage = ({artist, match}) => (
   <div>
-    <h3>{props.artist}'s Page</h3>
+    <h3>{artist.artist_name}'s Page</h3>
     
-    {props.records.map(record => {
+    {artist.image &&
+      <img src={artist.image} style={{width: '300px'}} />
+    }
+
+    <p>{artist.body}</p>
+
+    <ul>
+    {artist.albums.map(album => {
       return (
-        <li key={record._id}>
-          {/*<Link to={`${props.match.url}/${record.title.toLowerCase().replace(' ', '_')}`}>*/}
-            {record.title}
+        <li key={album}>
+          {/*<Link to={`${match.url}/${album.toLowerCase().replace(' ', '_')}`}>*/}
+            {album}
           {/*</Link>*/}
-          {record.image &&
-            <img src={record.image} style={{width: '300px'}} />
-          }
         </li>
       );
     })}
+    </ul>
   </div>
 );
 

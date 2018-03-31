@@ -18,16 +18,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '',
       items: null
     }
     // this.initialFetchPages = this.initialFetchPages.bind(this);
-    this.getUniqueArtistNames = this.getUniqueArtistNames.bind(this);
+    // this.getUniqueArtistNames = this.getUniqueArtistNames.bind(this);
 
   }
 
   componentWillMount() {
-    
     // this.initialFetchPages();
 
     const itemsRef = firebase.database().ref('/pages');
@@ -56,28 +54,26 @@ class App extends Component {
   //   });
   // }
 
-  getUniqueArtistNames(items) {
-    const uniqueItems = [];
-    items.forEach(function(item) {
-      if(uniqueItems.indexOf(item['artist_name'].join(', ')) < 0) {
-        uniqueItems.push(item['artist_name'].join(', '));
-      }
-    });
-    return this.sortByArtistName(uniqueItems);
-  }
+  // getUniqueArtistNames(items) {
+  //   const uniqueItems = [];
+  //   items.forEach(function(item) {
+  //     if(uniqueItems.indexOf(item['artist_name'].join(', ')) < 0) {
+  //       uniqueItems.push(item['artist_name'].join(', '));
+  //     }
+  //   });
+  //   return this.sortByArtistName(uniqueItems);
+  // }
 
-  sortByArtistName = (artistNamesArr) => {
-    return artistNamesArr.sort((a, b) => {
-      const a_artist = a.replace('The ', '');
-      const b_artist = b.replace('The ', '');
-      if (a_artist < b_artist) {
-        return -1;
-      } else if (a_artist > b_artist) {
-        return 1;
-      } else {
-        return 0
-      }
-    })
+  sortByArtistName = (a, b) => {
+    const a_artist = a.artist_name.replace('The ', '');
+    const b_artist = b.artist_name.replace('The ', '');
+    if (a_artist < b_artist) {
+      return -1;
+    } else if (a_artist > b_artist) {
+      return 1;
+    } else {
+      return 0
+    }
   }
 
   render() {
@@ -98,20 +94,19 @@ class App extends Component {
                   path="/"
                   exact
                   render={props => (
-                    <ArtistList items={this.getUniqueArtistNames(items)} />
+                    <ArtistList items={items.sort(this.sortByArtistName)} />
                   )}
                 />
 
-                {this.getUniqueArtistNames(items).map(item => (
+                {items.map(item => (
                   <Route
                     exact
-                    key={item.toLowerCase().replace(' ', '_')}
-                    path={`/${item.toLowerCase().replace(/[\. ,:-]+/g, "-")}`}
+                    key={item._id}
+                    path={`/${item.artist_name.toLowerCase().replace(/[\. ,:-]+/g, "-")}`}
                     render={props => (
                       <ArtistPage
                         {...props}
                         artist={item}
-                        records={items.filter(record => record.artist_name.join(', ') === item)}
                       />
                     )}
                   />

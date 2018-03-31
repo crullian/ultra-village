@@ -1,81 +1,67 @@
 [
   {
-    "artist_name": [
-      "Talk Talk"
-    ],
+    "artist_name": "Talk Talk",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/talk-talk.jpg?alt=media&token=ba3c1061-0a8b-4d1c-bd88-4a3bd30008dd",
     "tags": [],
+    "albums": [
+      "It's My Life",
+      "Laughing Stock"
+    ],
     "created_date": "2018-03-25T00:33:56.359Z",
     "_id": "5ab6ee74a797de49bf7a396e",
-    "title": "It's My Life",
-    "body": "Lorem Ipsum It's My Life",
-    "url_name": "its_my_life",
-    "year": "1984",
+    "body": "Lorem Ipsum about Talk Talk",
     "__v": 0
   },
   {
-    "artist_name": [
-      "Roxy Music"
-    ],
+    "artist_name": "Roxy Music",
+    "image": "https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Roxy-Music-tent-1972-612x399.jpg?alt=media&token=2075c133-5de6-4cd9-99b8-5d888074b05c",
     "tags": [],
+    "albums": [
+      "Avalon",
+      "Stranded",
+      "Country Life"
+    ],
     "created_date": "2018-03-25T00:33:56.365Z",
     "_id": "5ab6ee74a797de49bf7a396f",
-    "title": "Avalon",
-    "body": "Lorem Ipsum Avalon",
-    "url_name": "avalon",
-    "year": "1982",
+    "body": "Lorem Ipsum about Roxy Music",
     "__v": 0
   },
   {
-    "artist_name": [
-      "Roxy Music"
-    ],
+    "artist_name": "Harold Budd",
+    "image": "https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/220px-Harold_Budd.jpg?alt=media&token=7462cd4b-d751-4cbe-8938-32dfc0105be7",
     "tags": [],
-    "created_date": "2018-03-25T00:33:56.366Z",
-    "_id": "5ab6ee74a797de49bf7a3970",
-    "title": "Stranded",
-    "body": "Lorem Ipsum Stranded",
-    "url_name": "stranded",
-    "year": "1973",
-    "__v": 0
-  },
-  {
-    "artist_name": [
-      "Harold Budd",
-      "Brian Eno"
+    "albums": [
+      "The Pearl",
+      "The Moon And The Melodies"
     ],
-    "tags": [],
     "created_date": "2018-03-25T00:33:56.368Z",
     "_id": "5ab6ee74a797de49bf7a3971",
-    "title": "The Pearl",
-    "body": "Lorem Ipsum The Pearl",
-    "url_name": "the_pearl",
-    "year": "1984",
+    "body": "Lorem Ipsum about Harold Budd",
     "__v": 0
   },
   {
-    "artist_name": [
-      "The The"
-    ],
+    "artist_name": "The The",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/the-the-93.jpg?alt=media&token=32a89879-742f-48a9-8275-995757b77094",
     "tags": [],
+    "albums": [
+      "Soul Mining"
+    ],
     "created_date": "2018-03-25T00:33:56.412Z",
     "_id": "5ab6ee74a797de49bf7a3972",
-    "title": "Soul Mining",
-    "body": "New wave banger, AS IS",
-    "url_name": "soul_mining",
-    "year": "1983",
+    "body": "Lorem Ipsum about The The",
     "__v": 0
   },
   {
-    "artist_name": [
-      "The Cure"
-    ],
+    "artist_name": "The Cure",
+    "image" : "https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/thecurepornohuge.jpg?alt=media&token=e253c50c-c8ae-413a-9a13-451cb702e958",
     "tags": [],
+    "albums": [
+      "Disintegration",
+      "Three Imaginary Boys"
+    ],
     "created_date": "2018-03-25T00:33:56.413Z",
     "_id": "5ab6ee74a797de49bf7a3973",
-    "title": "Disintegration",
-    "body": "I loved it, much better than Love Cats",
-    "url_name": "disintegration",
-    "year": "1989",
+    "body": "Lorem Ipsum about The Cure",
     "__v": 0
   }
 ]
