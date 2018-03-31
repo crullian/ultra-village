@@ -24,17 +24,17 @@ const pageSchema = new Schema({ // Schema describes the model
     type: String,
     required: true
   }],
-  title: {
-    type: String,
-    required: true
-  },
+  // title: {
+  //   type: String,
+  //   required: true
+  // },
   url_name: String,
   owner_id: String,
-  body: {
+  body: { // Description of the artist
     type: String,
     required: true
   },
-  year: String,
+  // year: String,
   created_date: {
     type: Date,
     default: Date.now
