@@ -1,17 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import './ArtistList.css'
+
 const ArtistList = ({items}) => (
-  <ul>
+  <div className="ArtistList-flex-container">
     {items && items.map(item => (
-      <li key={item._id}>
-        <img alt="artist" src={item.image} style={{width: '80px', height: 'auto'}} />
-        <Link to={`/${item.artist_name.toLowerCase().replace(/[\. ,:-]+/g, "-")}`}>
-          {item.artist_name}
-        </Link>
-      </li>
+      <Link
+        to={`/${item.artist_name.toLowerCase().replace(/[\. ,:-]+/g, "-")}`}
+        key={item._id}
+        className="ArtistList-item-container"
+       >
+        <img alt="artist" src={item.image} className="ArtistList-item-image" />
+        <div className="ArtistList-item-name center-text">
+          <h3>{item.artist_name}</h3>
+        </div>
+      </Link>
     ))}
-  </ul>
+  </div>
 );
 
 export default ArtistList;

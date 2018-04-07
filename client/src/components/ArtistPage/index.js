@@ -5,7 +5,7 @@ import './ArtistPage.css';
 
 const ArtistPage = ({artist, match}) => (
   <div className="ArtistPage-container">
-    <h3 className="center-text">{artist.artist_name}</h3>
+    
     
     <div className="ArtistPage-content">
       {artist.image &&
@@ -18,6 +18,7 @@ const ArtistPage = ({artist, match}) => (
       }
 
       <div className="ArtistPage-review">
+        <h3 className="center-text">{artist.artist_name}</h3>
         <p>{artist.body}</p>
       </div>
     </div>

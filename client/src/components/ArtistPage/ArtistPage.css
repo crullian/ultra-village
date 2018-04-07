@@ -3,6 +3,7 @@
   padding: 20px;
   border-radius: 3px;
   box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+  background-color: #fff;
 }
 
 .ArtistPage-content {
@@ -17,6 +18,7 @@
 
 .ArtistPage-review {
   padding: 20px;
+  flex-grow: 1;
 }
 
 @media only screen and (min-width: 768px) {
