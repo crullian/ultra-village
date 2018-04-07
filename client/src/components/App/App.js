@@ -121,7 +121,7 @@ class App extends Component {
             </main>
           }
 
-          <footer className="center-text">- ultra village llc -</footer>
+          <footer className="App-footer center-text">- ultra village llc -</footer>
         </div>
       </Router>
     );

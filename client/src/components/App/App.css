@@ -30,3 +30,8 @@
 li {
   text-align: left;
 }
+
+.App-footer {
+  position: relative;
+  z-index: -2;
+}
