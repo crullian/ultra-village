@@ -4,6 +4,11 @@
   border-radius: 3px;
   box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
   background-color: #fff;
+
+  animation-name: fade-up;
+  animation-duration: .5s;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
 }
 
 .ArtistPage-content {
@@ -20,6 +25,21 @@
   padding: 20px;
   flex-grow: 1;
 }
+
+/****************** FADE-UP ANIMATION ***********/
+
+@keyframes fade-up {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+/****************** Media Query *****************/ 
 
 @media only screen and (min-width: 768px) {
   .ArtistPage-content {

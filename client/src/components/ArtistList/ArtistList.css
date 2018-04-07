@@ -1,6 +1,11 @@
 .ArtistList-flex-container {
   display: flex;
   flex-flow: wrap;
+
+  animation-name: fade-up;
+  animation-duration: .5s;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
 }
 
 .ArtistList-item-container {
@@ -26,6 +31,21 @@
   padding: 20px;
   flex-grow: 1;
 }
+
+/****************** FADE-UP ANIMATION ***********/
+
+@keyframes fade-up {
+  0% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+/****************** Media Query *****************/ 
 
 @media only screen and (min-width: 768px) {
   .ArtistList-item-container {
