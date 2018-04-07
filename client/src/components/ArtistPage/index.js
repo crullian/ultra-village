@@ -1,15 +1,26 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+
+import './ArtistPage.css';
 
 const ArtistPage = ({artist, match}) => (
-  <div>
-    <h3>{artist.artist_name}'s Page</h3>
+  <div className="ArtistPage-container">
+    <h3 className="center-text">{artist.artist_name}</h3>
     
-    {artist.image &&
-      <img src={artist.image} style={{width: '300px'}} />
-    }
+    <div className="ArtistPage-content">
+      {artist.image &&
+        <img
+          alt="artist"
+          src={artist.image}
+          className="ArtistPage-img"
+          width="300"
+        />
+      }
 
-    <p>{artist.body}</p>
+      <div className="ArtistPage-review">
+        <p>{artist.body}</p>
+      </div>
+    </div>
 
     <ul>
     {artist.albums.map(album => {

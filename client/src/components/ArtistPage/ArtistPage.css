@@ -1,0 +1,26 @@
+.ArtistPage-container {
+  margin: 0 0 10px;
+  padding: 20px;
+  border-radius: 3px;
+  box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+}
+
+.ArtistPage-content {
+  display: flex;
+  flex-direction: column; 
+}
+
+.ArtistPage-img {
+  width: 300px;
+  align-self: center;
+}
+
+.ArtistPage-review {
+  padding: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+  .ArtistPage-content {
+    flex-direction: row;
+  }
+}

@@ -8,9 +8,7 @@ import firebase from '../../firebase.js';
 
 import ArtistList from '../ArtistList/';
 import ArtistPage from '../ArtistPage/';
-import RecordPage from '../RecordPage/';
-
-import logo from './logo.svg';
+// import RecordPage from '../RecordPage/';
 
 import './App.css';
 
@@ -22,16 +20,14 @@ class App extends Component {
     }
     // this.initialFetchPages = this.initialFetchPages.bind(this);
     // this.getUniqueArtistNames = this.getUniqueArtistNames.bind(this);
-
   }
 
   componentWillMount() {
+    console.log('MOUNTING');
     // this.initialFetchPages();
-
     const itemsRef = firebase.database().ref('/pages');
     itemsRef.on('value', (snapshot) => {
       let items = snapshot.val();      
-
       this.setState({
         items: items
       });
@@ -83,12 +79,11 @@ class App extends Component {
       <Router>
         <div className="App">
           <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to Ultra Village</h1>
+            <h1 className="App-title">Ultra Village</h1>
           </header>
 
           {items &&
-            <main>
+            <main className="App-panel">
               <Switch>
                 <Route
                   path="/"
@@ -102,7 +97,7 @@ class App extends Component {
                   <Route
                     exact
                     key={item._id}
-                    path={`/${item.artist_name.toLowerCase().replace(/[\. ,:-]+/g, "-")}`}
+                    path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
                     render={props => (
                       <ArtistPage
                         {...props}
@@ -125,6 +120,8 @@ class App extends Component {
               </Switch>
             </main>
           }
+
+          <footer className="center-text">- ultra village llc -</footer>
         </div>
       </Router>
     );
