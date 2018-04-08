@@ -27,9 +27,7 @@
 
 .App-panel {
   margin: 120px auto;
-  // max-width: 1028px;
-  width: 97%;
-  // background: white;
+  width: 96%;
   border-radius: 3px;
 }
 
