@@ -20,7 +20,7 @@
 .firebaserc
 firebase.json
 database.rules.json
-storage.rules.json
+storage.rules
 /src/firebase.json
 
 npm-debug.log*
