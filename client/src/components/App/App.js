@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Switch
+  Switch,
+  Link
 } from 'react-router-dom';
 import firebase from '../../firebase.js';
 
@@ -79,7 +80,12 @@ class App extends Component {
       <Router>
         <div className="App">
           <header className="App-header">
-            <h1 className="App-title">Ultra Village</h1>
+            <Link
+              to="/"
+              className="App-header-link"
+            >
+              <h1 className="App-title">Ultra Village</h1>
+            </Link>
           </header>
 
           {items &&

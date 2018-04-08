@@ -12,17 +12,23 @@
   color: white;
   position: fixed;
   width: 100%;
-  z-index: -1;
+  z-index: 0;
+}
+
+.App-header-link {
+
 }
 
 .App-title {
   font-size: 1.5em;
+  font-weight: 200;
+  color: #fff;
 }
 
 .App-panel {
   margin: 120px auto;
   // max-width: 1028px;
-  width: 95%;
+  width: 97%;
   // background: white;
   border-radius: 3px;
 }
