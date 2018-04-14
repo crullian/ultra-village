@@ -11,12 +11,12 @@
 .ArtistList-item-container {
   display: flex;
   width: 400px;
-  margin: 8px 8px 10px 8px;
+  margin: 8px auto 10px;
   background: #f9f9f9;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px,
               rgba(0, 0, 0, 0.12) 0px 1px 4px;
-  border-radius: 5px;
+  border-radius: 3px;
   transition: box-shadow .1s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
@@ -50,5 +50,6 @@
 @media only screen and (min-width: 768px) {
   .ArtistList-item-container {
     width: 31%;
+    margin: 8px 8px 10px 8px;
   }
 }

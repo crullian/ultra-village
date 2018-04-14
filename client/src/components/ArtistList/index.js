@@ -5,10 +5,10 @@ import './ArtistList.css'
 
 const ArtistList = ({items}) => (
   <div className="ArtistList-flex-container">
-    {items && items.map(item => (
+    {items && items.map((item, i) => (
       <Link
-        to={`/${item.artist_name.toLowerCase().replace(/[\. ,:-]+/g, "-")}`}
-        key={item._id}
+        to={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
+        key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${i}`}
         className="ArtistList-item-container"
        >
         <img alt="artist" src={item.image} className="ArtistList-item-image" />

@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import {
-  BrowserRouter as Router,
   Route,
-  Switch,
-  Link
+  Switch
 } from 'react-router-dom';
 import firebase from '../../firebase.js';
 
+import Header from '../Header/';
 import ArtistList from '../ArtistList/';
 import ArtistPage from '../ArtistPage/';
-// import RecordPage from '../RecordPage/';
+import RecordPage from '../RecordPage/';
 
 import './App.css';
 
@@ -19,13 +18,9 @@ class App extends Component {
     this.state = {
       items: null
     }
-    // this.initialFetchPages = this.initialFetchPages.bind(this);
-    // this.getUniqueArtistNames = this.getUniqueArtistNames.bind(this);
   }
 
   componentWillMount() {
-    console.log('MOUNTING');
-    // this.initialFetchPages();
     const itemsRef = firebase.database().ref('/pages');
     itemsRef.on('value', (snapshot) => {
       let items = snapshot.val();      
@@ -35,31 +30,12 @@ class App extends Component {
     });
   }
 
-  // initialFetchPages() {
-  //   fetch('/api/pages').then(res => {
-  //     if (res.ok) {
-  //       return res.json();
-  //     } else {
-  //       console.error(`Network response was not ok: ${res}`);
-  //     }
-  //   }).then(json => {
-  //     this.setState({
-  //       items: json
-  //     });
-  //   }).catch(error => {
-  //     console.error(`There was a problem with your fetch: ${error.message}`);
-  //   });
-  // }
-
-  // getUniqueArtistNames(items) {
-  //   const uniqueItems = [];
-  //   items.forEach(function(item) {
-  //     if(uniqueItems.indexOf(item['artist_name'].join(', ')) < 0) {
-  //       uniqueItems.push(item['artist_name'].join(', '));
-  //     }
-  //   });
-  //   return this.sortByArtistName(uniqueItems);
-  // }
+  componentDidUpdate() {
+    if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }
 
   sortByArtistName = (a, b) => {
     const a_artist = a.artist_name.replace('The ', '');
@@ -77,59 +53,52 @@ class App extends Component {
     const {items} = this.state;
 
     return (
-      <Router>
-        <div className="App">
-          <header className="App-header">
-            <Link
-              to="/"
-              className="App-header-link"
-            >
-              <h1 className="App-title">Ultra Village</h1>
-            </Link>
-          </header>
+      <div className="App">
+        <Header />
 
-          {items &&
-            <main className="App-panel">
-              <Switch>
+        {items &&
+          <main className="App-panel">
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={props => (
+                  <ArtistList items={items.sort(this.sortByArtistName)} />
+                )}
+              />
+
+              {items.map((item, i) => (
                 <Route
-                  path="/"
+                  key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${1}`}
                   exact
+                  path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
                   render={props => (
-                    <ArtistList items={items.sort(this.sortByArtistName)} />
+                    <ArtistPage
+                      {...props}
+                      artist={item}
+                    />
                   )}
                 />
+              ))}
 
-                {items.map(item => (
+              {items.map(item => (
+                item.albums.map((record, i) => (
                   <Route
+                    key={`${record}-${i}`}
                     exact
-                    key={item._id}
-                    path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-                    render={props => (
-                      <ArtistPage
-                        {...props}
-                        artist={item}
-                      />
-                    )}
-                  />
-                ))}
-
-                {/*items.map(record => (
-                  <Route
-                    exact
-                    key={record._id}
-                    path={`/${record.artist_name.join(', ').toLowerCase().replace(/[\. ,:-]+/g, "-")}/${record.title.toLowerCase().replace(' ', '_')}`}
+                    path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}/${record.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
                     render={props => (
                       <RecordPage {...props} record={record} />
                     )}
                   />
-                ))*/}
-              </Switch>
-            </main>
-          }
+                ))
+              ))}
 
-          <footer className="App-footer center-text">- ultra village llc -</footer>
-        </div>
-      </Router>
+            </Switch>
+          </main>
+        }
+        {items && <footer className="App-footer center-text">- ultra village llc -</footer>}
+      </div>
     );
   }
 }

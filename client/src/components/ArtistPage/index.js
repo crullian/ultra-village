@@ -1,11 +1,10 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './ArtistPage.css';
 
 const ArtistPage = ({artist, match}) => (
   <div className="ArtistPage-container">
-    
     
     <div className="ArtistPage-content">
       {artist.image &&
@@ -24,12 +23,12 @@ const ArtistPage = ({artist, match}) => (
     </div>
 
     <ul>
-    {artist.albums.map(album => {
+    {artist.albums.map((album, i) => {
       return (
-        <li key={album}>
-          {/*<Link to={`${match.url}/${album.toLowerCase().replace(' ', '_')}`}>*/}
+        <li key={`${album}-${1}`}>
+          <Link to={`${match.url}/${album.toLowerCase().replace(/[. ,:-]+/g, "-")}`}>
             {album}
-          {/*</Link>*/}
+          </Link>
         </li>
       );
     })}
