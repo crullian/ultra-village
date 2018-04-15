@@ -1,11 +1,15 @@
 import React from 'react';
+import Remarkable from 'remarkable';
 import { Link } from 'react-router-dom';
 
 import './ArtistPage.css';
 
+const md = new Remarkable({breaks:true});
+
 const ArtistPage = ({artist, match}) => (
   <div className="ArtistPage-container">
     
+    <h2 className="center-text">{artist.artist_name}</h2>
     <div className="ArtistPage-content">
       {artist.image &&
         <img
@@ -17,8 +21,7 @@ const ArtistPage = ({artist, match}) => (
       }
 
       <div className="ArtistPage-review">
-        <h3 className="center-text">{artist.artist_name}</h3>
-        <p>{artist.body}</p>
+        <div dangerouslySetInnerHTML={{ __html: md.render(artist.body) }} />
       </div>
     </div>
 
