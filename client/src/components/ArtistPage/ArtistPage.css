@@ -18,7 +18,7 @@
 
 .ArtistPage-img {
   width: 300px;
-  align-self: flex-start;
+  align-self: center;
 }
 
 .ArtistPage-review {
@@ -44,5 +44,8 @@
 @media only screen and (min-width: 768px) {
   .ArtistPage-content {
     flex-direction: row;
+  }
+  .ArtistPage-img {
+    align-self: flex-start;
   }
 }
