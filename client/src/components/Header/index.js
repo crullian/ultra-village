@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 
 const Header = (props) => {
@@ -22,16 +23,16 @@ const Header = (props) => {
 
       {document.location.pathname !== '/' &&
         <div className="App-header-row">
-          <Link
-            to="/"
+          <div
+            onClick={props.history.goBack}
             className="App-header-link"
           >
             <h4>&larr;</h4>
-          </Link>
+          </div>
         </div>
       }
     </header>
   )
 }
 
-export default Header;
+export default withRouter(Header);

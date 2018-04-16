@@ -3,6 +3,7 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import firebase from '../../firebase.js';
 
 import Header from '../Header/';
@@ -28,6 +29,9 @@ class App extends Component {
         items: items
       });
     });
+  }
+
+  componentWillReceiveProps(nextProps) {
   }
 
   componentDidUpdate() {
@@ -103,4 +107,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);
