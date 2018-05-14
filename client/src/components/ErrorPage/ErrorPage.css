@@ -1,0 +1,14 @@
+.ErrorPage-container {
+  color: #fff;
+  animation-name: fade-up;
+  animation-duration: .5s;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+.ErrorPage-img {
+  width: 300px;
+  align-self: center;
+  display: flex;
+  margin: 0 auto;
+}
