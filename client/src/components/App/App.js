@@ -4,12 +4,15 @@ import {
   Switch
 } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import firebase from '../../firebase.js';
+import firebase, { auth, provider } from '../../firebase.js';
 
 import Header from '../Header/';
 import ArtistList from '../ArtistList/';
 import ArtistPage from '../ArtistPage/';
 import RecordPage from '../RecordPage/';
+import AuthPage from '../AuthPage/';
+import AboutPage from '../AboutPage/';
+import ErrorPage from '../ErrorPage/';
 
 import './App.css';
 
@@ -17,11 +20,17 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: null
+      items: null,
+      user: null
     }
   }
 
   componentWillMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setState({user});
+      } 
+    });
     const itemsRef = firebase.database().ref('/pages');
     itemsRef.on('value', (snapshot) => {
       let items = snapshot.val();      
@@ -53,8 +62,18 @@ class App extends Component {
     }
   }
 
+  handleAuth = (user) => {
+    if (user) {
+      this.setState({user});
+    } else {
+      this.setState({user: null});
+    }
+  }
+
   render() {
-    const {items} = this.state;
+    const { items, user } = this.state;
+    // console.log('APP PROPS', this.props);
+    // console.log('APP STATE', this.state);
 
     return (
       <div className="App">
@@ -65,9 +84,25 @@ class App extends Component {
             <Switch>
               <Route
                 exact
+                path="/auth"
+                render={ props => (
+                  <AuthPage {...props} user={ user } handleAuth={this.handleAuth} />
+                )}
+              />
+
+              <Route
+                exact
                 path="/"
                 render={props => (
                   <ArtistList items={items.sort(this.sortByArtistName)} />
+                )}
+              />
+
+              <Route
+                exact
+                path="/about"
+                render={props => (
+                  <AboutPage />
                 )}
               />
 
@@ -97,6 +132,8 @@ class App extends Component {
                   />
                 ))
               ))}
+
+              <Route path="/*" render={props => <ErrorPage />} />
 
             </Switch>
           </main>

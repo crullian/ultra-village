@@ -7,8 +7,8 @@
 .App-header {
   // background: rgb(43,61,150);
   // background: linear-gradient(180deg, rgba(43,61,150,1) 45%, rgba(118,44,145,1) 73%, rgba(251,71,37,1) 100%);
-  background: center/120% no-repeat url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader.jpg?alt=media&token=f48edaa5-8382-41c1-92eb-78285a15878a');
-  height: 385px;
+  background: center/262% no-repeat url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader.jpg?alt=media&token=f48edaa5-8382-41c1-92eb-78285a15878a');
+  height: 100%;
   padding: 20px;
   color: white;
   position: fixed;
