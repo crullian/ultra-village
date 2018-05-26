@@ -26,6 +26,14 @@
   flex-grow: 1;
 }
 
+.Page-edit {
+  cursor: pointer;
+}
+
+#Page-markdown-content {
+  width: 100%;
+}
+
 /****************** Media Query *****************/ 
 
 @media only screen and (min-width: 768px) {
