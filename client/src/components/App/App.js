@@ -4,7 +4,7 @@ import {
   Switch
 } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import firebase, { auth, provider } from '../../firebase.js';
+import firebase, { auth } from '../../firebase.js';
 
 import Header from '../Header/';
 import ArtistList from '../ArtistList/';
@@ -21,7 +21,8 @@ class App extends Component {
     super(props);
     this.state = {
       items: null,
-      user: null
+      user: null,
+      users: null
     }
   }
 
@@ -31,23 +32,17 @@ class App extends Component {
         this.setState({user});
       } 
     });
-    const itemsRef = firebase.database().ref('/pages');
+    const itemsRef = firebase.database().ref('/');
     itemsRef.on('value', (snapshot) => {
       let items = snapshot.val();      
       this.setState({
-        items: items
+        items: items.pages,
+        users: items.users
       });
     });
   }
 
   componentWillReceiveProps(nextProps) {
-  }
-
-  componentDidUpdate() {
-    if ('scrollRestoration' in window.history) {
-        window.history.scrollRestoration = 'manual';
-    }
-    window.scrollTo(0, 0);
   }
 
   sortByArtistName = (a, b) => {
@@ -71,9 +66,9 @@ class App extends Component {
   }
 
   render() {
-    const { items, user } = this.state;
+    const { items, user, users } = this.state;
     // console.log('APP PROPS', this.props);
-    // console.log('APP STATE', this.state);
+    console.log('APP STATE', this.state);
 
     return (
       <div className="App">
@@ -86,7 +81,11 @@ class App extends Component {
                 exact
                 path="/auth"
                 render={ props => (
-                  <AuthPage {...props} user={ user } handleAuth={this.handleAuth} />
+                  <AuthPage
+                    {...props}
+                    user={ user }
+                    handleAuth={this.handleAuth}
+                  />
                 )}
               />
 
@@ -94,7 +93,9 @@ class App extends Component {
                 exact
                 path="/"
                 render={props => (
-                  <ArtistList items={items.sort(this.sortByArtistName)} />
+                  <ArtistList
+                    items={items.sort(this.sortByArtistName)}
+                  />
                 )}
               />
 
@@ -114,6 +115,8 @@ class App extends Component {
                   render={props => (
                     <ArtistPage
                       {...props}
+                      artistId={i}
+                      isAdmin={user && users && users[user.uid]}
                       artist={item}
                     />
                   )}
@@ -127,7 +130,11 @@ class App extends Component {
                     exact
                     path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}/${record.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
                     render={props => (
-                      <RecordPage {...props} record={record} />
+                      <RecordPage
+                        {...props}
+                        isAdmin={user && users && users[user.uid]}
+                        record={record}
+                      />
                     )}
                   />
                 ))
