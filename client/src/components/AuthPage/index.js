@@ -37,7 +37,7 @@ class AuthPage extends React.Component {
           <div>
             <h3 className="center-text">You are signed in as:</h3>
             <div className="AuthPage-user-container">
-              <img className="AuthPage-user-photo" src={user.photoURL} />
+              <img alt="" className="AuthPage-user-photo" src={user.photoURL} />
               <div className="AuthPage-user-info">
                 <h4>{this.capitalizeName(user.displayName)}</h4>
                 <p>{user.email}</p>
