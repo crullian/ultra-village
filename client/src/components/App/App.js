@@ -68,7 +68,14 @@ class App extends Component {
   render() {
     const { items, user, users } = this.state;
     // console.log('APP PROPS', this.props);
-    console.log('APP STATE', this.state);
+    // console.log('APP STATE', items);
+
+    // cache page id here TODO:Fix this by using Firebase push to get a unqiue
+    // object ID 'The Right Way' ;)
+    const identified = items && items.map((item, i) => {
+      item.id = i;
+      return item;
+    });
 
     return (
       <div className="App">
@@ -94,7 +101,7 @@ class App extends Component {
                 path="/"
                 render={props => (
                   <ArtistList
-                    items={items.sort(this.sortByArtistName)}
+                    items={identified.sort(this.sortByArtistName)}
                   />
                 )}
               />
@@ -116,7 +123,7 @@ class App extends Component {
                     <ArtistPage
                       {...props}
                       artistId={i}
-                      isAdmin={user && users && users[user.uid]}
+                      isAdmin={!!(user && users && users[user.uid])}
                       artist={item}
                     />
                   )}

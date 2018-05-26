@@ -28,38 +28,44 @@ class ArtistPage extends React.Component {
   }
 
   handleUpdateBody = (e) => {
-    console.log('VALUE', e.target.value)
     this.setState({
       newBody: e.target.value
     })
   }
 
   writeArtistData = () => {
-    console.log('ARTIST', this.props.artist, this.props.artistId, this.state)
-    firebase.database().ref('/pages/' + this.props.artistId).set({
-      albums: this.props.artist.albums,
-      artist_name: this.props.artist.artist_name,
-      body: this.state.newBody,
-      image: this.props.artist.image
+    firebase.database().ref('/pages/' + this.props.artist.id).update({
+      body: this.state.newBody
     });
-
     this.setState({isEditing: false});
   }
 
   render() {
-    const { artist, match, isAdmin, Id } = this.props;
-    console.log('this.props',this.props)
+    const { artist, match, isAdmin } = this.props;
+    const { isEditing } = this.state;
 
     let adminControls = null;
-    if (isAdmin && !this.state.isEditing) {
+    if (isAdmin && !isEditing) {
       adminControls = (
-        <i className="Page-edit material-icons" onClick={this.handleActivateEditMode}>edit</i>
+        <div className="Page-admin-controls">
+          <i className="Page-edit material-icons" onClick={this.handleActivateEditMode}>edit</i>
+        </div>
       )
-    } else if (isAdmin && this.state.isEditing) {
+    } else if (isAdmin && isEditing) {
       adminControls = (
-        <div>
-          <button onClick={this.handleDeactivateEditMode}>cancel</button>
-          <button onClick={this.writeArtistData}>submit</button>
+        <div className="Page-admin-controls">
+          <button
+            className="Page-edit-button"
+            onClick={this.handleDeactivateEditMode}
+          >
+            cancel
+          </button>
+          <button
+            className="Page-edit-button"
+            onClick={this.writeArtistData}
+          >
+            submit
+          </button>
         </div>
       )
     }
@@ -77,9 +83,10 @@ class ArtistPage extends React.Component {
               width="300"
             />
           }
-          {this.state.isEditing ?
+          {isEditing ?
             <textarea
               id="Page-markdown-content"
+              className="ArtistPage-review"
               onChange={this.handleUpdateBody}
               defaultValue={artist.body}
             />

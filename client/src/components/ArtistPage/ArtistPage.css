@@ -18,20 +18,55 @@
 
 .ArtistPage-img {
   width: 300px;
+  margin-bottom: 10px;
   align-self: center;
 }
 
 .ArtistPage-review {
-  padding: 20px;
+  padding: 0 20px;
   flex-grow: 1;
+  font-size: 100%;
+}
+
+.Page-admin-controls {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
 }
 
 .Page-edit {
   cursor: pointer;
 }
 
+.Page-edit-button {
+  display: flex;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0px;
+  text-transform: uppercase;
+  border: 10px;
+  font-family: Roboto, sans-serif;
+  cursor: pointer;
+  margin: 0 5px 5px;
+  padding: 0px 20px;
+  outline: none;
+  height: 36px;
+  line-height: 36px;
+  width: 88px;
+  border-radius: 3px;
+  background-color: rgb(14, 97, 253);
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+}
+
+.Page-edit-button:hover {
+  background-color: rgb(86, 143, 251);
+}
+
 #Page-markdown-content {
   width: 100%;
+  height: 150px;
+  margin-bottom: 5px;
 }
 
 /****************** Media Query *****************/ 
@@ -42,5 +77,9 @@
   }
   .ArtistPage-img {
     align-self: flex-start;
+  }
+  .Page-admin-controls {
+    flex-flow: column;
+    justify-content: flex-start;
   }
 }
