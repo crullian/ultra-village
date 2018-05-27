@@ -68,7 +68,7 @@ class App extends Component {
   render() {
     const { items, user, users } = this.state;
     // console.log('APP PROPS', this.props);
-    // console.log('APP STATE', items);
+    // console.log('APP STATE', this.state);
 
     // cache page id here TODO:Fix this by using Firebase push to get a unqiue
     // object ID 'The Right Way' ;)
