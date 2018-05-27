@@ -34,9 +34,11 @@ class ArtistPage extends React.Component {
   }
 
   writeArtistData = () => {
-    firebase.database().ref('/pages/' + this.props.artist.id).update({
-      body: this.state.newBody
-    });
+    if (this.state.newBody) {
+      firebase.database().ref('/pages/' + this.props.artist.id).update({
+        body: this.state.newBody
+      });
+    }
     this.setState({isEditing: false});
   }
 
