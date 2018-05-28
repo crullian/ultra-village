@@ -45,6 +45,13 @@ class App extends Component {
   componentWillReceiveProps(nextProps) {
   }
 
+  componentDidUpdate() { 
+    if ('scrollRestoration' in window.history) { 
+      window.history.scrollRestoration = 'manual'; 
+    }  
+    window.scrollTo(0, 0); 
+  }
+
   sortByArtistName = (a, b) => {
     const a_artist = a.artist_name.replace('The ', '');
     const b_artist = b.artist_name.replace('The ', '');
