@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import HomeCard from '../HomeCard';
+
 import './ArtistList.css'
 
 class ArtistList extends React.Component {
@@ -16,10 +18,11 @@ class ArtistList extends React.Component {
             key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${i}`}
             className="ArtistList-item-container"
            >
-            <img alt="artist" src={item.image} className="ArtistList-item-image" />
+            {/*<img alt="artist" src={item.image} className="ArtistList-item-image" />
             <div className="ArtistList-item-name center-text">
               <h3>{item.artist_name}</h3>
-            </div>
+            </div>*/}
+            <HomeCard item={item} />
           </Link>
         ))}
       </div>

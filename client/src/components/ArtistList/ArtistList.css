@@ -1,7 +1,7 @@
 .ArtistList-flex-container {
   display: flex;
   flex-flow: wrap;
-
+  justify-content: center;
   animation-name: fade-up;
   animation-duration: .5s;
   animation-timing-function: ease-in;
@@ -9,8 +9,8 @@
 }
 
 .ArtistList-item-container {
-  display: flex;
-  width: 400px;
+  // display: flex;
+  // width: 400px;
   margin: 8px auto 10px;
   background: #f9f9f9;
   overflow: hidden;
@@ -49,7 +49,7 @@
 
 @media only screen and (min-width: 768px) {
   .ArtistList-item-container {
-    width: 31%;
+    // width: 31%;
     margin: 8px 8px 10px 8px;
   }
 }

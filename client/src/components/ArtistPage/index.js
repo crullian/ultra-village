@@ -2,6 +2,9 @@ import React from 'react';
 import Remarkable from 'remarkable';
 import { Link } from 'react-router-dom';
 
+import IconButton from '@material-ui/core/IconButton';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 import firebase from '../../firebase.js';
 
 import './ArtistPage.css';
@@ -12,7 +15,8 @@ class ArtistPage extends React.Component {
 
   state = {
     isEditing: false,
-    newBody: ''
+    newBody: '',
+    expanded: false
   }
 
   handleActivateEditMode = () => {
@@ -41,6 +45,10 @@ class ArtistPage extends React.Component {
     }
     this.setState({isEditing: false});
   }
+
+  handleExpandClick = () => {
+    this.setState({ expanded: !this.state.expanded });
+  };
 
   render() {
     const { artist, match, isAdmin } = this.props;
@@ -94,7 +102,25 @@ class ArtistPage extends React.Component {
             />
             :
             <div className="ArtistPage-review">
-              <div dangerouslySetInnerHTML={{ __html: md.render(artist.body) }} />
+              <div
+                className={`ArtistPage-review-content${!this.state.expanded ? ' hide' : ''}`}
+                  
+                dangerouslySetInnerHTML={{ __html: md.render(artist.body) }}
+              />
+              <IconButton
+                className="ArtistPage-review-expand-btn"
+                style={this.state.expanded
+                  ? {
+                      transform: 'rotate(180deg)'
+                    }
+                  : null
+                }
+                onClick={this.handleExpandClick}
+                aria-expanded={this.state.expanded}
+                aria-label="Show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
             </div>
           }
           {adminControls}
