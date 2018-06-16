@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
   Route,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import firebase, { auth } from '../../firebase.js';
@@ -22,7 +23,8 @@ class App extends Component {
     this.state = {
       items: null,
       user: null,
-      users: null
+      users: null,
+      scrolled: false
     }
   }
 
@@ -42,14 +44,19 @@ class App extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-  }
-
   componentDidUpdate() { 
     if ('scrollRestoration' in window.history) { 
       window.history.scrollRestoration = 'manual'; 
     }  
-    window.scrollTo(0, 0); 
+    window.onscroll = () => this.handleScroll();
+  }
+
+  handleScroll = () => {
+    if (document.documentElement.scrollTop > 0) {
+      this.setState({ scrolled: true });
+    } else {
+      this.setState({ scrolled: false });
+    }
   }
 
   sortByArtistName = (a, b) => {
@@ -86,7 +93,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header />
+        <Header isScrolled={false} />
 
         {items &&
           <main className="App-panel">
@@ -153,7 +160,7 @@ class App extends Component {
                   />
                 ))
               ))}
-
+              <Redirect to="/" />
               <Route path="/*" render={props => <ErrorPage />} />
 
             </Switch>

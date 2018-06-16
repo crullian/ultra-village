@@ -2,6 +2,13 @@ import React from 'react';
 import Remarkable from 'remarkable';
 import { Link } from 'react-router-dom';
 
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CardHeader from '@material-ui/core/CardHeader';
+import Dialog from '@material-ui/core/Dialog';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@material-ui/core/IconButton';
+
 import firebase from '../../firebase.js';
 
 import './ArtistPage.css';
@@ -12,7 +19,17 @@ class ArtistPage extends React.Component {
 
   state = {
     isEditing: false,
-    newBody: ''
+    newBody: '',
+    open: false,
+    expanded: false
+  }
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  }
+
+  handleClose = () => {
+    this.setState({ open: false });
   }
 
   handleActivateEditMode = () => {
@@ -41,6 +58,10 @@ class ArtistPage extends React.Component {
     }
     this.setState({isEditing: false});
   }
+
+  handleExpandClick = () => {
+    this.setState({ expanded: !this.state.expanded });
+  };
 
   render() {
     const { artist, match, isAdmin } = this.props;
@@ -74,17 +95,19 @@ class ArtistPage extends React.Component {
 
     return (
       <div className="ArtistPage-container">
-        
-        <h2 className="center-text">{artist.artist_name}</h2>
-        <div className="ArtistPage-content">
-          {artist.image &&
-            <img
-              alt="artist"
-              src={artist.image}
-              className="ArtistPage-img"
-              width="300"
-            />
+        <CardHeader
+          avatar={
+              <img
+                alt="artist"
+                src={artist.image}
+                className="ArtistPage-img"
+                width="60"
+                onClick={this.handleClickOpen}
+              />
           }
+          title={<h2>{artist.artist_name}</h2>}
+        />
+        <div className="ArtistPage-content">
           {isEditing ?
             <textarea
               id="Page-markdown-content"
@@ -94,7 +117,25 @@ class ArtistPage extends React.Component {
             />
             :
             <div className="ArtistPage-review">
-              <div dangerouslySetInnerHTML={{ __html: md.render(artist.body) }} />
+              <div
+                className={`ArtistPage-review-content${!this.state.expanded ? ' hide' : ''}`}
+                  
+                dangerouslySetInnerHTML={{ __html: md.render(artist.body) }}
+              />
+              <IconButton
+                className="ArtistPage-review-expand-btn"
+                style={this.state.expanded
+                  ? {
+                      transform: 'rotate(180deg)'
+                    }
+                  : null
+                }
+                onClick={this.handleExpandClick}
+                aria-expanded={this.state.expanded}
+                aria-label="Show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
             </div>
           }
           {adminControls}
@@ -111,6 +152,18 @@ class ArtistPage extends React.Component {
           );
         })}
         </ul>
+
+        <Dialog
+          open={this.state.open}  
+          onClose={this.handleClose}
+          aria-labelledby="simple-dialog-title"
+        >
+          <img
+            alt="artist"
+            src={artist.image}
+            style={{width: '100%', borderRadius: '3px'}}            
+          />
+        </Dialog>
       </div>
     )
   }

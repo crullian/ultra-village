@@ -4,14 +4,28 @@ import { Link } from 'react-router-dom';
 
 const Header = (props) => {
   return (
-    <header className="App-header">
+    <header
+      className="App-header"
+      style={props.isScrolled
+        ? {
+            zIndex: '10',
+            height: '70px',
+            boxShadow: '0 1px 6px rgba(32, 33, 36, 0.28)'
+          }
+        : null
+      }
+    >
       <div className="App-header-row">
-        <Link
-          to="/"
-          className="App-header-link"
-        >
-          <h1 className="App-title">Ultra Village</h1>
-        </Link>
+        <div style={{display: 'flex'}}>
+          <Link
+            to="/"
+            className="App-header-link"
+          >
+            <h1 className="App-title" style={ props.isScrolled ? {
+              fontSize: '1.25em'
+            } : null}>Ultra Village</h1>
+          </Link>
+        </div>
 
         <Link
           to="/about"
@@ -20,17 +34,18 @@ const Header = (props) => {
           <h4>about</h4>
         </Link>
       </div>
-
-      {document.location.pathname !== '/' &&
-        <div className="App-header-row">
+      <div className="App-header-row">
+        {document.location.pathname !== '/' &&
           <div
             onClick={props.history.goBack}
             className="App-header-link"
+            style={{display: 'flex'}}
           >
             <h4>&larr;</h4>
+            {/*<h4>{document.location.pathname}</h4>*/}
           </div>
-        </div>
-      }
+        }
+      </div>
     </header>
   )
 }
