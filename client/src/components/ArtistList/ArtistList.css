@@ -9,9 +9,8 @@
 }
 
 .ArtistList-item-container {
-  // display: flex;
-  // width: 400px;
-  margin: 8px auto 10px;
+  width: 100%;
+  margin: 10px 0 0 0;
   background: #f9f9f9;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px,
@@ -45,11 +44,16 @@
   }
 }
 
-/****************** Media Query *****************/ 
+/****************** Media Query *****************/
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 380px) {
   .ArtistList-item-container {
-    // width: 31%;
-    margin: 8px 8px 10px 8px;
+    width: 380px;
+  }
+}
+
+@media only screen and (min-width: 792px) {
+  .ArtistList-item-container {
+    margin: 8px;
   }
 }

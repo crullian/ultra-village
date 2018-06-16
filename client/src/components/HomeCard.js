@@ -8,11 +8,12 @@ import Typography from '@material-ui/core/Typography';
 const styles = theme => ({
   card: {
     display: 'flex',
+    justifyContent: 'space-between'
   },
   details: {
     display: 'flex',
     flexDirection: 'column',
-    width: '200px'
+    width: '240px'
   },
   content: {
     flex: '1 0 auto',

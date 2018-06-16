@@ -18,10 +18,6 @@ class ArtistList extends React.Component {
             key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${i}`}
             className="ArtistList-item-container"
            >
-            {/*<img alt="artist" src={item.image} className="ArtistList-item-image" />
-            <div className="ArtistList-item-name center-text">
-              <h3>{item.artist_name}</h3>
-            </div>*/}
             <HomeCard item={item} />
           </Link>
         ))}

@@ -16,9 +16,12 @@
 }
 
 .ArtistPage-img {
-  width: 300px;
-  margin-bottom: 10px;
-  align-self: center;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 3px;
+  // margin-bottom: 10px;
+  // align-self: center;
 }
 
 .ArtistPage-review {
