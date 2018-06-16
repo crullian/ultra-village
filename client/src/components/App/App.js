@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
   Route,
-  Switch
+  Switch,
+  Redirect
 } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import firebase, { auth } from '../../firebase.js';
@@ -43,14 +44,10 @@ class App extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-  }
-
   componentDidUpdate() { 
     if ('scrollRestoration' in window.history) { 
       window.history.scrollRestoration = 'manual'; 
     }  
-    // window.scrollTo(0, 0);
     window.onscroll = () => this.handleScroll();
   }
 
@@ -163,7 +160,7 @@ class App extends Component {
                   />
                 ))
               ))}
-
+              <Redirect to="/" />
               <Route path="/*" render={props => <ErrorPage />} />
 
             </Switch>
