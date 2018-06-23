@@ -61,6 +61,10 @@ class Header extends Component {
             </IconButton>
           }
           <TextField
+            classes={{
+              root: 'classes-state-root',
+              hover: 'hover'
+            }}
             placeholder="Search..."
             style={{color: '#fff', marginLeft: 'auto'}}
             id="searchField"

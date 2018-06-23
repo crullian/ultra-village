@@ -12,14 +12,14 @@
   // background: center/262% no-repeat url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader.jpg?alt=media&token=f48edaa5-8382-41c1-92eb-78285a15878a');
   // background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader.jpg?alt=media&token=f48edaa5-8382-41c1-92eb-78285a15878a') center;
   background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader50.jpg?alt=media&token=7d1f960d-38ce-40f7-a89d-f8d6be89b4c6') center;
-  background-attachment: fixed;
+  // background-attachment: fixed;
   height: 120px;
   padding: 0 20px;
   color: white;
   position: sticky;
   top: -60px;
   width: 100%;
-  z-index: 10;
+  z-index: 1000;
   transition: all .2s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
@@ -39,6 +39,13 @@
 
 #searchField::before {
   border-bottom: #fff;
+}
+.classes-state-root.hover {
+  border-bottom-color: #fff; 
+}
+
+#searchField::hover {
+  border-bottom: 2px solid #fff
 }
 
 #searchField {
@@ -73,16 +80,9 @@ li {
 .App-footer {
   position: relative;
   z-index: -2;
-  // position: fixed;
-  // text-align: center;
-  // width: 100%;
-  // bottom: 10px;
 }
 
 @media only screen and (min-width: 960px) {
-  .App-header {
-    // min-height: 85%;
-  }
   .App-panel {
     width: 930px;
   }
