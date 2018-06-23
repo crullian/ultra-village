@@ -141,17 +141,20 @@ class ArtistPage extends React.Component {
           {adminControls}
         </div>
 
-        <ul>
-        {artist.albums.map((album, i) => {
-          return (
-            <li key={`${album}-${1}`}>
-              <Link to={`${match.url}/${album.toLowerCase().replace(/[. ,:-]+/g, "-")}`}>
-                {album}
-              </Link>
-            </li>
-          );
-        })}
-        </ul>
+        <section className="ArtistPage-disco">
+          <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
+          <ul>
+          {artist.albums.map((album, i) => {
+            return (
+              <li key={`${album}-${1}`}>
+                <Link to={`${match.url}/${album.toLowerCase().replace(/[. ,:-]+/g, "-")}`}>
+                  {album}
+                </Link>
+              </li>
+            );
+          })}
+          </ul>
+        </section>
 
         <Dialog
           open={this.state.open}  

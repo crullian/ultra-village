@@ -80,7 +80,7 @@ class App extends Component {
   }
 
   render() {
-    const { items, user, users } = this.state;
+    const { items, user, users, scrolled } = this.state;
     // console.log('APP PROPS', this.props);
     // console.log('APP STATE', this.state);
 
@@ -93,7 +93,18 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header isScrolled={false} />
+        <Header isScrolled={scrolled} />
+        {/*<div
+          style={{
+            height: 60, 
+            background: '#191f6e', 
+            position: 'sticky', 
+            top: 0,
+            zIndex: '10',
+            boxShadow: '0 1px 6px rgba(32, 33, 36, 0.28)'
+          }}
+        >
+        </div>*/}
 
         {items &&
           <main className="App-panel">
