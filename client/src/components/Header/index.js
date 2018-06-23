@@ -26,7 +26,6 @@ class Header extends Component {
         className="App-header"
         style={this.props.isScrolled
           ? {
-              zIndex: '10',
               boxShadow: '0 1px 6px rgba(32, 33, 36, 0.28)'
             }
           : null
