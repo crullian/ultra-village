@@ -24,23 +24,25 @@ class App extends Component {
       items: null,
       user: null,
       users: null,
-      scrolled: false
+      scrolled: false,
+      filterTerm: ''
     }
   }
 
   componentWillMount() {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        this.setState({user});
-      } 
-    });
     const itemsRef = firebase.database().ref('/');
     itemsRef.on('value', (snapshot) => {
       let items = snapshot.val();      
       this.setState({
         items: items.pages,
         users: items.users
-      });
+      },
+        auth.onAuthStateChanged((user) => {
+          if (user) {
+            this.setState({user});
+          } 
+        })
+      );
     });
   }
 
@@ -79,6 +81,10 @@ class App extends Component {
     }
   }
 
+  handleSearch = (term) => {
+    this.setState({filterTerm: term});
+  }
+
   render() {
     const { items, user, users, scrolled } = this.state;
     // console.log('APP PROPS', this.props);
@@ -86,25 +92,26 @@ class App extends Component {
 
     // cache page id here TODO:Fix this by using Firebase push to get a unqiue
     // object ID 'The Right Way' ;)
-    const identified = items && items.map((item, i) => {
+    let identified = items && items.map((item, i) => {
       item.id = i;
       return item;
     });
 
+    if (this.state.filterTerm) {
+      identified = identified.filter((item) => {
+        let searchString = this.state.filterTerm.toLowerCase().trim();
+        let strTofind = item.artist_name.toLowerCase();
+        return strTofind.indexOf(searchString) !== -1;
+      })
+    }
+
     return (
       <div className="App">
-        <Header isScrolled={scrolled} />
-        {/*<div
-          style={{
-            height: 60, 
-            background: '#191f6e', 
-            position: 'sticky', 
-            top: 0,
-            zIndex: '10',
-            boxShadow: '0 1px 6px rgba(32, 33, 36, 0.28)'
-          }}
-        >
-        </div>*/}
+        <Header
+          searchTerm={this.state.filterTerm}
+          isScrolled={scrolled}
+          handleSearch={this.handleSearch}
+        />
 
         {items &&
           <main className="App-panel">
@@ -148,7 +155,7 @@ class App extends Component {
                     <ArtistPage
                       {...props}
                       artistId={i}
-                      isAdmin={!!(user && users && users[user.uid])}
+                      user={user && users[user.uid]}
                       artist={item}
                     />
                   )}
