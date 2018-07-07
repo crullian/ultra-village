@@ -2,8 +2,8 @@ import React from 'react';
 import Remarkable from 'remarkable';
 import { Link } from 'react-router-dom';
 
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
+// import Avatar from '@material-ui/core/Avatar';
+// import Button from '@material-ui/core/Button';
 import CardHeader from '@material-ui/core/CardHeader';
 import Dialog from '@material-ui/core/Dialog';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -64,17 +64,17 @@ class ArtistPage extends React.Component {
   };
 
   render() {
-    const { artist, match, isAdmin } = this.props;
+    const { artist, match, user } = this.props;
     const { isEditing } = this.state;
 
     let adminControls = null;
-    if (isAdmin && !isEditing) {
+    if ((user && user.isAdmin) && !isEditing) {
       adminControls = (
         <div className="Page-admin-controls">
           <i className="Page-edit material-icons" onClick={this.handleActivateEditMode}>edit</i>
         </div>
       )
-    } else if (isAdmin && isEditing) {
+    } else if ((user && user.isAdmin) && isEditing) {
       adminControls = (
         <div className="Page-admin-controls">
           <button
@@ -141,17 +141,20 @@ class ArtistPage extends React.Component {
           {adminControls}
         </div>
 
-        <ul>
-        {artist.albums.map((album, i) => {
-          return (
-            <li key={`${album}-${1}`}>
-              <Link to={`${match.url}/${album.toLowerCase().replace(/[. ,:-]+/g, "-")}`}>
-                {album}
-              </Link>
-            </li>
-          );
-        })}
-        </ul>
+        <section className="ArtistPage-disco">
+          <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
+          <ul>
+          {artist.albums.map((album, i) => {
+            return (
+              <li key={`${album}-${1}`}>
+                <Link to={`${match.url}/${album.toLowerCase().replace(/[. ,:-]+/g, "-")}`}>
+                  {album}
+                </Link>
+              </li>
+            );
+          })}
+          </ul>
+        </section>
 
         <Dialog
           open={this.state.open}  

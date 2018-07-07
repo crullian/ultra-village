@@ -10,14 +10,16 @@
   // background: rgb(43,61,150);
   // background: linear-gradient(180deg, rgba(43,61,150,1) 45%, rgba(118,44,145,1) 73%, rgba(251,71,37,1) 100%);
   // background: center/262% no-repeat url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader.jpg?alt=media&token=f48edaa5-8382-41c1-92eb-78285a15878a');
-  background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader.jpg?alt=media&token=f48edaa5-8382-41c1-92eb-78285a15878a') center;
-  // height: 100%;
-  height: 300px;
-  padding: 20px;
+  // background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader.jpg?alt=media&token=f48edaa5-8382-41c1-92eb-78285a15878a') center;
+  background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader50.jpg?alt=media&token=7d1f960d-38ce-40f7-a89d-f8d6be89b4c6') center;
+  // background-attachment: fixed;
+  height: 120px;
+  padding: 0 20px;
   color: white;
-  position: fixed;
+  position: sticky;
+  top: -60px;
   width: 100%;
-  z-index: 0;
+  z-index: 1000;
   transition: all .2s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
@@ -28,12 +30,37 @@
 .App-header-row {
   display: flex;
   justify-content: space-between;
+  padding: 20px 0 0 0;
+}
+
+.App-header-row.toolbar {
+  padding-top: 8px;
+}
+
+#searchField::before {
+  border-bottom: #fff;
+}
+.classes-state-root.hover {
+  border-bottom-color: #fff; 
+}
+
+#searchField::hover {
+  border-bottom: 2px solid #fff
+}
+
+#searchField {
+  color: #fff;
+  border-bottom-color: #fff; 
+}
+
+.material-icons.back {
+  color: #fff;
+  margin-left: 10px;
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 1.35em;
   font-weight: 200;
-  transition: all .2s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
 .App-header-link {
@@ -41,7 +68,7 @@
 }
 
 .App-panel {
-  margin: 120px auto 0;
+  margin: 10px auto 0;
   width: 96%;
   border-radius: 3px;
 }
@@ -53,16 +80,9 @@ li {
 .App-footer {
   position: relative;
   z-index: -2;
-  // position: fixed;
-  // text-align: center;
-  // width: 100%;
-  // bottom: 10px;
 }
 
 @media only screen and (min-width: 960px) {
-  .App-header {
-    // min-height: 85%;
-  }
   .App-panel {
     width: 930px;
   }

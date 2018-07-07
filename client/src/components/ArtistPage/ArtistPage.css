@@ -1,9 +1,9 @@
 .ArtistPage-container {
   margin: 0 0 10px;
-  padding: 20px;
+  padding: 0px;
   border-radius: 3px;
-  box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
-  background-color: #fff;
+  // box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+  // background-color: #fff;
   animation-name: fade-up;
   animation-duration: .5s;
   animation-timing-function: ease-in;
@@ -20,8 +20,6 @@
   height: 60px;
   object-fit: cover;
   border-radius: 3px;
-  // margin-bottom: 10px;
-  // align-self: center;
 }
 
 .ArtistPage-review {
@@ -87,6 +85,10 @@
   width: 100%;
   height: 250px;
   margin-bottom: 5px;
+}
+
+.ArtistPage-disco-heading {
+  padding: 0 20px;
 }
 
 /****************** Media Query *****************/ 
