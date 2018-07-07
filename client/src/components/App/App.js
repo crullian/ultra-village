@@ -10,7 +10,7 @@ import firebase, { auth } from '../../firebase.js';
 import Header from '../Header/';
 import ArtistList from '../ArtistList/';
 import ArtistPage from '../ArtistPage/';
-import RecordPage from '../RecordPage/';
+// import RecordPage from '../RecordPage/';
 import AuthPage from '../AuthPage/';
 import AboutPage from '../AboutPage/';
 import ErrorPage from '../ErrorPage/';
@@ -162,7 +162,7 @@ class App extends Component {
                 />
               ))}
 
-              {items.map(item => (
+              {/*items.map(item => (
                 item.albums.map((record, i) => (
                   <Route
                     key={`${record}-${i}`}
@@ -177,7 +177,7 @@ class App extends Component {
                     )}
                   />
                 ))
-              ))}
+              ))*/}
               <Redirect to="/" />
               <Route path="/*" render={props => <ErrorPage />} />
 

@@ -146,10 +146,10 @@ class ArtistPage extends React.Component {
           <ul>
           {artist.albums.map((album, i) => {
             return (
-              <li key={`${album}-${1}`}>
-                <Link to={`${match.url}/${album.toLowerCase().replace(/[. ,:-]+/g, "-")}`}>
-                  {album}
-                </Link>
+              <li key={`${album.title}-${i}`}>
+                {/*<Link to={`${match.url}/${album.toLowerCase().replace(/[. ,:-]+/g, "-")}`}>*/}
+                  {album.title}
+                {/*</Link>*/}
               </li>
             );
           })}
