@@ -149,7 +149,7 @@ class ArtistPage extends React.Component {
 
         <section className="ArtistPage-disco">
           <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
-          <div style={{padding: '0 20px'}}>
+          <div style={{padding: '0 16px'}}>
           {artist.albums.map((album, i) => {
             const heading = `${album.title} - ${album.year}, ${album.label}`;
             if (album.review) {
