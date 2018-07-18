@@ -9,6 +9,12 @@ import Dialog from '@material-ui/core/Dialog';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
 
+import Paper from '@material-ui/core/Paper';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+
 import firebase from '../../firebase.js';
 
 import './ArtistPage.css';
@@ -143,17 +149,34 @@ class ArtistPage extends React.Component {
 
         <section className="ArtistPage-disco">
           <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
-          <ul>
+          <div style={{padding: '0 20px'}}>
           {artist.albums.map((album, i) => {
-            return (
-              <li key={`${album.title}-${i}`}>
-                {/*<Link to={`${match.url}/${album.toLowerCase().replace(/[. ,:-]+/g, "-")}`}>*/}
-                  {album.title}
-                {/*</Link>*/}
-              </li>
-            );
+            if (album.review) {
+              return (
+                <ExpansionPanel key={`${album.title}-${i}`}>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    {`${album.title} - ${album.year} ${album.label}`}
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <Typography>
+                      {album.review}
+                    </Typography>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+              )
+            } else {
+              return (
+                <Paper
+                  key={`${album.title}-${i}`}
+                  style={{padding: '16px 24px', marginBottom: '2px'}}
+                  elevation={1}
+                >
+                  {`${album.title} - ${album.year} ${album.label}`}
+                </Paper>
+              );
+            }
           })}
-          </ul>
+          </div>
         </section>
 
         <Dialog
