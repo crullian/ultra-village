@@ -102,6 +102,7 @@ class ArtistPage extends React.Component {
     return (
       <div className="ArtistPage-container">
         <CardHeader
+          style={{padding: '16px 8px'}}
           avatar={
               <img
                 alt="artist"
@@ -149,7 +150,7 @@ class ArtistPage extends React.Component {
 
         <section className="ArtistPage-disco">
           <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
-          <div style={{padding: '0 16px'}}>
+          <div style={{padding: '0 8px'}}>
           {artist.albums.map((album, i) => {
             const heading = `${album.title} - ${album.year}, ${album.label}`;
             if (album.review) {
