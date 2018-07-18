@@ -151,11 +151,12 @@ class ArtistPage extends React.Component {
           <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
           <div style={{padding: '0 20px'}}>
           {artist.albums.map((album, i) => {
+            const heading = `${album.title} - ${album.year}, ${album.label}`;
             if (album.review) {
               return (
                 <ExpansionPanel key={`${album.title}-${i}`}>
                   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    {`${album.title} - ${album.year} ${album.label}`}
+                    {heading}
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
                     <Typography>
@@ -171,7 +172,7 @@ class ArtistPage extends React.Component {
                   style={{padding: '16px 24px', marginBottom: '2px'}}
                   elevation={1}
                 >
-                  {`${album.title} - ${album.year} ${album.label}`}
+                  {heading}
                 </Paper>
               );
             }
