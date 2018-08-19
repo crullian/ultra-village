@@ -14,6 +14,7 @@ import ArtistPage from '../ArtistPage/';
 import AuthPage from '../AuthPage/';
 import AboutPage from '../AboutPage/';
 import ErrorPage from '../ErrorPage/';
+import Loader from '../Loader/';
 
 import './App.css';
 
@@ -25,17 +26,20 @@ class App extends Component {
       user: null,
       users: null,
       scrolled: false,
-      filterTerm: ''
+      filterTerm: '',
+      isLoading: true
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const itemsRef = firebase.database().ref('/');
     itemsRef.on('value', (snapshot) => {
       let items = snapshot.val();      
       this.setState({
         items: items.pages,
-        users: items.users
+        users: items.users,
+        about: items.about,
+        isLoading: false
       },
         auth.onAuthStateChanged((user) => {
           if (user) {
@@ -86,9 +90,7 @@ class App extends Component {
   }
 
   render() {
-    const { items, user, users, scrolled } = this.state;
-    // console.log('APP PROPS', this.props);
-    // console.log('APP STATE', this.state);
+    const { items, user, users, scrolled, isLoading } = this.state;
 
     // cache page id here TODO:Fix this by using Firebase push to get a unqiue
     // object ID 'The Right Way' ;)
@@ -112,7 +114,7 @@ class App extends Component {
           isScrolled={scrolled}
           handleSearch={this.handleSearch}
         />
-
+        {isLoading && <Loader />}
         {items &&
           <main className="App-panel">
             <Switch>
@@ -142,7 +144,11 @@ class App extends Component {
                 exact
                 path="/about"
                 render={props => (
-                  <AboutPage />
+                  <AboutPage
+                    {...props}
+                    content={this.state.about} 
+                    user={user && users[user.uid]}
+                  />
                 )}
               />
 

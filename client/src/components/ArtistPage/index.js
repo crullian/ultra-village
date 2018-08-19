@@ -1,6 +1,5 @@
 import React from 'react';
 import Remarkable from 'remarkable';
-import { Link } from 'react-router-dom';
 
 // import Avatar from '@material-ui/core/Avatar';
 // import Button from '@material-ui/core/Button';
@@ -70,7 +69,7 @@ class ArtistPage extends React.Component {
   };
 
   render() {
-    const { artist, match, user } = this.props;
+    const { artist, user } = this.props;
     const { isEditing } = this.state;
 
     let adminControls = null;

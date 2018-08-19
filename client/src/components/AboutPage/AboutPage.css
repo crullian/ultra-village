@@ -1,4 +1,6 @@
 .AboutPage-container {
+  display: flex;
+  flex-flow: column;
   margin: 0 0 10px;
   padding: 20px;
   border-radius: 3px;
@@ -13,4 +15,8 @@
 
 .AboutPage-container a {
   color: #0d5ffc;
+}
+
+.Page-admin-controls.about {
+  align-self: flex-end;
 }
