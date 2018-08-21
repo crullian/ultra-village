@@ -11,7 +11,7 @@
   // background: linear-gradient(180deg, rgba(43,61,150,1) 45%, rgba(118,44,145,1) 73%, rgba(251,71,37,1) 100%);
   // background: center/262% no-repeat url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader.jpg?alt=media&token=f48edaa5-8382-41c1-92eb-78285a15878a');
   // background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader.jpg?alt=media&token=f48edaa5-8382-41c1-92eb-78285a15878a') center;
-  background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader50.jpg?alt=media&token=7d1f960d-38ce-40f7-a89d-f8d6be89b4c6') center;
+  background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader50.jpg?alt=media&token=7d1f960d-38ce-40f7-a89d-f8d6be89b4c6') no-repeat center;
   // background-attachment: fixed;
   height: 120px;
   padding: 0 20px;
