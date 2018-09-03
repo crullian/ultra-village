@@ -190,7 +190,7 @@ class App extends Component {
             </Switch>
           </main>
         }
-        {items && <footer className="App-footer center-text">- ultra village llc -</footer>}
+        {items && <footer className="App-footer center-text">- All site contents © Mark Griffey 2018 -</footer>}
       </div>
     );
   }

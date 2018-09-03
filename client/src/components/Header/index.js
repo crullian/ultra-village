@@ -34,7 +34,7 @@ class Header extends Component {
               to="/"
               className="App-header-link"
             >
-              <h1 className="App-title">Ultra Village</h1>
+              <h1 className="App-title">Ultravillage</h1>
             </Link>
           </div>
 

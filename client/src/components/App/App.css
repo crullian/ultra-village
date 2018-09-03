@@ -3,16 +3,12 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #eee;
 }
 
 .App-header {
-  // background: rgb(43,61,150);
-  // background: linear-gradient(180deg, rgba(43,61,150,1) 45%, rgba(118,44,145,1) 73%, rgba(251,71,37,1) 100%);
-  // background: center/262% no-repeat url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader.jpg?alt=media&token=f48edaa5-8382-41c1-92eb-78285a15878a');
-  // background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader.jpg?alt=media&token=f48edaa5-8382-41c1-92eb-78285a15878a') center;
-  background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader50.jpg?alt=media&token=7d1f960d-38ce-40f7-a89d-f8d6be89b4c6') no-repeat center;
-  // background-attachment: fixed;
+  background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader_cropped.png?alt=media&token=89af4a33-085a-4eb4-a69a-eaf3dfcfb235') no-repeat center -300px fixed;
+  background-size: cover;
+  background-attachment: fixed;
   height: 120px;
   padding: 0 20px;
   color: white;
@@ -68,6 +64,7 @@
 }
 
 .App-panel {
+  flex: 1;
   margin: 10px auto 0;
   width: 96%;
   border-radius: 3px;
@@ -78,6 +75,7 @@ li {
 }
 
 .App-footer {
+  margin: 24px 0 32px;
   position: relative;
   z-index: -2;
 }
@@ -90,6 +88,6 @@ li {
 
 @media only screen and (min-width: 1475px) {
   .App-panel {
-    width: 1027px;
+    width: 1227px;
   }
 }
