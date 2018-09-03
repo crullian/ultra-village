@@ -49,7 +49,6 @@ class Header extends Component {
           {this.props.location.pathname !== '/' &&
             <IconButton
               aria-label="Back"
-              style={{width: 30}}
               onClick={this.props.history.goBack}
             >
               <i className="material-icons back">
