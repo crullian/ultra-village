@@ -6,9 +6,8 @@
 }
 
 .App-header {
-  background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader_cropped.png?alt=media&token=89af4a33-085a-4eb4-a69a-eaf3dfcfb235') no-repeat center -300px fixed;
+  background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader_cropped.png?alt=media&token=89af4a33-085a-4eb4-a69a-eaf3dfcfb235') no-repeat center;
   background-size: cover;
-  background-attachment: fixed;
   height: 120px;
   padding: 0 20px;
   color: white;
