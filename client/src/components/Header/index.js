@@ -3,9 +3,6 @@ import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import IconButton from '@material-ui/core/IconButton';
-// import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-// import Input from '@material-ui/core/Input';
-
 import TextField from '@material-ui/core/TextField';
 
 class Header extends Component {
@@ -21,12 +18,9 @@ class Header extends Component {
     return (
       <header
         className="App-header"
-        style={this.props.isScrolled
-          ? {
-              boxShadow: '0 1px 6px rgba(32, 33, 36, 0.28)'
-            }
-          : null
-        }
+        style={{
+          boxShadow: '0 1px 6px rgba(32, 33, 36, 0.28)'
+        }}
       >
         <div className="App-header-row">
           <div style={{display: 'flex'}}>

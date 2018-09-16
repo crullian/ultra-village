@@ -25,7 +25,6 @@ class App extends Component {
       items: null,
       user: null,
       users: null,
-      scrolled: false,
       filterTerm: '',
       isLoading: true
     }
@@ -54,15 +53,6 @@ class App extends Component {
     if ('scrollRestoration' in window.history) { 
       window.history.scrollRestoration = 'manual'; 
     }  
-    window.onscroll = () => this.handleScroll();
-  }
-
-  handleScroll = () => {
-    if (document.documentElement.scrollTop > 0) {
-      this.setState({ scrolled: true });
-    } else {
-      this.setState({ scrolled: false });
-    }
   }
 
   sortByArtistName = (a, b) => {
@@ -90,7 +80,7 @@ class App extends Component {
   }
 
   render() {
-    const { items, user, users, scrolled, isLoading } = this.state;
+    const { items, user, users, isLoading } = this.state;
 
     // cache page id here TODO:Fix this by using Firebase push to get a unqiue
     // object ID 'The Right Way' ;)
@@ -107,15 +97,16 @@ class App extends Component {
       })
     }
 
+    if (isLoading) {
+      return <Loader />;
+    }
+
     return (
       <div className="App">
         <Header
           searchTerm={this.state.filterTerm}
-          isScrolled={scrolled}
           handleSearch={this.handleSearch}
         />
-        {isLoading && <Loader />}
-        {items &&
           <main className="App-panel">
             <Switch>
               <Route
@@ -189,8 +180,7 @@ class App extends Component {
 
             </Switch>
           </main>
-        }
-        {items && <footer className="App-footer center-text">- All site contents © Mark Griffey 2018 -</footer>}
+        <footer className="App-footer center-text">- All site contents © Mark Griffey 2018 -</footer>}
       </div>
     );
   }

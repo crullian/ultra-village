@@ -1,14 +1,11 @@
 import React from 'react';
 import Remarkable from 'remarkable';
 
-// import Avatar from '@material-ui/core/Avatar';
-// import Button from '@material-ui/core/Button';
 import CardHeader from '@material-ui/core/CardHeader';
 import Dialog from '@material-ui/core/Dialog';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 
-import Paper from '@material-ui/core/Paper';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -137,20 +134,21 @@ class ArtistPage extends React.Component {
                   
                 dangerouslySetInnerHTML={{ __html: md.render(artist.body) }}
               />
-              <IconButton
+
+              <Button
                 className="ArtistPage-review-expand-btn"
-                style={this.state.expanded
-                  ? {
-                      transform: 'rotate(180deg)'
-                    }
-                  : null
-                }
                 onClick={this.handleExpandClick}
                 aria-expanded={this.state.expanded}
                 aria-label="Show more"
               >
-                <ExpandMoreIcon />
-              </IconButton>
+                {this.state.expanded ? 'less' : 'more'}
+                <ExpandMoreIcon style={this.state.expanded
+                  ? {
+                      transform: 'rotate(180deg)'
+                    }
+                  : null
+                } />
+              </Button>
             </div>
           }
           {adminControls}
@@ -161,7 +159,6 @@ class ArtistPage extends React.Component {
           <div style={{padding: '0 8px'}}>
           {artist.albums.map((album, i) => {
             const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
-            
               return (
                 <ExpansionPanel key={`${album.title}-${i}`} expanded={this.state.reviewExpanded && this.state.albumToExpand === album.title}>
                   <ExpansionPanelSummary expandIcon={album.review ? <ExpandMoreIcon onClick={(e) => this.handleReviewExpandClick(album)} /> : null}>
