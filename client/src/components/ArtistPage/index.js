@@ -26,7 +26,9 @@ class ArtistPage extends React.Component {
     isEditing: false,
     newBody: '',
     open: false,
-    expanded: false
+    expanded: false,
+    reviewExpanded: false,
+    albumToExpand: ''
   }
 
   handleClickOpen = () => {
@@ -66,6 +68,13 @@ class ArtistPage extends React.Component {
 
   handleExpandClick = () => {
     this.setState({ expanded: !this.state.expanded });
+  };
+
+  handleReviewExpandClick = (album) => {
+    this.setState({ 
+      reviewExpanded: !this.state.reviewExpanded,
+      albumToExpand: album.title
+    });
   };
 
   render() {
@@ -152,10 +161,10 @@ class ArtistPage extends React.Component {
           <div style={{padding: '0 8px'}}>
           {artist.albums.map((album, i) => {
             const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
-            if (album.review) {
+            
               return (
-                <ExpansionPanel key={`${album.title}-${i}`}>
-                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <ExpansionPanel key={`${album.title}-${i}`} expanded={this.state.reviewExpanded && this.state.albumToExpand === album.title}>
+                  <ExpansionPanelSummary expandIcon={album.review ? <ExpandMoreIcon onClick={(e) => this.handleReviewExpandClick(album)} /> : null}>
                     {heading}
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
@@ -165,18 +174,7 @@ class ArtistPage extends React.Component {
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
               )
-            } else {
-              return (
-                <Paper
-                  key={`${album.title}-${i}`}
-                  style={{padding: '16px 24px', marginBottom: '2px'}}
-                  elevation={1}
-                >
-                  {heading}
-                </Paper>
-              );
-            }
-          })}
+            })}
           </div>
         </section>
 
