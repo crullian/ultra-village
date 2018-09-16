@@ -24,8 +24,7 @@ class ArtistPage extends React.Component {
     newBody: '',
     open: false,
     expanded: false,
-    reviewExpanded: false,
-    albumToExpand: ''
+    reviewExpanded: null
   }
 
   handleClickOpen = () => {
@@ -67,11 +66,12 @@ class ArtistPage extends React.Component {
     this.setState({ expanded: !this.state.expanded });
   };
 
-  handleReviewExpandClick = (album) => {
-    this.setState({ 
-      reviewExpanded: !this.state.reviewExpanded,
-      albumToExpand: album.title
-    });
+  handleReviewExpandChange = album => (e, expanded) => {
+    if (album.review) {
+      this.setState({ 
+        reviewExpanded: expanded ? album.title : false
+      });
+    }
   };
 
   render() {
@@ -160,8 +160,8 @@ class ArtistPage extends React.Component {
           {artist.albums.map((album, i) => {
             const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
               return (
-                <ExpansionPanel key={`${album.title}-${i}`} expanded={this.state.reviewExpanded && this.state.albumToExpand === album.title}>
-                  <ExpansionPanelSummary expandIcon={album.review ? <ExpandMoreIcon onClick={(e) => this.handleReviewExpandClick(album)} /> : null}>
+                <ExpansionPanel key={`${album.title}-${i}`} expanded={this.state.reviewExpanded === album.title} onChange={this.handleReviewExpandChange(album)} >
+                  <ExpansionPanelSummary expandIcon={album.review ? <ExpandMoreIcon /> : null}>
                     {heading}
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
