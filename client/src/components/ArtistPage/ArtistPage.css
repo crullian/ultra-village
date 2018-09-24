@@ -30,7 +30,7 @@
   font-size: 100%;
 }
 
-.hide :not(:first-child) {
+.hide > :not(:first-child) {
   display: none;
 }
 
