@@ -28,18 +28,27 @@ const styles = theme => ({
 
 function HomeCard(props) {
   const { classes, item } = props;
+  let hasReviews = false;
+
+  // if (item.albums.length) {
+  //   item.albums.forEach(album => {
+  //     if (album.review) {
+  //       hasReviews =  true;
+  //     }
+  //   })
+  // }
 
   return (
     <Card className={classes.card}>
       <div className={classes.details}>
         <CardContent className={classes.content}>
-          <Typography variant="subheading" style={{fontFamily: 'Google Sans, sans-serif'}}>{item.artist_name}</Typography>
+          <Typography variant="subheading" style={{fontFamily: 'Google Sans, sans-serif'}}>{item.artist_name} {hasReviews && <p style={{color: '#1579ff'}}>album reviews</p>}</Typography>
         </CardContent>
       </div>
       <CardMedia
         className={classes.cover}
         image={item.image}
-        title="Live from space album cover"
+        title=""
       />
     </Card>
   );

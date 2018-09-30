@@ -68,15 +68,6 @@ class ArtistPage extends React.Component {
     });
   }
 
-  // writeArtistData = () => {
-  //   if (this.state.newBody) {
-  //     firebase.database().ref('/pages/' + this.props.artist.id).update({
-  //       body: this.state.newBody
-  //     });
-  //   }
-  //   this.setState({isEditing: false});
-  // }
-
   handleUpdateReview = (e, id) => {
     firebase.database().ref(`/pages/${this.props.artist.id}/albums/${id}/`).update({
       review: e.target.value
@@ -204,12 +195,13 @@ class ArtistPage extends React.Component {
                       {isEditingReview ? 
                         <textarea
                           id="Page-markdown-content"
-                          className="ArtistPage-review"
+                          className="ArtistPage-review-content"
                           onChange={(e) => this.handleUpdateReview(e, i)}
                           defaultValue={album.review}
                         /> 
                         : 
                         <div
+                          className="ArtistPage-review-content"
                           dangerouslySetInnerHTML={{ __html: md.render(album.review) }}
                         />
                       }
