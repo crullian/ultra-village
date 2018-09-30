@@ -162,7 +162,9 @@ class ArtistPage extends React.Component {
               return (
                 <ExpansionPanel key={`${album.title}-${i}`} expanded={this.state.reviewExpanded === album.title} onChange={this.handleReviewExpandChange(album)} >
                   <ExpansionPanelSummary expandIcon={album.review ? <ExpandMoreIcon /> : null}>
-                    {heading}
+                    <Typography>
+                      {heading}
+                    </Typography>
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
                     <Typography>
