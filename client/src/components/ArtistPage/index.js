@@ -3,12 +3,14 @@ import Remarkable from 'remarkable';
 
 import CardHeader from '@material-ui/core/CardHeader';
 import Dialog from '@material-ui/core/Dialog';
+import Divider from '@material-ui/core/Divider';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 
 import firebase from '../../firebase.js';
@@ -21,6 +23,7 @@ class ArtistPage extends React.Component {
 
   state = {
     isEditing: false,
+    isEditingReview: false,
     newBody: '',
     open: false,
     expanded: false,
@@ -47,19 +50,37 @@ class ArtistPage extends React.Component {
     })
   }
 
-  handleUpdateBody = (e) => {
+  handleActivateEditReviewMode = () => {
     this.setState({
-      newBody: e.target.value
+      isEditingReview: true
     })
   }
 
-  writeArtistData = () => {
-    if (this.state.newBody) {
-      firebase.database().ref('/pages/' + this.props.artist.id).update({
-        body: this.state.newBody
-      });
-    }
-    this.setState({isEditing: false});
+  handleDeactivateEditReviewMode = () => {
+    this.setState({
+      isEditingReview: false
+    })
+  }
+
+  handleUpdateBody = (e) => {
+    firebase.database().ref('/pages/' + this.props.artist.id).update({
+      body: e.target.value
+    });
+  }
+
+  // writeArtistData = () => {
+  //   if (this.state.newBody) {
+  //     firebase.database().ref('/pages/' + this.props.artist.id).update({
+  //       body: this.state.newBody
+  //     });
+  //   }
+  //   this.setState({isEditing: false});
+  // }
+
+  handleUpdateReview = (e, id) => {
+    firebase.database().ref(`/pages/${this.props.artist.id}/albums/${id}/`).update({
+      review: e.target.value
+    });
   }
 
   handleExpandClick = () => {
@@ -76,9 +97,28 @@ class ArtistPage extends React.Component {
 
   render() {
     const { artist, user } = this.props;
-    const { isEditing } = this.state;
+    const { isEditing, isEditingReview } = this.state;
 
     let adminControls = null;
+    let adminControlsReview = null;
+    if ((user && user.isAdmin) && !isEditingReview) {
+      adminControlsReview = (
+        <div className="Page-admin-controls"style={{paddingRight: 5}}>
+          <i className="Page-edit material-icons" onClick={this.handleActivateEditReviewMode}>edit</i>
+        </div>
+      )
+    } else if ((user && user.isAdmin) && isEditingReview) {
+      adminControlsReview = (
+        <div className="Page-admin-controls">
+          <button
+            className="Page-edit-button"
+            onClick={this.handleDeactivateEditReviewMode}
+          >
+            done
+          </button>
+        </div>
+      )
+    }
     if ((user && user.isAdmin) && !isEditing) {
       adminControls = (
         <div className="Page-admin-controls">
@@ -92,13 +132,7 @@ class ArtistPage extends React.Component {
             className="Page-edit-button"
             onClick={this.handleDeactivateEditMode}
           >
-            cancel
-          </button>
-          <button
-            className="Page-edit-button"
-            onClick={this.writeArtistData}
-          >
-            submit
+            done
           </button>
         </div>
       )
@@ -131,7 +165,6 @@ class ArtistPage extends React.Component {
             <div className="ArtistPage-review">
               <div
                 className={`ArtistPage-review-content${!this.state.expanded ? ' hide' : ''}`}
-                  
                 dangerouslySetInnerHTML={{ __html: md.render(artist.body) }}
               />
 
@@ -167,10 +200,27 @@ class ArtistPage extends React.Component {
                     </Typography>
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
-                    <Typography>
-                      {album.review}
-                    </Typography>
+                    <div style={isEditingReview ? {width:'100%'} : null}>
+                      {isEditingReview ? 
+                        <textarea
+                          id="Page-markdown-content"
+                          className="ArtistPage-review"
+                          onChange={(e) => this.handleUpdateReview(e, i)}
+                          defaultValue={album.review}
+                        /> 
+                        : 
+                        <div
+                          dangerouslySetInnerHTML={{ __html: md.render(album.review) }}
+                        />
+                      }
+                    </div>
                   </ExpansionPanelDetails>
+                  {adminControlsReview && <Divider /> }
+                  {adminControlsReview &&
+                    <ExpansionPanelActions>
+                      {adminControlsReview}
+                    </ExpansionPanelActions>
+                  }
                 </ExpansionPanel>
               )
             })}

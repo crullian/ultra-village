@@ -58,6 +58,7 @@
 
 .Page-edit-button {
   display: flex;
+  justify-content: center;
   color: #fff;
   font-size: 14px;
   font-weight: 500;
@@ -66,8 +67,7 @@
   border: 10px;
   font-family: Google Sans, sans-serif;
   cursor: pointer;
-  margin: 0 5px 5px;
-  padding: 0px 20px;
+  margin: 0 5px;
   outline: none;
   height: 36px;
   line-height: 36px;
