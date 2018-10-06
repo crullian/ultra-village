@@ -6,9 +6,6 @@ import IconButton from '@material-ui/core/IconButton';
 import TextField from '@material-ui/core/TextField';
 
 class Header extends Component {
-  state = {
-    searchTerm: ''
-  }
 
   handleChange = (e) => {
     this.props.handleSearch(e.target.value);
@@ -16,12 +13,7 @@ class Header extends Component {
 
   render() {
     return (
-      <header
-        className="App-header"
-        style={{
-          boxShadow: '0 1px 6px rgba(32, 33, 36, 0.28)'
-        }}
-      >
+      <header className="App-header">
         <div className="App-header-row">
           <div style={{display: 'flex'}}>
             <Link

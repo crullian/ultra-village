@@ -97,17 +97,9 @@ class App extends Component {
       })
     }
 
-    if (isLoading) {
-      return <Loader />;
-    }
-
-    return (
-      <div className="App">
-        <Header
-          searchTerm={this.state.filterTerm}
-          handleSearch={this.handleSearch}
-        />
-          <main className="App-panel">
+    const main = isLoading
+    ? <Loader />
+    : <main className="App-panel">
             <Switch>
               <Route
                 exact
@@ -179,8 +171,16 @@ class App extends Component {
               <Route path="/*" render={props => <ErrorPage />} />
 
             </Switch>
-          </main>
-        <footer className="App-footer center-text">- All site contents © Mark Griffey 2018 -</footer>}
+          </main>;
+
+    return (
+      <div className="App">
+        <Header
+          searchTerm={this.state.filterTerm}
+          handleSearch={this.handleSearch}
+        />
+        { main }
+        <footer className={`App-footer ${isLoading ? 'hide' : ''} center-text`}>- All site contents © Mark Griffey 2018 -</footer>
       </div>
     );
   }

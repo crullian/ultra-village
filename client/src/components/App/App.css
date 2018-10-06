@@ -6,6 +6,7 @@
 }
 
 .App-header {
+  background-color: #1578ff;
   background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader_cropped_33.jpg?alt=media&token=bdc6d27b-1b11-4ab8-8a12-dc3c2f2d420a') no-repeat center;
   background-size: cover;
   height: 120px;
@@ -16,6 +17,7 @@
   width: 100%;
   z-index: 1000;
   transition: all .2s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
 }
 
 .App-header-link h4 {
@@ -74,9 +76,15 @@ li {
 }
 
 .App-footer {
+  opacity: 1;
   margin: 24px 0 32px;
   position: relative;
   z-index: -2;
+  transtition: opacity 1s ease;
+}
+
+.App-footer.hide {
+  opacity: 0
 }
 
 @media only screen and (min-width: 960px) {
