@@ -65,3 +65,14 @@ code {
     opacity: 1;
   }
 }
+
+@keyframes fade-down {
+  0% {
+    transform: translateY(-120px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
