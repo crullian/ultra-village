@@ -148,7 +148,7 @@ class ArtistPage extends React.Component {
           {isEditing ?
             <textarea
               id="Page-markdown-content"
-              className="ArtistPage-review"
+              className="ArtistPage-review ArtistPage-review-content"
               onChange={this.handleUpdateBody}
               defaultValue={artist.body}
             />
