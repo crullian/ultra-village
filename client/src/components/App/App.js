@@ -180,7 +180,7 @@ class App extends Component {
           handleSearch={this.handleSearch}
         />
         { main }
-        <footer className={`App-footer ${isLoading ? 'hide' : ''} center-text`}>- All site contents © Mark Griffey 2018 -</footer>
+        <footer className={`App-footer ${isLoading ? 'hide' : ''} center-text`}></footer>
       </div>
     );
   }
