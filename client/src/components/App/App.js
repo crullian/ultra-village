@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  Link,
   Route,
   Switch,
   Redirect
@@ -15,6 +16,10 @@ import AuthPage from '../AuthPage/';
 import AboutPage from '../AboutPage/';
 import ErrorPage from '../ErrorPage/';
 import Loader from '../Loader/';
+
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 
 import './App.css';
 
@@ -33,9 +38,9 @@ class App extends Component {
   componentDidMount() {
     const itemsRef = firebase.database().ref('/');
     itemsRef.on('value', (snapshot) => {
-      let items = snapshot.val();      
+      let items = snapshot.val();
       this.setState({
-        items: items.pages,
+        items: Object.values(items.pages),
         users: items.users,
         about: items.about,
         isLoading: false
@@ -79,15 +84,35 @@ class App extends Component {
     this.setState({filterTerm: term});
   }
 
+  handleClick = () => {
+    const itemsRef = firebase.database().ref('/pages/');
+    itemsRef.push({
+      artist_name: 'stuff',
+      albums: [],
+      body: 'Nice body',
+      createdAt: firebase.database.ServerValue.TIMESTAMP
+    }, (thing) => {
+      console.log('WTF', thing)
+    })
+  }
+
   render() {
     const { items, user, users, isLoading } = this.state;
+
+    console.log('STATE ITEMS', items)
 
     // cache page id here TODO:Fix this by using Firebase push to get a unqiue
     // object ID 'The Right Way' ;)
     let identified = items && items.map((item, i) => {
-      item.id = i;
+      if (!item.id) {
+        item.id = i;
+      }
       return item;
     });
+
+    let featured = identified && identified.filter((item) => {
+      return item.featured
+    })
 
     if (this.state.filterTerm) {
       identified = identified.filter((item) => {
@@ -97,9 +122,13 @@ class App extends Component {
       })
     }
 
+    console.log('FEATURED', featured)
+
     const main = isLoading
     ? <Loader />
     : <main className="App-panel">
+            
+            
             <Switch>
               <Route
                 exact
@@ -117,9 +146,33 @@ class App extends Component {
                 exact
                 path="/"
                 render={props => (
+                  <div>
+                  {featured &&
+                    <div style={{padding: '32px 8px'}}>
+                      <h3>Featured Artist</h3>
+
+                      <Link
+                        to={`/${featured[0].artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
+                      >
+                        <CardHeader
+                          avatar={
+                              <img
+                                alt="artist"
+                                src={featured[0].image}
+                                className="ArtistPage-img"
+                                width="60"
+                              />
+                          }
+                          title={<h2>{featured[0].artist_name}</h2>}
+                          subheader={<Typography component="p">{featured[0].body.split('.')[0]}.</Typography>}
+                        />
+                      </Link>
+                    </div>
+                  }
                   <ArtistList
                     items={identified.sort(this.sortByArtistName)}
                   />
+                  </div>
                 )}
               />
 
