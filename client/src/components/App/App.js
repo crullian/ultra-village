@@ -33,9 +33,9 @@ class App extends Component {
   componentDidMount() {
     const itemsRef = firebase.database().ref('/');
     itemsRef.on('value', (snapshot) => {
-      let items = snapshot.val();      
+      let items = snapshot.val();
       this.setState({
-        items: items.pages,
+        items: Object.values(items.pages),
         users: items.users,
         about: items.about,
         isLoading: false
@@ -79,13 +79,27 @@ class App extends Component {
     this.setState({filterTerm: term});
   }
 
+  handleClick = () => {
+    const itemsRef = firebase.database().ref('/pages/');
+    itemsRef.push({
+      artist_name: 'stuff',
+      albums: [],
+      body: 'Nice body',
+      createdAt: firebase.database.ServerValue.TIMESTAMP
+    }, (thing) => {
+      console.log('WTF', thing)
+    })
+  }
+
   render() {
     const { items, user, users, isLoading } = this.state;
 
     // cache page id here TODO:Fix this by using Firebase push to get a unqiue
     // object ID 'The Right Way' ;)
     let identified = items && items.map((item, i) => {
-      item.id = i;
+      if (!item.id) {
+        item.id = i;
+      }
       return item;
     });
 
@@ -100,6 +114,7 @@ class App extends Component {
     const main = isLoading
     ? <Loader />
     : <main className="App-panel">
+            
             <Switch>
               <Route
                 exact
