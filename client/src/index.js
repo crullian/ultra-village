@@ -8,7 +8,7 @@ import {
   BrowserRouter as Router
 } from 'react-router-dom';
 
-import registerServiceWorker from './registerServiceWorker';
+// import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
   <Router>
@@ -18,4 +18,4 @@ ReactDOM.render(
   </Router>,
   document.getElementById('root')
 );
-registerServiceWorker();
+// registerServiceWorker();

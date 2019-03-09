@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import firebase, { auth } from '../../firebase.js';
+import values from 'object.values';
 
 import Header from '../Header/';
 import ArtistList from '../ArtistList/';
@@ -35,7 +36,7 @@ class App extends Component {
     itemsRef.on('value', (snapshot) => {
       let items = snapshot.val();
       this.setState({
-        items: Object.values(items.pages),
+        items: values(items.pages),
         users: items.users,
         about: items.about,
         isLoading: false
