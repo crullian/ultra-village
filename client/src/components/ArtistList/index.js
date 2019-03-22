@@ -31,12 +31,12 @@ class ArtistList extends React.Component {
 
                 <CardHeader
                   avatar={
-                      <img
-                        alt="artist"
-                        src={featured[0].image}
-                        className="ArtistPage-img"
-                        width="60"
-                      />
+                    <img
+                      alt="artist"
+                      src={featured[0].image}
+                      className="ArtistPage-img"
+                      width="60"
+                    />
                   }
                   subheader={<Typography component="p">{featured[0].body.split('.')[0]}.</Typography>}
                 />

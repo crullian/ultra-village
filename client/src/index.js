@@ -8,8 +8,6 @@ import {
   BrowserRouter as Router
 } from 'react-router-dom';
 
-// import registerServiceWorker from './registerServiceWorker';
-
 ReactDOM.render(
   <Router>
     <ScrollToTop>
@@ -18,4 +16,3 @@ ReactDOM.render(
   </Router>,
   document.getElementById('root')
 );
-// registerServiceWorker();
