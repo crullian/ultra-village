@@ -4,6 +4,7 @@ import Remarkable from 'remarkable';
 
 import HomeCard from '../HomeCard';
 
+import { withStyles } from '@material-ui/core/styles';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 
@@ -11,10 +12,16 @@ import './ArtistList.css'
 
 const md = new Remarkable({breaks:true});
 
+const styles = theme => ({
+  avatar: {
+    alignItems: 'end'
+  }
+});
+
 class ArtistList extends React.Component {
 
   render() {
-    const { items } = this.props;
+    const { items, classes } = this.props;
 
     let featured = items && items.filter((item) => {
       return item.featured
@@ -33,12 +40,12 @@ class ArtistList extends React.Component {
               <h3 style={{padding: '0 24px'}}>Featured Artist: {featured[0].artist_name}</h3>
 
                 <CardHeader
+                  className={classes.avatar}
                   avatar={
                     <img
                       alt="artist"
                       src={featured[0].image}
                       className="ArtistPage-img"
-                      width="60"
                     />
                   }
                   subheader={
@@ -67,4 +74,4 @@ class ArtistList extends React.Component {
   }
 }
 
-export default ArtistList;
+export default withStyles(styles)(ArtistList);
