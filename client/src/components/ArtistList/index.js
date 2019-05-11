@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Remarkable from 'remarkable';
 
 import HomeCard from '../HomeCard';
 
@@ -7,6 +8,8 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 
 import './ArtistList.css'
+
+const md = new Remarkable({breaks:true});
 
 class ArtistList extends React.Component {
 
@@ -38,7 +41,13 @@ class ArtistList extends React.Component {
                       width="60"
                     />
                   }
-                  subheader={<Typography component="p">{featured[0].body.split('.')[0]}.</Typography>}
+                  subheader={
+                    <Typography
+                      component="p"
+                      dangerouslySetInnerHTML={{ __html: md.render(featured[0].body.split('.')[0]) }}
+                    >
+                    </Typography>
+                  }
                 />
             </div>
           </Link>
