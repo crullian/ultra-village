@@ -51,7 +51,7 @@ class ArtistList extends React.Component {
                   subheader={
                     <Typography
                       component="p"
-                      dangerouslySetInnerHTML={{ __html: md.render(featured[0].body.split('.')[0]) }}
+                      dangerouslySetInnerHTML={{ __html: md.render(featured[0].body.split('.')[0] + '.') }}
                     >
                     </Typography>
                   }
