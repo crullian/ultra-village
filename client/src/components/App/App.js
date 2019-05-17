@@ -11,7 +11,7 @@ import values from 'object.values';
 import Header from '../Header/';
 import ArtistList from '../ArtistList/';
 import ArtistPage from '../ArtistPage/';
-// import RecordPage from '../RecordPage/';
+import RecordPage from '../RecordPage/';
 import AuthPage from '../AuthPage/';
 import AboutPage from '../AboutPage/';
 import ErrorPage from '../ErrorPage/';
@@ -77,21 +77,20 @@ class App extends Component {
     this.setState({filterTerm: term});
   }
 
-  handleClick = () => {
-    const itemsRef = firebase.database().ref('/pages/');
-    itemsRef.push({
-      artist_name: 'stuff',
-      albums: [],
-      body: 'Nice body',
-      createdAt: firebase.database.ServerValue.TIMESTAMP
-    }, (thing) => {
-      console.log('WTF', thing)
-    })
-  }
+  // handleClick = () => {
+  //   const itemsRef = firebase.database().ref('/pages/');
+  //   itemsRef.push({
+  //     artist_name: 'stuff',
+  //     albums: [],
+  //     body: 'Nice body',
+  //     createdAt: firebase.database.ServerValue.TIMESTAMP
+  //   }, (thing) => {
+  //     console.log('WTF', thing)
+  //   })
+  // }
 
   render() {
     const { items, user, users, isLoading } = this.state;
-
     // cache page id here TODO:Fix this by using Firebase push to get a unqiue
     // object ID 'The Right Way' ;)
     let identified = items && items.map((item, i) => {
@@ -164,25 +163,25 @@ class App extends Component {
                 />
               ))}
 
-              {/*items.map(item => (
-                item.albums.map((record, i) => (
+              {items.map(item => (
+                item.albums.map((album, i) => (
                   <Route
-                    key={`${record}-${i}`}
+                    key={`${album.title}-${i}`}
                     exact
-                    path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}/${record.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
+                    path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}/${album.title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
                     render={props => (
                       <RecordPage
                         {...props}
                         isAdmin={user && users && users[user.uid]}
-                        record={record}
+                        record={album}
                       />
                     )}
                   />
                 ))
-              ))*/}
+              ))}
+
               <Redirect to="/" />
               <Route path="/*" render={props => <ErrorPage />} />
-
             </Switch>
           </main>;
 
