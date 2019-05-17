@@ -50,7 +50,7 @@ class App extends Component {
   componentDidUpdate() { 
     // if ('scrollRestoration' in window.history) { 
     //   window.history.scrollRestoration = 'manual'; 
-    // }  
+    // }
   }
 
   sortByArtistName = (a, b) => {
@@ -80,9 +80,9 @@ class App extends Component {
   // handleClick = () => {
   //   const itemsRef = firebase.database().ref('/pages/');
   //   itemsRef.push({
-  //     artist_name: 'stuff',
+  //     artist_name: 'Artist',
   //     albums: [],
-  //     body: 'Nice body',
+  //     body: 'Content',
   //     createdAt: firebase.database.ServerValue.TIMESTAMP
   //   }, (thing) => {
   //     console.log('WTF', thing)
@@ -91,6 +91,7 @@ class App extends Component {
 
   render() {
     const { items, user, users, isLoading } = this.state;
+    // console.log('%cRENDERING', 'color:#BADA55;font-size:14px;', this.state);
     // cache page id here TODO:Fix this by using Firebase push to get a unqiue
     // object ID 'The Right Way' ;)
     let identified = items && items.map((item, i) => {
@@ -110,80 +111,81 @@ class App extends Component {
 
     const main = isLoading
     ? <Loader />
-    : <main className="App-panel">
-            
-            <Switch>
-              <Route
-                exact
-                path="/auth"
-                render={ props => (
-                  <AuthPage
-                    {...props}
-                    user={ user }
-                    handleAuth={this.handleAuth}
-                  />
-                )}
-              />
+    : (
+        <main className="App-panel">   
+          <Switch>
+            <Route
+              exact
+              path="/auth"
+              render={ props => (
+                <AuthPage
+                  {...props}
+                  user={ user }
+                  handleAuth={this.handleAuth}
+                />
+              )}
+            />
 
-              <Route
-                exact
-                path="/"
-                render={props => (
-                  <ArtistList
-                    items={identified.sort(this.sortByArtistName)}
-                  />
-                )}
-              />
+            <Route
+              exact
+              path="/"
+              render={props => (
+                <ArtistList
+                  items={identified.sort(this.sortByArtistName)}
+                />
+              )}
+            />
 
+            <Route
+              exact
+              path="/about"
+              render={props => (
+                <AboutPage
+                  {...props}
+                  content={this.state.about} 
+                  user={user && users[user.uid]}
+                />
+              )}
+            />
+
+            {items.map((item, i) => (
               <Route
+                key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${1}`}
                 exact
-                path="/about"
+                path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
                 render={props => (
-                  <AboutPage
+                  <ArtistPage
                     {...props}
-                    content={this.state.about} 
+                    artistId={i}
                     user={user && users[user.uid]}
+                    artist={item}
                   />
                 )}
               />
+            ))}
 
-              {items.map((item, i) => (
+            {items.map(item => (
+              item.albums.map((album, i) => (
                 <Route
-                  key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${1}`}
+                  key={`${album.title}-${i}`}
                   exact
-                  path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
+                  path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}/${album.title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
                   render={props => (
-                    <ArtistPage
+                    <RecordPage
                       {...props}
-                      artistId={i}
-                      user={user && users[user.uid]}
-                      artist={item}
+                      isAdmin={user && users && users[user.uid]}
+                      record={album}
                     />
                   )}
                 />
-              ))}
+              ))
+            ))}
 
-              {items.map(item => (
-                item.albums.map((album, i) => (
-                  <Route
-                    key={`${album.title}-${i}`}
-                    exact
-                    path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}/${album.title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-                    render={props => (
-                      <RecordPage
-                        {...props}
-                        isAdmin={user && users && users[user.uid]}
-                        record={album}
-                      />
-                    )}
-                  />
-                ))
-              ))}
-
-              <Redirect to="/" />
-              <Route path="/*" render={props => <ErrorPage />} />
-            </Switch>
-          </main>;
+            <Redirect to="/" />
+            <Route path="/*" render={props => <ErrorPage />} />
+          </Switch>
+        </main>
+      );
 
     return (
       <div className="App">
