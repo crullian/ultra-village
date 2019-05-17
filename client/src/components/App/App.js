@@ -20,15 +20,12 @@ import Loader from '../Loader/';
 import './App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: null,
-      user: null,
-      users: null,
-      filterTerm: '',
-      isLoading: true
-    }
+  state = {
+    items: null,
+    user: null,
+    users: null,
+    filterTerm: '',
+    isLoading: true
   }
 
   componentDidMount() {
@@ -51,9 +48,9 @@ class App extends Component {
   }
 
   componentDidUpdate() { 
-    if ('scrollRestoration' in window.history) { 
-      window.history.scrollRestoration = 'manual'; 
-    }  
+    // if ('scrollRestoration' in window.history) { 
+    //   window.history.scrollRestoration = 'manual'; 
+    // }  
   }
 
   sortByArtistName = (a, b) => {
