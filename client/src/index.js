@@ -16,12 +16,12 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render(
-	<MuiThemeProvider theme={theme}>
-	  <Router>
-	    <ScrollToTop>
-	      <App />
-	    </ScrollToTop>
-	  </Router>
+  <MuiThemeProvider theme={theme}>
+    <Router>
+      <ScrollToTop>
+        <App />
+      </ScrollToTop>
+    </Router>
   </MuiThemeProvider>,
   document.getElementById('root')
 );
