@@ -180,40 +180,47 @@ class ArtistPage extends React.Component {
 
         <section className="ArtistPage-disco">
           <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
-          <div style={{padding: '0 8px'}}>
-          {artist.albums.map((album, i) => {
-            const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
-              return (
-                <ExpansionPanel key={`${album.title}-${i}`} expanded={this.state.reviewExpanded === album.title} onChange={this.handleReviewExpandChange(album)} >
-                  <ExpansionPanelSummary style={{cursor: album.review ? 'pointer' : 'default'}} expandIcon={album.review ? <ExpandMoreIcon /> : null}>
-                    <Typography>
-                      {heading}
-                    </Typography>
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>
-                    <div style={isEditingReview ? {width:'100%'} : null}>
-                      {isEditingReview ? 
-                        <textarea
-                          id="Page-markdown-content"
-                          className="ArtistPage-review-content"
-                          onChange={(e) => this.handleUpdateReview(e, i)}
-                          defaultValue={album.review}
-                        /> 
-                        : 
-                        <div
-                          className="ArtistPage-review-content"
-                          dangerouslySetInnerHTML={{ __html: md.render(album.review) }}
-                        />
+          <div>
+          {artist.albums.map((albumList, i) => {
+            return (
+              <div style={{padding: '0 8px'}}>
+                <h4 className="ArtistPage-disco-heading">{albumList.artist_name}</h4>
+                {albumList.albums.map((album, i) => {
+                  const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
+                  return (
+                    <ExpansionPanel key={`${album.title}-${i}`} expanded={this.state.reviewExpanded === album.title} onChange={this.handleReviewExpandChange(album)} >
+                      <ExpansionPanelSummary style={{cursor: album.review ? 'pointer' : 'default'}} expandIcon={album.review ? <ExpandMoreIcon /> : null}>
+                        <Typography>
+                          {heading}
+                        </Typography>
+                      </ExpansionPanelSummary>
+                      <ExpansionPanelDetails>
+                        <div style={isEditingReview ? {width:'100%'} : null}>
+                          {isEditingReview ? 
+                            <textarea
+                              id="Page-markdown-content"
+                              className="ArtistPage-review-content"
+                              onChange={(e) => this.handleUpdateReview(e, i)}
+                              defaultValue={album.review}
+                            /> 
+                            : 
+                            <div
+                              className="ArtistPage-review-content"
+                              dangerouslySetInnerHTML={{ __html: md.render(album.review) }}
+                            />
+                          }
+                        </div>
+                      </ExpansionPanelDetails>
+                      {adminControlsReview && <Divider /> }
+                      {adminControlsReview &&
+                        <ExpansionPanelActions>
+                          {adminControlsReview}
+                        </ExpansionPanelActions>
                       }
-                    </div>
-                  </ExpansionPanelDetails>
-                  {adminControlsReview && <Divider /> }
-                  {adminControlsReview &&
-                    <ExpansionPanelActions>
-                      {adminControlsReview}
-                    </ExpansionPanelActions>
-                  }
-                </ExpansionPanel>
+                    </ExpansionPanel>
+                  )
+                })}
+                </div>
               )
             })}
           </div>

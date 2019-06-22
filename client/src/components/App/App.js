@@ -148,37 +148,43 @@ class App extends Component {
               )}
             />
 
-            {items.map((item, i) => (
-              <Route
-                key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${1}`}
-                exact
-                path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-                render={props => (
-                  <ArtistPage
-                    {...props}
-                    artistId={i}
-                    user={user && users[user.uid]}
-                    artist={item}
-                  />
-                )}
-              />
-            ))}
-
-            {items.map(item => (
-              item.albums.map((album, i) => (
+            {items.map((item, i) => {
+              return (
                 <Route
-                  key={`${album.title}-${i}`}
+                  key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${1}`}
                   exact
-                  path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}/${album.title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
+                  path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
                   render={props => (
-                    <RecordPage
+                    <ArtistPage
                       {...props}
-                      isAdmin={user && users && users[user.uid]}
-                      record={album}
+                      artistId={i}
+                      user={user && users[user.uid]}
+                      artist={item}
                     />
                   )}
                 />
-              ))
+              )
+            })}
+
+            {items.map(item => (
+              item.albums.map((item, i) => {
+                return item.albums.map((album, i) => {
+                  return (
+                    <Route
+                      key={`${album.title}-${i}`}
+                      exact
+                      path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}/${album.title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
+                      render={props => (
+                        <RecordPage
+                          {...props}
+                          isAdmin={user && users && users[user.uid]}
+                          record={album}
+                        />
+                      )}
+                    />
+                  )
+                })
+              })
             ))}
 
             <Redirect to="/" />
