@@ -68,8 +68,8 @@ class ArtistPage extends React.Component {
     });
   }
 
-  handleUpdateReview = (e, id) => {
-    firebase.database().ref(`/pages/${this.props.artist.id}/albums/${id}/`).update({
+  handleUpdateReview = (e, albumIndex, albumId) => {
+    firebase.database().ref(`/pages/${this.props.artist.id}/albums/${albumIndex}/albums/${albumId}`).update({
       review: e.target.value
     });
   }
@@ -183,12 +183,12 @@ class ArtistPage extends React.Component {
           <div>
           {artist.albums.map((albumList, i) => {
             return (
-              <div style={{padding: '0 8px'}}>
+              <div key={`album-index-${i}`} style={{padding: '0 8px'}}>
                 <h4 className="ArtistPage-disco-heading">{albumList.artist_name}</h4>
-                {albumList.albums.map((album, i) => {
+                {albumList.albums.map((album, j) => {
                   const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
                   return (
-                    <ExpansionPanel key={`${album.title}-${i}`} expanded={this.state.reviewExpanded === album.title} onChange={this.handleReviewExpandChange(album)} >
+                    <ExpansionPanel key={`${album.title}-${j}`} expanded={this.state.reviewExpanded === album.title} onChange={this.handleReviewExpandChange(album)} >
                       <ExpansionPanelSummary style={{cursor: album.review ? 'pointer' : 'default'}} expandIcon={album.review ? <ExpandMoreIcon /> : null}>
                         <Typography>
                           {heading}
@@ -200,7 +200,7 @@ class ArtistPage extends React.Component {
                             <textarea
                               id="Page-markdown-content"
                               className="ArtistPage-review-content"
-                              onChange={(e) => this.handleUpdateReview(e, i)}
+                              onChange={(e) => this.handleUpdateReview(e, i, j)}
                               defaultValue={album.review}
                             /> 
                             : 
