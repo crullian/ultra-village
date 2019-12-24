@@ -9,11 +9,9 @@
   background-color: #1578ff;
   background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader_cropped_33.jpg?alt=media&token=bdc6d27b-1b11-4ab8-8a12-dc3c2f2d420a') no-repeat center;
   background-size: cover;
-  height: 120px;
-  padding: 0 20px;
   color: white;
   position: sticky;
-  top: -60px;
+  top: -78px;
   width: 100%;
   z-index: 1000;
   transition: all .2s cubic-bezier(0.4, 0.0, 0.2, 1);
@@ -24,41 +22,6 @@
   animation-fill-mode: forwards;
 }
 
-.App-header-link h4 {
-  margin-left: 10px;
-}
-
-.App-header-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 0 0 0;
-}
-
-.App-header-row.toolbar {
-  padding-top: 8px;
-}
-
-#searchField::before {
-  border-bottom: #fff;
-}
-.classes-state-root.hover {
-  border-bottom-color: #fff; 
-}
-
-#searchField::hover {
-  border-bottom: 2px solid #fff
-}
-
-#searchField {
-  color: #fff;
-  border-bottom-color: #fff; 
-}
-
-.material-icons.back {
-  color: #fff;
-  margin-left: 10px;
-}
-
 .App-title {
   font-size: 1.35em;
   font-weight: 200;
@@ -66,6 +29,66 @@
 
 .App-header-link {
   color: #fff;
+}
+
+.App-header-link h4 {
+  margin-left: 10px;
+}
+
+.App-header-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.App-header-row.toolbar {
+  background-color: #d4d4d440;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  grid-column-gap: 24px;
+}
+
+.toolbar .MuiIconButton-root {
+  width: 30px;
+}
+
+.material-icons.back {
+  color: #fff;
+  margin-left: 10px;
+}
+
+#searchField::before {
+  border-bottom-color: #fff !important;
+}
+
+.MuiInput-underline:hover:not(.Mui-disabled):before {
+  border-bottom: 2px solid #fff !important;
+}
+
+.classes-state-root.hover {
+  border-bottom-color: #fff !important; 
+}
+
+.input-label-root {
+  color: #fff !important;
+}
+
+#searchField::hover {
+  border-bottom: 2px solid #fff !important;
+}
+
+#searchField {
+  color: #fff;
+  border-bottom-color: #fff !important; 
+}
+
+#searchField-label {
+  color: #fff;
+}
+
+#age-native-simple {
+  color: #fff !important;
 }
 
 .App-panel {
@@ -94,6 +117,9 @@ li {
 @media only screen and (min-width: 960px) {
   .App-panel {
     width: 930px;
+  }
+  .App-header-row.toolbar {
+    grid-template-columns: repeat(5, 1fr);
   }
 }
 
