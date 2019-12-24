@@ -51,11 +51,8 @@ const Header = (props) => {
         {props.location.pathname === '/' &&
           <React.Fragment>
             <TextField
-              classes={{
-                root: 'classes-state-root'
-              }}
+              autoComplete="off"
               label="Search"
-              style={{color: '#fff'}}
               id="searchField"
               value={props.searchTerm}
               onChange={handleChange}

@@ -11,7 +11,7 @@ const express = require('express');
 
 const app = express();
 app.use(require('prerender-node'));
-app.get('**', function (req, res) {
+app.get('**', (req, res) => {
  res.sendFile('build/index.html', {'root': '.'});
 });
 
