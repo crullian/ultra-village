@@ -42,7 +42,7 @@ function HomeCard(props) {
     <Card className={classes.card}>
       <div className={classes.details}>
         <CardContent className={classes.content}>
-          <Typography variant="subheading" style={{fontFamily: 'Google Sans, sans-serif'}}>{item.artist_name} {hasReviews && <p style={{color: '#1579ff'}}>album reviews</p>}</Typography>
+          <Typography variant="inherit" style={{fontFamily: 'Google Sans, sans-serif'}}>{item.artist_name} {hasReviews && <p style={{color: '#1579ff'}}>album reviews</p>}</Typography>
         </CardContent>
       </div>
       <CardMedia

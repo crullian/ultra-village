@@ -25,6 +25,7 @@ class App extends Component {
     user: null,
     users: null,
     filterTerm: '',
+    sortByTerm: '',
     isLoading: true
   }
 
@@ -47,13 +48,7 @@ class App extends Component {
     });
   }
 
-  componentDidUpdate() { 
-    // if ('scrollRestoration' in window.history) { 
-    //   window.history.scrollRestoration = 'manual'; 
-    // }
-  }
-
-  sortByArtistName = (a, b) => {
+  sortByFirstName = (a, b) => {
     const a_artist = a.artist_name.replace('The ', '');
     const b_artist = b.artist_name.replace('The ', '');
     if (a_artist < b_artist) {
@@ -63,6 +58,31 @@ class App extends Component {
     } else {
       return 0
     }
+  }
+
+  sortByLastName = (a, b) => {
+    const a_artist = a.artist_name.replace('The ', '').split(' ').pop();
+    const b_artist = b.artist_name.replace('The ', '').split(' ').pop();
+    if (a_artist < b_artist) {
+      return -1;
+    } else if (a_artist > b_artist) {
+      return 1;
+    } else {
+      return 0
+    }
+  }
+
+  handleSortByMethod = (identified) => {
+    if (this.state.sortByTerm === '' || this.state.sortByTerm === 'firstName') {
+      return identified.sort(this.sortByFirstName);
+    }
+    if (this.state.sortByTerm === 'lastName') {
+      return identified.sort(this.sortByLastName);
+    }
+    if (this.state.sortByTerm === 'mostRecent') {
+      return identified.reverse();
+    }
+    console.log('other')
   }
 
   handleAuth = (user) => {
@@ -75,6 +95,10 @@ class App extends Component {
 
   handleSearch = (term) => {
     this.setState({filterTerm: term});
+  }
+
+  setSortByMethod = (term) => {
+    this.setState({sortByTerm: term});
   }
 
   // handleClick = () => {
@@ -91,7 +115,7 @@ class App extends Component {
 
   render() {
     const { items, user, users, isLoading } = this.state;
-    // console.log('%cRENDERING', 'color:#BADA55;font-size:14px;', this.state);
+    // console.log('%cRENDERING', 'color:#BADA55;font-size:14px;', items);
     // cache page id here TODO:Fix this by using Firebase push to get a unqiue
     // object ID 'The Right Way' ;)
     let identified = items && items.map((item, i) => {
@@ -131,7 +155,7 @@ class App extends Component {
               path="/"
               render={props => (
                 <ArtistList
-                  items={identified.sort(this.sortByArtistName)}
+                  items={this.handleSortByMethod(identified)}
                 />
               )}
             />
@@ -198,6 +222,8 @@ class App extends Component {
         <Header
           searchTerm={this.state.filterTerm}
           handleSearch={this.handleSearch}
+          sortBy={this.state.sortByTerm}
+          sortByMethod={this.setSortByMethod}
         />
         { main }
         <footer className={`App-footer ${isLoading ? 'hide' : ''} center-text`}></footer>
