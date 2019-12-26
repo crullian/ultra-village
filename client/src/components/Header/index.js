@@ -52,7 +52,7 @@ const Header = (props) => {
           <React.Fragment>
             <TextField
               autoComplete="off"
-              label="Search"
+              label="Filter"
               id="searchField"
               value={props.searchTerm}
               onChange={handleChange}
@@ -76,10 +76,10 @@ const Header = (props) => {
                   id: 'age-native-simple',
                 }}
               >
-                <option value="" />
+                <option style={{display: 'none'}} value="" />
+                <option value="mostRecent">most recent</option>
                 <option value="lastName">last name</option>
                 <option value="firstName">first name</option>
-                <option value="mostRecent">most recent</option>
               </Select>
             </FormControl>
           </React.Fragment>
