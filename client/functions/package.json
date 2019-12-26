@@ -2,7 +2,7 @@
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "engines": {
-    "node": "8"
+    "node": "10.14.2"
   },
   "scripts": {
     "lint": "eslint .",
@@ -13,9 +13,9 @@
     "logs": "firebase functions:log"
   },
   "dependencies": {
+    "express": "^4.16.4",
     "firebase-admin": "~6.0.0",
     "firebase-functions": "^2.1.0",
-    "express": "^4.16.4",
     "prerender-node": "^3.2.1"
   },
   "devDependencies": {
