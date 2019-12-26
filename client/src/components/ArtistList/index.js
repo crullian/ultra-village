@@ -1,77 +1,35 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Remarkable from 'remarkable';
 
-import HomeCard from '../HomeCard';
-
-import { withStyles } from '@material-ui/core/styles';
-import CardHeader from '@material-ui/core/CardHeader';
-import Typography from '@material-ui/core/Typography';
+import FeaturedArtistCard from '../FeaturedArtistCard';
+import ArtistCard from '../ArtistCard';
 
 import './ArtistList.css'
 
-const md = new Remarkable({breaks:true});
+const ArtistList = ({ items }) => {
 
-const styles = theme => ({
-  avatar: {
-    alignItems: 'end'
-  }
-});
+  const featured = (() => {
+    return items && items.filter((item) => {
+      return item.featured;
+    });
+  })();
 
-class ArtistList extends React.Component {
+  const filteredOutFeaturedItems = (() => {
+    return items && items.filter(item => !item.featured);
+  })();
 
-  render() {
-    const { items, classes } = this.props;
+  return (
+    <div className="ArtistList-flex-container">
+      {featured && featured.length > 0 &&
+        <FeaturedArtistCard featuredArtist={featured[0]} />
+      }
 
-    let featured = items && items.filter((item) => {
-      return item.featured
-    })
+      {filteredOutFeaturedItems && filteredOutFeaturedItems.map((item, i) => {
+        return (
+          <ArtistCard key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${i}`} item={item} />
+        );
+      })}
+    </div>
+  );
+};
 
-    return (
-      <div className="ArtistList-flex-container">
-        {featured && featured.length > 0 &&
-          <Link
-            to={`/${featured[0].artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-          >
-
-            <div 
-              className="ArtistList-featured"
-            >
-              <h3 style={{padding: '0 24px'}}>Featured Artist: {featured[0].artist_name}</h3>
-
-                <CardHeader
-                  className={classes.avatar}
-                  avatar={
-                    <img
-                      alt="artist"
-                      src={featured[0].image}
-                      className="ArtistPage-img"
-                    />
-                  }
-                  subheader={
-                    <Typography
-                      component="p"
-                      dangerouslySetInnerHTML={{ __html: md.render(featured[0].body.split('.')[0] + '.') }}
-                    >
-                    </Typography>
-                  }
-                />
-            </div>
-          </Link>
-        }
-
-        {items && items.map((item, i) => (
-          <Link
-            to={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-            key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${i}`}
-            className="ArtistList-item-container"
-           >
-            <HomeCard item={item} />
-          </Link>
-        ))}
-      </div>
-    );
-  }
-}
-
-export default withStyles(styles)(ArtistList);
+export default ArtistList;

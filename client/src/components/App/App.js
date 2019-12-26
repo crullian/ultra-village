@@ -8,6 +8,8 @@ import { withRouter } from 'react-router';
 import firebase, { auth } from '../../firebase.js';
 import values from 'object.values';
 
+import handleSortByMethod from '../sortFunctions';
+
 import Header from '../Header/';
 import ArtistList from '../ArtistList/';
 import ArtistPage from '../ArtistPage/';
@@ -48,43 +50,6 @@ class App extends Component {
     });
   }
 
-  sortByFirstName = (a, b) => {
-    const a_artist = a.artist_name.replace('The ', '');
-    const b_artist = b.artist_name.replace('The ', '');
-    if (a_artist < b_artist) {
-      return -1;
-    } else if (a_artist > b_artist) {
-      return 1;
-    } else {
-      return 0
-    }
-  }
-
-  sortByLastName = (a, b) => {
-    const a_artist = a.artist_name.replace('The ', '').split(' ').pop();
-    const b_artist = b.artist_name.replace('The ', '').split(' ').pop();
-    if (a_artist < b_artist) {
-      return -1;
-    } else if (a_artist > b_artist) {
-      return 1;
-    } else {
-      return 0
-    }
-  }
-
-  handleSortByMethod = (identified) => {
-    if (this.state.sortByTerm === '' || this.state.sortByTerm === 'firstName') {
-      return identified.sort(this.sortByFirstName);
-    }
-    if (this.state.sortByTerm === 'lastName') {
-      return identified.sort(this.sortByLastName);
-    }
-    if (this.state.sortByTerm === 'mostRecent') {
-      return identified.reverse();
-    }
-    console.log('other')
-  }
-
   handleAuth = (user) => {
     if (user) {
       this.setState({user});
@@ -114,7 +79,7 @@ class App extends Component {
   // }
 
   render() {
-    const { items, user, users, isLoading } = this.state;
+    const { items, user, users, isLoading, sortByTerm } = this.state;
     // console.log('%cRENDERING', 'color:#BADA55;font-size:14px;', items);
     // cache page id here TODO:Fix this by using Firebase push to get a unqiue
     // object ID 'The Right Way' ;)
@@ -155,7 +120,7 @@ class App extends Component {
               path="/"
               render={props => (
                 <ArtistList
-                  items={this.handleSortByMethod(identified)}
+                  items={handleSortByMethod(identified, sortByTerm)}
                 />
               )}
             />
