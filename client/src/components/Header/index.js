@@ -64,7 +64,7 @@ const Header = (props) => {
                 }} 
                 htmlFor="age-native-simple"
               >
-                Sort by
+                Sort By
               </InputLabel>
               <Select
                 native
@@ -77,9 +77,9 @@ const Header = (props) => {
                 }}
               >
                 <option style={{display: 'none'}} value="" />
-                <option value="mostRecent">most recent</option>
-                <option value="lastName">last name</option>
-                <option value="firstName">first name</option>
+                <option value="mostRecent">Most Recent</option>
+                <option value="lastName">Last Name</option>
+                <option value="firstName">First Name</option>
               </Select>
             </FormControl>
           </React.Fragment>

@@ -1,0 +1,18 @@
+[debug] [2019-12-26T19:07:54.603Z] ----------------------------------------------------------------------
+[debug] [2019-12-26T19:07:54.605Z] Command:       /Users/chrisgullian/.nvm/versions/node/v10.14.2/bin/node /Users/chrisgullian/.nvm/versions/node/v10.14.2/bin/firebase functions:shell
+[debug] [2019-12-26T19:07:54.605Z] CLI Version:   7.11.0
+[debug] [2019-12-26T19:07:54.605Z] Platform:      darwin
+[debug] [2019-12-26T19:07:54.605Z] Node Version:  v10.14.2
+[debug] [2019-12-26T19:07:54.606Z] Time:          Thu Dec 26 2019 19:07:54 GMT+0000 (Greenwich Mean Time)
+[debug] [2019-12-26T19:07:54.606Z] ----------------------------------------------------------------------
+[debug] [2019-12-26T19:07:54.606Z] 
+[debug] [2019-12-26T19:07:54.620Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-12-26T19:07:54.620Z] > authorizing via signed-in user
+[debug] [2019-12-26T19:07:54.620Z] [iam] checking project api-project-464300049727 for permissions ["firebase.projects.get"]
+[debug] [2019-12-26T19:07:54.622Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-12-26T19:07:54.622Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-12-26T19:07:54.778Z] <<< HTTP RESPONSE 200
+[debug] [2019-12-26T19:07:54.794Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/api-project-464300049727:testIamPermissions  
+
+[debug] [2019-12-26T19:07:55.540Z] <<< HTTP RESPONSE 200
