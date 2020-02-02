@@ -35,7 +35,7 @@ const FeaturedArtistCard = ({ classes, featuredArtist }) => (
       subheader={
         <Typography
           component="p"
-          dangerouslySetInnerHTML={{ __html: md.render(featuredArtist.body.split('.')[0] + '.') }}
+          dangerouslySetInnerHTML={{ __html: md.render(featuredArtist.body.split('. ')[0] + '.') }}
         >
         </Typography>
       }
