@@ -36,7 +36,14 @@ class App extends Component {
     itemsRef.on('value', (snapshot) => {
       let items = snapshot.val();
       this.setState({
-        items: values(items.pages),
+        items: values(items.pages).map((item, i) => {
+          // cache page id here TODO:Fix this by using Firebase push to get a unqiue
+          // object ID 'The Right Way' ;)
+          if (!item.id) {
+            item.id = i;
+          }
+          return item;
+        }),
         users: items.users,
         about: items.about,
         isLoading: false
@@ -59,7 +66,7 @@ class App extends Component {
   }
 
   handleSearch = (term) => {
-    this.setState({filterTerm: term});
+    this.setState({filterTerm: term.toLowerCase().trim()});
   }
 
   setSortByMethod = (term) => {
@@ -80,19 +87,11 @@ class App extends Component {
 
   render() {
     const { items, user, users, isLoading, sortByTerm } = this.state;
-    // console.log('%cRENDERING', 'color:#BADA55;font-size:14px;', items);
-    // cache page id here TODO:Fix this by using Firebase push to get a unqiue
-    // object ID 'The Right Way' ;)
-    let identified = items && items.map((item, i) => {
-      if (!item.id) {
-        item.id = i;
-      }
-      return item;
-    });
+    let identified = items;
 
     if (this.state.filterTerm) {
       identified = identified.filter((item) => {
-        let searchString = this.state.filterTerm.toLowerCase().trim();
+        let searchString = this.state.filterTerm;
         let strTofind = item.artist_name.toLowerCase();
         return strTofind.indexOf(searchString) !== -1;
       })

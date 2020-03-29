@@ -30,6 +30,10 @@ class ArtistPage extends React.Component {
     reviewExpanded: null
   }
 
+  componentDidMount() {
+    document.title = `Ultravillage | ${this.props.artist.artist_name}`;
+  }
+
   handleClickOpen = () => {
     this.setState({ open: true });
   }

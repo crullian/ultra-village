@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import FeaturedArtistCard from '../FeaturedArtistCard';
 import ArtistCard from '../ArtistCard';
@@ -6,6 +6,9 @@ import ArtistCard from '../ArtistCard';
 import './ArtistList.css'
 
 const ArtistList = ({ items }) => {
+  useEffect(() => {
+    document.title = 'Ultravillage';
+  }, [])
 
   const featured = (() => {
     return items && items.filter((item) => {
