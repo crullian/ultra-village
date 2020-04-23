@@ -27,27 +27,24 @@ const styles = theme => ({
   }
 });
 
-const ArtistCard = ({ classes, item }) => {
-
-  return (
-    <Link
-      to={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-      className="ArtistList-item-container"
-     >
-      <Card className={classes.card}>
-        <div className={classes.details}>
-          <CardContent className={classes.content}>
-            <Typography variant="inherit">{item.artist_name}</Typography>
-          </CardContent>
-        </div>
-        <CardMedia
-          className={classes.cover}
-          image={item.image}
-          title=""
-        />
-      </Card>
-    </Link>
-  );
-}
+const ArtistCard = ({ classes, item }) => (
+  <Link
+    to={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
+    className="ArtistList-item-container"
+   >
+    <Card className={classes.card}>
+      <div className={classes.details}>
+        <CardContent className={classes.content}>
+          <Typography variant="inherit">{item.artist_name}</Typography>
+        </CardContent>
+      </div>
+      <CardMedia
+        className={classes.cover}
+        image={item.image}
+        title=""
+      />
+    </Card>
+  </Link>
+);
 
 export default withStyles(styles, { withTheme: true })(ArtistCard);
