@@ -35,6 +35,7 @@ class App extends Component {
     const itemsRef = firebase.database().ref('/');
     itemsRef.on('value', (snapshot) => {
       let items = snapshot.val();
+      window.pages = items.pages;
       this.setState({
         items: values(items.pages).map((item, i) => {
           // cache page id here TODO:Fix this by using Firebase push to get a unqiue
@@ -66,7 +67,7 @@ class App extends Component {
   }
 
   handleSearch = (term) => {
-    this.setState({filterTerm: term.toLowerCase().trim()});
+    this.setState({filterTerm: term.toLowerCase()});
   }
 
   setSortByMethod = (term) => {
@@ -89,7 +90,7 @@ class App extends Component {
     const { items, user, users, isLoading, sortByTerm } = this.state;
     let identified = items;
 
-    if (this.state.filterTerm) {
+    if (this.state.filterTerm && identified) {
       identified = identified.filter((item) => {
         let searchString = this.state.filterTerm;
         let strTofind = item.artist_name.toLowerCase();
