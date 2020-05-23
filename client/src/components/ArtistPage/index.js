@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import Remarkable from 'remarkable';
+
+import EditToggle from '../EditToggle';
 
 import CardHeader from '@material-ui/core/CardHeader';
 import Dialog from '@material-ui/core/Dialog';
@@ -19,7 +21,7 @@ import './ArtistPage.css';
 
 const md = new Remarkable({breaks:true});
 
-const ArtistPage = ({ artist, user }) => {
+const ArtistPage = ({ artist, userIsAdmin }) => {
 
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingReview, setIsEditingReview] = useState(false);
@@ -29,19 +31,11 @@ const ArtistPage = ({ artist, user }) => {
 
   useEffect(() => {
     document.title = `Ultravillage | ${artist.artist_name}`;
-  })
+  });
 
-  const handleClickOpen = () => setOpen(true);
+  const toggleEditMode = () => setIsEditing(!isEditing);
 
-  const handleClose = () => setOpen(false);
-
-  const handleActivateEditMode = () => setIsEditing(true);
-
-  const handleDeactivateEditMode = () => setIsEditing(false);
-
-  const handleActivateEditReviewMode = () => setIsEditingReview(true);
-
-  const handleDeactivateEditReviewMode = () => setIsEditingReview(false);
+  const toggleEditReviewMode = () => setIsEditingReview(!isEditingReview);
 
   const handleUpdateBody = (e) => {
     firebase.database().ref('/pages/' + artist.id).update({
@@ -49,13 +43,11 @@ const ArtistPage = ({ artist, user }) => {
     });
   }
 
-  const handleUpdateReview = (e, albumIndex, albumId) => {
+  const handleUpdateReview = (albumIndex, albumId) => e => {
     firebase.database().ref(`/pages/${artist.id}/albums/${albumIndex}/albums/${albumId}`).update({
       review: e.target.value
     });
   }
-
-  const handleExpandClick = () => setExpanded(!expanded)
 
   const handleReviewExpandChange = album => (e, expanded) => {
     if (album.review) {
@@ -63,62 +55,23 @@ const ArtistPage = ({ artist, user }) => {
     }
   };
 
-
-  let adminControls = null;
-  let adminControlsReview = null;
-  if ((user && user.isAdmin) && !isEditingReview) {
-    adminControlsReview = (
-      <div className="Page-admin-controls"style={{paddingRight: 5}}>
-        <i className="Page-edit material-icons" onClick={handleActivateEditReviewMode}>edit</i>
-      </div>
-    )
-  } else if ((user && user.isAdmin) && isEditingReview) {
-    adminControlsReview = (
-      <div className="Page-admin-controls">
-        <button
-          className="Page-edit-button"
-          onClick={handleDeactivateEditReviewMode}
-        >
-          done
-        </button>
-      </div>
-    )
-  }
-  if ((user && user.isAdmin) && !isEditing) {
-    adminControls = (
-      <div className="Page-admin-controls">
-        <i className="Page-edit material-icons" onClick={handleActivateEditMode}>edit</i>
-      </div>
-    )
-  } else if ((user && user.isAdmin) && isEditing) {
-    adminControls = (
-      <div className="Page-admin-controls">
-        <button
-          className="Page-edit-button"
-          onClick={handleDeactivateEditMode}
-        >
-          done
-        </button>
-      </div>
-    )
-  }
-
   return (
     <div className="ArtistPage-container">
       <CardHeader
+        title={<h2>{artist.artist_name}</h2>}
         style={{padding: '16px 8px'}}
         avatar={
-            <img
-              alt="artist"
-              src={artist.image}
-              className="ArtistPage-img"
-              width="60"
-              onClick={handleClickOpen}
-            />
+          <img
+            alt="artist"
+            src={artist.image}
+            className="ArtistPage-img"
+            width="60"
+            onClick={() => setOpen(true)}
+          />
         }
-        title={<h2>{artist.artist_name}</h2>}
       />
       <div className="ArtistPage-content">
+        <EditToggle show={userIsAdmin} isEditing={isEditing} toggleHandler={toggleEditMode} />
         {isEditing ?
           <textarea
             id="Page-markdown-content"
@@ -133,23 +86,24 @@ const ArtistPage = ({ artist, user }) => {
               dangerouslySetInnerHTML={{ __html: md.render(artist.body) }}
             />
 
-            <Button
-              className="ArtistPage-review-expand-btn"
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="Show more"
-            >
-              {expanded ? 'less' : 'more'}
-              <ExpandMoreIcon style={expanded
-                ? {
-                    transform: 'rotate(180deg)'
-                  }
-                : null
-              } />
-            </Button>
           </div>
         }
-        {adminControls}
+        {!isEditing && (
+          <Button
+            className="ArtistPage-review-expand-btn"
+            onClick={() => setExpanded(!expanded)}
+            aria-expanded={expanded}
+            aria-label="Show more"
+          >
+            {expanded ? 'less' : 'more'}
+            <ExpandMoreIcon
+              style={expanded
+                ? {transform: 'rotate(180deg)'}
+                : null
+              }
+            />
+          </Button>
+        )}
       </div>
 
       <section className="ArtistPage-disco">
@@ -162,8 +116,15 @@ const ArtistPage = ({ artist, user }) => {
               {albumList.albums.map((album, j) => {
                 const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
                 return (
-                  <ExpansionPanel key={`${album.title}-${j}`} expanded={reviewExpanded === album.title} onChange={handleReviewExpandChange(album)} >
-                    <ExpansionPanelSummary style={{cursor: album.review ? 'pointer' : 'default'}} expandIcon={album.review ? <ExpandMoreIcon /> : null}>
+                  <ExpansionPanel
+                    key={`${album.title}-${j}`}
+                    expanded={reviewExpanded === album.title}
+                    onChange={handleReviewExpandChange(album)}
+                  >
+                    <ExpansionPanelSummary
+                      style={{cursor: album.review ? 'pointer' : 'default'}}
+                      expandIcon={album.review ? <ExpandMoreIcon /> : null}
+                    >
                       <Typography>
                         {heading}
                       </Typography>
@@ -174,7 +135,7 @@ const ArtistPage = ({ artist, user }) => {
                           <textarea
                             id="Page-markdown-content"
                             className="ArtistPage-review-content"
-                            onChange={(e) => handleUpdateReview(e, i, j)}
+                            onChange={handleUpdateReview(i, j)}
                             defaultValue={album.review}
                           />
                           :
@@ -185,12 +146,18 @@ const ArtistPage = ({ artist, user }) => {
                         }
                       </div>
                     </ExpansionPanelDetails>
-                    {adminControlsReview && <Divider /> }
-                    {adminControlsReview &&
-                      <ExpansionPanelActions>
-                        {adminControlsReview}
-                      </ExpansionPanelActions>
-                    }
+                    {userIsAdmin && (
+                      <Fragment>
+                        <Divider />
+                        <ExpansionPanelActions>
+                          <EditToggle
+                            show={userIsAdmin}
+                            isEditing={isEditingReview}
+                            toggleHandler={toggleEditReviewMode}
+                          />
+                        </ExpansionPanelActions>
+                      </Fragment>
+                    )}
                   </ExpansionPanel>
                 )
               })}
@@ -202,7 +169,7 @@ const ArtistPage = ({ artist, user }) => {
 
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={() => setOpen(false)}
         aria-labelledby="simple-dialog-title"
       >
         <img

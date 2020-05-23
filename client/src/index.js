@@ -13,6 +13,9 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: 'Google Sans'
   },
+  palette: {
+    brandBlue: 'rgb(14, 97, 253)'
+  }
 });
 
 ReactDOM.render(

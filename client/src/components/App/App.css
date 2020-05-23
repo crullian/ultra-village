@@ -5,88 +5,6 @@
   flex-direction: column;
 }
 
-.App-header {
-  background-color: #1578ff;
-  background: url('https://firebasestorage.googleapis.com/v0/b/api-project-464300049727.appspot.com/o/Meader_cropped_33.jpg?alt=media&token=bdc6d27b-1b11-4ab8-8a12-dc3c2f2d420a') no-repeat center;
-  background-size: cover;
-  color: white;
-  position: sticky;
-  top: -78px;
-  width: 100%;
-  z-index: 1000;
-  transition: all .2s cubic-bezier(0.4, 0.0, 0.2, 1);
-  box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
-  animation-name: fade-down;
-  animation-duration: .5s;
-  animation-timing-function: ease-in;
-  animation-fill-mode: forwards;
-}
-
-.App-title {
-  font-size: 1.35em;
-  font-weight: 200;
-}
-
-.App-header-link {
-  color: #fff;
-}
-
-.App-header-link h4 {
-  margin-left: 10px;
-}
-
-.App-header-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-}
-
-.App-header-row.toolbar {
-  background-color: #d4d4d440;
-  padding: 20px;
-  display: grid;
-  grid-template-columns: repeat(3, max-content);
-  grid-column-gap: 24px;
-}
-
-.toolbar .MuiIconButton-root {
-  width: 30px;
-}
-
-.material-icons.back {
-  color: #fff;
-  margin-left: 10px;
-}
-
-#searchField::before {
-  border-bottom-color: #fff !important;
-}
-
-.MuiInput-underline:hover:not(.Mui-disabled):before {
-  border-bottom: 2px solid #fff !important;
-}
-
-.input-label-root {
-  color: #fff !important;
-}
-
-#searchField::hover {
-  border-bottom: 2px solid #fff !important;
-}
-
-#searchField {
-  color: #fff;
-  border-bottom-color: #fff !important; 
-}
-
-#searchField-label {
-  color: #fff;
-}
-
-#age-native-simple {
-  color: #fff !important;
-}
-
 .App-panel {
   flex: 1;
   margin: 10px auto 0;
@@ -103,7 +21,7 @@ li {
   margin: 24px 0 32px;
   position: relative;
   z-index: -2;
-  transtition: opacity 1s ease;
+  transition: opacity 1s ease;
 }
 
 .App-footer.hide {
@@ -113,9 +31,6 @@ li {
 @media only screen and (min-width: 960px) {
   .App-panel {
     width: 930px;
-  }
-  .App-header-row.toolbar {
-    grid-template-columns: repeat(5, 1fr);
   }
 }
 
