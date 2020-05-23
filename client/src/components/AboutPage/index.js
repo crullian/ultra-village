@@ -3,7 +3,6 @@ import Remarkable from 'remarkable';
 import EditToggle from '../EditToggle';
 
 import firebase from '../../firebase.js';
-import useAuth from '../../hooks/useAuth';
 
 import './AboutPage.css';
 
@@ -11,7 +10,9 @@ const md = new Remarkable({breaks:true});
 
 const AboutPage = ({ userIsAdmin, content }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [newContent, setNewContent] = useState('');
+  useEffect(() => {
+    document.title = `Ultravillage | about`;
+  });
 
   const toggleEditMode = () => setIsEditing(!isEditing);
 

@@ -5,7 +5,7 @@ import {
   Redirect
 } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import firebase, { auth } from '../../firebase.js';
+import firebase from '../../firebase.js';
 import values from 'object.values';
 
 import handleSortByMethod from '../sortFunctions';
