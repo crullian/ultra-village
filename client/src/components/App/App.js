@@ -15,6 +15,7 @@ import useAuth from '../../hooks/useAuth';
 import Header from '../Header/';
 import ArtistList from '../ArtistList/';
 import ArtistPage from '../ArtistPage/';
+import ListsPage from '../ListsPage';
 import RecordPage from '../RecordPage/';
 import AuthPage from '../AuthPage/';
 import AboutPage from '../AboutPage/';
@@ -97,6 +98,17 @@ const App = () => {
               <AboutPage
                 {...props}
                 content={about} 
+                userIsAdmin={isAdmin}
+              />
+            )}
+          />
+
+          <Route
+            exact
+            path="/lists"
+            render={props => (
+              <ListsPage
+                {...props}
                 userIsAdmin={isAdmin}
               />
             )}
