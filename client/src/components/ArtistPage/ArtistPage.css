@@ -52,41 +52,6 @@
   transition: all 1s ease;
 }
 
-.Page-admin-controls {
-  display: flex;
-  flex-flow: row;
-  justify-content: flex-end;
-}
-
-.Page-edit {
-  cursor: pointer;
-}
-
-.Page-edit-button {
-  display: flex;
-  justify-content: center;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0px;
-  text-transform: uppercase;
-  border: 10px;
-  font-family: Google Sans, sans-serif;
-  cursor: pointer;
-  margin: 0 5px;
-  outline: none;
-  height: 36px;
-  line-height: 36px;
-  width: 88px;
-  border-radius: 3px;
-  background-color: rgb(14, 97, 253);
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
-}
-
-.Page-edit-button:hover {
-  background-color: rgb(86, 143, 251);
-}
-
 #Page-markdown-content {
   width: 100%;
   height: 250px;
@@ -104,16 +69,10 @@
 /****************** Media Query *****************/ 
 
 @media only screen and (min-width: 768px) {
-  .ArtistPage-content {
-    flex-direction: row;
-  }
   .ArtistPage-img {
     width: 160px;
     height: 160px;
     align-self: flex-start;
   }
-  .Page-admin-controls {
-    flex-flow: column;
-    justify-content: flex-start;
-  }
+
 }

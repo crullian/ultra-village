@@ -3,10 +3,13 @@ import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+
+import './Header.css';
 
 const Header = (props) => {
   const handleChange = (e) => {
@@ -20,15 +23,18 @@ const Header = (props) => {
   return (
     <header className="App-header">
       <div className="App-header-row">
-        <div style={{display: 'flex'}}>
-          <Link
-            to="/"
-            className="App-header-link"
-          >
-            <h1 className="App-title">Ultravillage</h1>
-          </Link>
-        </div>
-
+        <Link
+          to="/"
+          className="App-header-link"
+        >
+          <h1 className="App-title">Ultravillage</h1>
+        </Link>
+        <Link
+          to="/lists"
+          className="App-header-link"
+        >
+          <h4>lists</h4>
+        </Link>
         <Link
           to="/about"
           className="App-header-link"
@@ -40,12 +46,9 @@ const Header = (props) => {
         {props.location.pathname !== '/' &&
           <IconButton
             aria-label="Back"
-            size="small"
             onClick={props.history.goBack}
           >
-            <i className="material-icons back">
-              arrow_back_ios
-            </i>
+            <ArrowBackIosIcon className="back" />
           </IconButton>
         }
         {props.location.pathname === '/' &&

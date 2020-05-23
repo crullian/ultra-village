@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Route,
   Switch,
@@ -9,6 +9,8 @@ import firebase, { auth } from '../../firebase.js';
 import values from 'object.values';
 
 import handleSortByMethod from '../sortFunctions';
+
+import useAuth from '../../hooks/useAuth';
 
 import Header from '../Header/';
 import ArtistList from '../ArtistList/';
@@ -21,180 +23,141 @@ import Loader from '../Loader/';
 
 import './App.css';
 
-class App extends Component {
-  state = {
-    items: null,
-    user: null,
-    users: null,
-    filterTerm: '',
-    sortByTerm: '',
-    isLoading: true
-  }
+const App = () => {
+  const user = useAuth();
+  const [items, setItems] = useState(null);
+  const [about, setAbout] = useState(null);
+  const [users, setUsers] = useState(null);
+  const [filterTerm, setFilterTerm] = useState('');
+  const [sortByTerm, setSortByTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
-  componentDidMount() {
+  useEffect(() => {
     const itemsRef = firebase.database().ref('/');
-    itemsRef.on('value', (snapshot) => {
+    itemsRef.on('value', snapshot => {
       let items = snapshot.val();
       window.pages = items.pages;
-      this.setState({
-        items: values(items.pages).map((item, i) => {
-          // cache page id here TODO:Fix this by using Firebase push to get a unqiue
-          // object ID 'The Right Way' ;)
-          if (!item.id) {
-            item.id = i;
-          }
-          return item;
-        }),
-        users: items.users,
-        about: items.about,
-        isLoading: false
-      },
-        auth.onAuthStateChanged((user) => {
-          if (user) {
-            this.setState({user});
-          } 
-        })
-      );
+      setItems(values(items.pages).map((item, i) => {
+        // assign page id
+        if (!item.id) {
+          item.id = i;
+        }
+        return item;
+      }));
+      setUsers(items.users);
+      setAbout(items.about);
+      setIsLoading(false);
     });
+  }, []);
+
+  const handleSearch = term => setFilterTerm(term.toLowerCase());
+
+  const setSortByMethod = term => setSortByTerm(term);
+
+  let identified = items;
+
+  if (filterTerm && identified) {
+    identified = identified.filter((item) => {
+      let searchString = filterTerm;
+      let strTofind = item.artist_name.toLowerCase();
+      return strTofind.indexOf(searchString) !== -1;
+    })
   }
+  const isAdmin = user && users && users[user.uid].isAdmin;
+  const main = isLoading
+  ? <Loader />
+  : (
+      <main className="App-panel">   
+        <Switch>
+          <Route
+            exact
+            path="/auth"
+            render={ props => (
+              <AuthPage
+                {...props}
+                user={user}
+              />
+            )}
+          />
 
-  handleAuth = (user) => {
-    if (user) {
-      this.setState({user});
-    } else {
-      this.setState({user: null});
-    }
-  }
+          <Route
+            exact
+            path="/"
+            render={props => (
+              <ArtistList
+                items={handleSortByMethod(identified, sortByTerm)}
+              />
+            )}
+          />
 
-  handleSearch = (term) => {
-    this.setState({filterTerm: term.toLowerCase()});
-  }
+          <Route
+            exact
+            path="/about"
+            render={props => (
+              <AboutPage
+                {...props}
+                content={about} 
+                userIsAdmin={isAdmin}
+              />
+            )}
+          />
 
-  setSortByMethod = (term) => {
-    this.setState({sortByTerm: term});
-  }
+          {items.map((item, i) => {
+            return (
+              <Route
+                key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${i}`}
+                exact
+                path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
+                render={props => (
+                  <ArtistPage
+                    {...props}
+                    artistId={i}
+                    userIsAdmin={isAdmin}
+                    artist={item}
+                  />
+                )}
+              />
+            )
+          })}
 
-  // handleClick = () => {
-  //   const itemsRef = firebase.database().ref('/pages/');
-  //   itemsRef.push({
-  //     artist_name: 'Artist',
-  //     albums: [],
-  //     body: 'Content',
-  //     createdAt: firebase.database.ServerValue.TIMESTAMP
-  //   }, (thing) => {
-  //     console.log('WTF', thing)
-  //   })
-  // }
-
-  render() {
-    const { items, user, users, isLoading, sortByTerm } = this.state;
-    let identified = items;
-
-    if (this.state.filterTerm && identified) {
-      identified = identified.filter((item) => {
-        let searchString = this.state.filterTerm;
-        let strTofind = item.artist_name.toLowerCase();
-        return strTofind.indexOf(searchString) !== -1;
-      })
-    }
-
-    const main = isLoading
-    ? <Loader />
-    : (
-        <main className="App-panel">   
-          <Switch>
-            <Route
-              exact
-              path="/auth"
-              render={ props => (
-                <AuthPage
-                  {...props}
-                  user={ user }
-                  handleAuth={this.handleAuth}
-                />
-              )}
-            />
-
-            <Route
-              exact
-              path="/"
-              render={props => (
-                <ArtistList
-                  items={handleSortByMethod(identified, sortByTerm)}
-                />
-              )}
-            />
-
-            <Route
-              exact
-              path="/about"
-              render={props => (
-                <AboutPage
-                  {...props}
-                  content={this.state.about} 
-                  user={user && users[user.uid]}
-                />
-              )}
-            />
-
-            {items.map((item, i) => {
-              return (
-                <Route
-                  key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${1}`}
-                  exact
-                  path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-                  render={props => (
-                    <ArtistPage
-                      {...props}
-                      artistId={i}
-                      user={user && users[user.uid]}
-                      artist={item}
-                    />
-                  )}
-                />
-              )
-            })}
-
-            {items.map(item => (
-              item.albums.map((item, i) => {
-                return item.albums.map((album, i) => {
-                  return (
-                    <Route
-                      key={`${album.title}-${i}`}
-                      exact
-                      path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}/${album.title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-                      render={props => (
-                        <RecordPage
-                          {...props}
-                          isAdmin={user && users && users[user.uid]}
-                          record={album}
-                        />
-                      )}
-                    />
-                  )
-                })
+          {items.map(item => (
+            item.albums.map((item, i) => {
+              return item.albums.map((album, i) => {
+                return (
+                  <Route
+                    key={`${album.title}-${i}`}
+                    exact
+                    path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}/${album.title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
+                    render={props => (
+                      <RecordPage
+                        {...props}
+                        record={album}
+                      />
+                    )}
+                  />
+                )
               })
-            ))}
+            })
+          ))}
 
-            <Redirect to="/" />
-            <Route path="/*" render={props => <ErrorPage />} />
-          </Switch>
-        </main>
-      );
-
-    return (
-      <div className="App">
-        <Header
-          searchTerm={this.state.filterTerm}
-          handleSearch={this.handleSearch}
-          sortBy={this.state.sortByTerm}
-          sortByMethod={this.setSortByMethod}
-        />
-        { main }
-        <footer className={`App-footer ${isLoading ? 'hide' : ''} center-text`}></footer>
-      </div>
+          <Redirect to="/" />
+          <Route path="/*" render={props => <ErrorPage />} />
+        </Switch>
+      </main>
     );
-  }
+
+  return (
+    <div className="App">
+      <Header
+        searchTerm={filterTerm}
+        handleSearch={handleSearch}
+        sortBy={sortByTerm}
+        sortByMethod={setSortByMethod}
+      />
+      { main }
+      <footer className={`App-footer ${isLoading ? 'hide' : ''} center-text`}></footer>
+    </div>
+  );
 }
 
 export default withRouter(App);

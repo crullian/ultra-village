@@ -1,0 +1,9 @@
+.Page-admin-controls {
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-end;
+}
+
+.Page-edit {
+  cursor: pointer;
+}
