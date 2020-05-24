@@ -90,7 +90,7 @@ const App = () => {
             render={props => (
               <ArtistList
                 items={handleSortByMethod(identified, sortByTerm)}
-                featuredList={featuredList}
+                featuredList={filterTerm ? null : featuredList}
               />
             )}
           />
