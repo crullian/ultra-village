@@ -3,6 +3,7 @@ import Remarkable from 'remarkable';
 import EditToggle from '../EditToggle';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 import './EditableContent.css';
 
@@ -16,7 +17,7 @@ const EditableContent = ({ userIsAdmin, changeHandler, content, collapsible }) =
 			<EditToggle show={userIsAdmin} isEditing={isEditing} toggleHandler={() => setIsEditing(!isEditing)} />
 			<div className="Editable-content-flex-container">
 			{isEditing ? (
-		    <textarea
+		    <TextareaAutosize
 		      id="Page-markdown-content"
 		      className="Editable-content-review Editable-content-review-content"
 		      onChange={changeHandler}
