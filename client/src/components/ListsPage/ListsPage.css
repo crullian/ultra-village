@@ -1,0 +1,10 @@
+.ListsPage-container {
+	margin: 0 0 10px;
+  padding: 0px;
+  border-radius: 3px;
+  
+	animation-name: fade-up;
+  animation-duration: .5s;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}

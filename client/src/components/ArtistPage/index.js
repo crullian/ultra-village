@@ -1,16 +1,12 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import Remarkable from 'remarkable';
+import React, { useState, useEffect } from 'react';
 
-import EditToggle from '../EditToggle';
+import EditableContent from '../EditableContent';
 
 import CardHeader from '@material-ui/core/CardHeader';
 import Dialog from '@material-ui/core/Dialog';
-import Divider from '@material-ui/core/Divider';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Button from '@material-ui/core/Button';
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelActions from '@material-ui/core/ExpansionPanelActions';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
@@ -19,23 +15,14 @@ import firebase from '../../firebase.js';
 
 import './ArtistPage.css';
 
-const md = new Remarkable({breaks:true});
 
 const ArtistPage = ({ artist, userIsAdmin }) => {
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [isEditingReview, setIsEditingReview] = useState(false);
   const [open, setOpen] = useState(false);
-  const [expanded, setExpanded] = useState(false);
   const [reviewExpanded, setReviewExpanded] = useState(false);
 
   useEffect(() => {
     document.title = `Ultravillage | ${artist.artist_name}`;
   });
-
-  const toggleEditMode = () => setIsEditing(!isEditing);
-
-  const toggleEditReviewMode = () => setIsEditingReview(!isEditingReview);
 
   const handleUpdateBody = (e) => {
     firebase.database().ref('/pages/' + artist.id).update({
@@ -70,41 +57,13 @@ const ArtistPage = ({ artist, userIsAdmin }) => {
           />
         }
       />
-      <div className="ArtistPage-content">
-        <EditToggle show={userIsAdmin} isEditing={isEditing} toggleHandler={toggleEditMode} />
-        {isEditing ?
-          <textarea
-            id="Page-markdown-content"
-            className="ArtistPage-review ArtistPage-review-content"
-            onChange={handleUpdateBody}
-            defaultValue={artist.body}
-          />
-          :
-          <div className="ArtistPage-review">
-            <div
-              className={`ArtistPage-review-content${!expanded ? ' hide' : ''}`}
-              dangerouslySetInnerHTML={{ __html: md.render(artist.body) }}
-            />
-
-          </div>
-        }
-        {!isEditing && (
-          <Button
-            className="ArtistPage-review-expand-btn"
-            onClick={() => setExpanded(!expanded)}
-            aria-expanded={expanded}
-            aria-label="Show more"
-          >
-            {expanded ? 'less' : 'more'}
-            <ExpandMoreIcon
-              style={expanded
-                ? {transform: 'rotate(180deg)'}
-                : null
-              }
-            />
-          </Button>
-        )}
-      </div>
+      
+      <EditableContent
+        collapsible
+        userIsAdmin={userIsAdmin}
+        changeHandler={handleUpdateBody}
+        content={artist.body}
+      />
 
       <section className="ArtistPage-disco">
         <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
@@ -130,34 +89,12 @@ const ArtistPage = ({ artist, userIsAdmin }) => {
                       </Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
-                      <div style={isEditingReview ? {width:'100%'} : null}>
-                        {isEditingReview ?
-                          <textarea
-                            id="Page-markdown-content"
-                            className="ArtistPage-review-content"
-                            onChange={handleUpdateReview(i, j)}
-                            defaultValue={album.review}
-                          />
-                          :
-                          <div
-                            className="ArtistPage-review-content"
-                            dangerouslySetInnerHTML={{ __html: md.render(album.review) }}
-                          />
-                        }
-                      </div>
+                      <EditableContent
+                        userIsAdmin={userIsAdmin}
+                        changeHandler={handleUpdateReview(i, j)}
+                        content={album.review}
+                      />
                     </ExpansionPanelDetails>
-                    {userIsAdmin && (
-                      <Fragment>
-                        <Divider />
-                        <ExpansionPanelActions>
-                          <EditToggle
-                            show={userIsAdmin}
-                            isEditing={isEditingReview}
-                            toggleHandler={toggleEditReviewMode}
-                          />
-                        </ExpansionPanelActions>
-                      </Fragment>
-                    )}
                   </ExpansionPanel>
                 )
               })}

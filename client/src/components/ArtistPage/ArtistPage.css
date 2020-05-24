@@ -2,15 +2,11 @@
   margin: 0 0 10px;
   padding: 0px;
   border-radius: 3px;
+  
   animation-name: fade-up;
   animation-duration: .5s;
   animation-timing-function: ease-in;
   animation-fill-mode: forwards;
-}
-
-.ArtistPage-content {
-  display: flex;
-  flex-direction: column; 
 }
 
 .ArtistPage-img {
@@ -18,47 +14,6 @@
   height: 80px;
   object-fit: cover;
   border-radius: 3px;
-}
-
-.ArtistPage-review {
-  width: 100%;
-  display: flex;
-  flex-flow: column;
-  padding: 0 8px;
-  flex-grow: 1;
-  font-size: 100%;
-}
-
-.ArtistPage-review-content {
-  color: rgba(0, 0, 0, 0.87);
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.46429em;
-}
-
-.ArtistPage-review-content.hide > :not(:first-child) {
-  display: none;
-}
-
-.ArtistPage-review-content a {
-  color: #0d5ffc;
-}
-
-.ArtistPage-review-expand-btn {
-  align-self: flex-end;
-}
-
-.ArtistPage-review-expand-btn .expanded {
-  transition: all 1s ease;
-}
-
-#Page-markdown-content {
-  width: 100%;
-  height: 250px;
-  background-color: rgba(255,255,255, 0);
-  margin-bottom: 5px;
-  border: 1px #ddd solid;
-  font-family: 'Google Sans', sans-serif;
 }
 
 .ArtistPage-disco-heading {
@@ -74,5 +29,4 @@
     height: 160px;
     align-self: flex-start;
   }
-
 }
