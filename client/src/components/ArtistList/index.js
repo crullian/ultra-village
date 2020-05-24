@@ -3,6 +3,7 @@ import LazyLoad from 'react-lazyload';
 import ContentLoader from "react-content-loader";
 
 import FeaturedArtistCard from '../FeaturedArtistCard';
+import FeaturedListCard from '../FeaturedListCard';
 import ArtistCard from '../ArtistCard';
 
 import './ArtistList.css'
@@ -23,26 +24,23 @@ const loadingCard = (
   </div>
 );
 
-const ArtistList = ({ items }) => {
+const ArtistList = ({ items, featuredList }) => {
   useEffect(() => {
     document.title = 'Ultravillage';
   }, [])
 
-  const featured = (() => {
-    return items && items.filter((item) => {
-      return item.featured;
-    });
-  })();
+  const featured = (() => items && items.find(item => item.featured))();
 
-  const filteredOutFeaturedItems = (() => {
-    return items && items.filter(item => !item.featured);
-  })();
+  const filteredOutFeaturedItems = (() => items && items.filter(item => !item.featured))();
 
   return (
     <div className="ArtistList-flex-container">
-      {featured && featured.length > 0 &&
-        <FeaturedArtistCard featuredArtist={featured[0]} />
-      }
+      {featuredList && (
+        <FeaturedListCard featuredList={featuredList} />
+      )}
+      {featured && (
+        <FeaturedArtistCard featuredArtist={featured} />
+      )}
 
       {filteredOutFeaturedItems && filteredOutFeaturedItems.map((item, i) => {
         return (

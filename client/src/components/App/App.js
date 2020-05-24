@@ -29,6 +29,7 @@ const App = () => {
   const [items, setItems] = useState(null);
   const [about, setAbout] = useState(null);
   const [users, setUsers] = useState(null);
+  const [lists, setLists] = useState(null);
   const [filterTerm, setFilterTerm] = useState('');
   const [sortByTerm, setSortByTerm] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +46,7 @@ const App = () => {
         }
         return item;
       }));
+      setLists(items.lists);
       setUsers(items.users);
       setAbout(items.about);
       setIsLoading(false);
@@ -64,6 +66,7 @@ const App = () => {
       return strTofind.indexOf(searchString) !== -1;
     })
   }
+  const featuredList = lists && lists.find(list => list.featured_list);
   const isAdmin = user && users && users[user.uid].isAdmin;
   const main = isLoading
   ? <Loader />
@@ -87,6 +90,7 @@ const App = () => {
             render={props => (
               <ArtistList
                 items={handleSortByMethod(identified, sortByTerm)}
+                featuredList={featuredList}
               />
             )}
           />
@@ -110,6 +114,7 @@ const App = () => {
               <ListsPage
                 {...props}
                 userIsAdmin={isAdmin}
+                lists={lists}
               />
             )}
           />
