@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 
-import './ArtistList/ArtistList.css'
+import './ArtistList.css'
 
 const md = new Remarkable({breaks:true});
 

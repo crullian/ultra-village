@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import LazyLoad from 'react-lazyload';
 
-import LoadingCard from '../LoadingCard';
-import FeaturedArtistCard from '../FeaturedArtistCard';
-import FeaturedListCard from '../FeaturedListCard';
-import ArtistCard from '../ArtistCard';
+import LoadingCard from './LoadingCard';
+import FeaturedArtistCard from './FeaturedArtistCard';
+import FeaturedListCard from './FeaturedListCard';
+import ArtistCard from './ArtistCard';
 
 import './ArtistList.css'
 
