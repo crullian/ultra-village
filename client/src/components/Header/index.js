@@ -43,15 +43,7 @@ const Header = (props) => {
         </Link>
       </div>
       <div className="App-header-row toolbar">
-        {props.location.pathname !== '/' &&
-          <IconButton
-            aria-label="Back"
-            onClick={props.history.goBack}
-          >
-            <ArrowBackIosIcon className="back" />
-          </IconButton>
-        }
-        {props.location.pathname === '/' &&
+        {props.location.pathname === '/' ? (
           <React.Fragment>
             <TextField
               autoComplete="off"
@@ -86,7 +78,14 @@ const Header = (props) => {
               </Select>
             </FormControl>
           </React.Fragment>
-        }
+        ) : (
+          <IconButton
+            aria-label="Back"
+            onClick={props.history.goBack}
+          >
+            <ArrowBackIosIcon className="back" />
+          </IconButton>
+        )}
       </div>
     </header>
   )
