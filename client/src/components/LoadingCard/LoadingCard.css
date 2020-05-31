@@ -8,3 +8,15 @@
   border-radius: 3px;
   transition: box-shadow .3s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
+
+@media only screen and (min-width: 380px) {
+  .LoadingCard-container {
+    width: 380px;
+  }
+}
+
+@media only screen and (min-width: 792px) {
+  .LoadingCard-container {
+    margin: 8px;
+  }
+}
