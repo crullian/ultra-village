@@ -8,31 +8,33 @@ import ArtistCard from '../ArtistCard';
 
 import './ArtistList.css'
 
-const ArtistList = ({ items, featuredList }) => {
+const ArtistList = ({ items, featuredList, filterTerm }) => {
   useEffect(() => {
     document.title = 'Ultravillage';
   }, [])
 
-  const featured = (() => items && items.find(item => item.featured))();
+  const featured = (() => items.find(item => item.featured))();
 
-  const filteredOutFeaturedItems = (() => items && items.filter(item => !item.featured))();
+  const filteredOutFeaturedItems = (() => items.filter(item => !item.featured))();
 
   return (
     <div className="ArtistList-flex-container">
-      {featuredList && (
+      {featuredList && !filterTerm &&(
         <FeaturedListCard featuredList={featuredList} />
       )}
-      {featured && (
+      {featured && !filterTerm && (
         <FeaturedArtistCard featuredArtist={featured} />
       )}
 
-      {filteredOutFeaturedItems && filteredOutFeaturedItems.map((item, i) => {
-        return (
-          <LazyLoad key={i} height={110} offset={100} placeholder={<LoadingCard />}>
-            <ArtistCard key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${i}`} item={item} />
-          </LazyLoad>
-        );
-      })}
+      {filteredOutFeaturedItems &&
+        filteredOutFeaturedItems.filter(item =>
+          item.artist_name.toLowerCase().indexOf(filterTerm) !== -1).map((item, i) => (
+            <LazyLoad key={i} height={110} offset={100} placeholder={<LoadingCard />}>
+              <ArtistCard key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${i}`} item={item} />
+            </LazyLoad>
+          )
+        )
+      }
     </div>
   );
 };

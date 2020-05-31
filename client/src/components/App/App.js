@@ -57,16 +57,8 @@ const App = () => {
 
   const setSortByMethod = term => dispatch({sortByTerm: term});
 
-  let identified = items;
-
-  if (filterTerm && identified) {
-    identified = identified.filter((item) => {
-      let searchString = filterTerm;
-      let strTofind = item.artist_name.toLowerCase();
-      return strTofind.indexOf(searchString) !== -1;
-    })
-  }
   const featuredList = lists && lists.find(list => list.featured_list);
+  
   const main = isLoading
   ? <Loader />
   : (
@@ -88,8 +80,9 @@ const App = () => {
             path="/"
             render={props => (
               <ArtistList
-                items={handleSortByMethod(identified, sortByTerm)}
-                featuredList={filterTerm ? null : featuredList}
+                filterTerm={filterTerm}
+                items={handleSortByMethod(items, sortByTerm)}
+                featuredList={featuredList}
               />
             )}
           />
