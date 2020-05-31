@@ -16,7 +16,7 @@ import firebase from '../../firebase.js';
 import './ArtistPage.css';
 
 
-const ArtistPage = ({ artist, userIsAdmin }) => {
+const ArtistPage = ({ artist, artistId }) => {
   const [open, setOpen] = useState(false);
   const [reviewExpanded, setReviewExpanded] = useState(false);
 
@@ -24,14 +24,14 @@ const ArtistPage = ({ artist, userIsAdmin }) => {
     document.title = `Ultravillage | ${artist.artist_name}`;
   });
 
-  const handleUpdateBody = (e) => {
-    firebase.database().ref('/pages/' + artist.id).update({
+  const handleUpdateBody = e => {
+    firebase.database().ref('/pages/' + artistId).update({
       body: e.target.value
     });
   }
 
   const handleUpdateReview = (albumIndex, albumId) => e => {
-    firebase.database().ref(`/pages/${artist.id}/albums/${albumIndex}/albums/${albumId}`).update({
+    firebase.database().ref(`/pages/${artistId}/albums/${albumIndex}/albums/${albumId}`).update({
       review: e.target.value
     });
   }
@@ -60,7 +60,6 @@ const ArtistPage = ({ artist, userIsAdmin }) => {
       
       <EditableContent
         collapsible
-        userIsAdmin={userIsAdmin}
         changeHandler={handleUpdateBody}
         content={artist.body}
       />
@@ -90,7 +89,6 @@ const ArtistPage = ({ artist, userIsAdmin }) => {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                       <EditableContent
-                        userIsAdmin={userIsAdmin}
                         changeHandler={handleUpdateReview(i, j)}
                         content={album.review}
                       />

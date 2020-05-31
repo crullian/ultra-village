@@ -5,16 +5,19 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
+import useAuth from '../../hooks/useAuth';
+
 import './EditableContent.css';
 
-const md = new Remarkable({breaks:true});
+const md = new Remarkable({ breaks:true });
 
-const EditableContent = ({ userIsAdmin, changeHandler, content, collapsible }) => {
+const EditableContent = ({ changeHandler, content, collapsible }) => {
+	const user = useAuth();
 	const [expanded, setExpanded] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
 	return (
 		<div className="Editable-content-container">
-			<EditToggle show={userIsAdmin} isEditing={isEditing} toggleHandler={() => setIsEditing(!isEditing)} />
+			<EditToggle show={Boolean(user)} isEditing={isEditing} toggleHandler={() => setIsEditing(!isEditing)} />
 			<div className="Editable-content-flex-container">
 			{isEditing ? (
 		    <TextareaAutosize

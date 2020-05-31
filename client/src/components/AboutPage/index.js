@@ -5,7 +5,7 @@ import firebase from '../../firebase.js';
 
 import './AboutPage.css';
 
-const AboutPage = ({ userIsAdmin, content }) => {
+const AboutPage = ({ content }) => {
   useEffect(() => {
     document.title = `Ultravillage | about`;
   });
@@ -15,7 +15,6 @@ const AboutPage = ({ userIsAdmin, content }) => {
   return (
     <div className="AboutPage-container">
       <EditableContent
-        userIsAdmin={userIsAdmin}
         changeHandler={handleUpdateContent}
         content={content}
       />

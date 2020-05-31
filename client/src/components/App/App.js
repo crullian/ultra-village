@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import {
   Route,
   Switch,
@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import firebase from '../../firebase.js';
-import values from 'object.values';
 
 import handleSortByMethod from '../sortFunctions';
 
@@ -26,36 +25,37 @@ import './App.css';
 
 const App = () => {
   const user = useAuth();
-  const [items, setItems] = useState(null);
-  const [about, setAbout] = useState(null);
-  const [users, setUsers] = useState(null);
-  const [lists, setLists] = useState(null);
-  const [filterTerm, setFilterTerm] = useState('');
-  const [sortByTerm, setSortByTerm] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+
+  const initialState = {
+    items: [],
+    about: '',
+    lists: [],
+    filterTerm: '',
+    sortByTerm: '',
+    isLoading: true
+  }
+  const stateReducer = (state, newState) => ({...state, ...newState});
+  const [state, dispatch] = useReducer(stateReducer, initialState);
 
   useEffect(() => {
     const itemsRef = firebase.database().ref('/');
     itemsRef.on('value', snapshot => {
       let items = snapshot.val();
       window.pages = items.pages;
-      setItems(values(items.pages).map((item, i) => {
-        // assign page id
-        if (!item.id) {
-          item.id = i;
-        }
-        return item;
-      }));
-      setLists(items.lists);
-      setUsers(items.users);
-      setAbout(items.about);
-      setIsLoading(false);
+      dispatch({
+        items: items.pages,
+        lists: items.lists,
+        about: items.about,
+        isLoading: false
+      });
     });
   }, []);
 
-  const handleSearch = term => setFilterTerm(term.toLowerCase());
+  const { isLoading, items, lists, about, filterTerm, sortByTerm } = state;
 
-  const setSortByMethod = term => setSortByTerm(term);
+  const handleSearch = term => dispatch({filterTerm: term.toLowerCase()});
+
+  const setSortByMethod = term => dispatch({sortByTerm: term});
 
   let identified = items;
 
@@ -67,7 +67,6 @@ const App = () => {
     })
   }
   const featuredList = lists && lists.find(list => list.featured_list);
-  const isAdmin = user && users && users[user.uid].isAdmin;
   const main = isLoading
   ? <Loader />
   : (
@@ -101,8 +100,7 @@ const App = () => {
             render={props => (
               <AboutPage
                 {...props}
-                content={about} 
-                userIsAdmin={isAdmin}
+                content={about}
               />
             )}
           />
@@ -110,13 +108,7 @@ const App = () => {
           <Route
             exact
             path="/lists"
-            render={props => (
-              <ListsPage
-                {...props}
-                userIsAdmin={isAdmin}
-                lists={lists}
-              />
-            )}
+            component={ListsPage}
           />
 
           {items.map((item, i) => {
@@ -129,7 +121,6 @@ const App = () => {
                   <ArtistPage
                     {...props}
                     artistId={i}
-                    userIsAdmin={isAdmin}
                     artist={item}
                   />
                 )}
