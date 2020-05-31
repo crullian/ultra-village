@@ -57,8 +57,8 @@ const App = () => {
 
   const setSortByMethod = term => dispatch({sortByTerm: term});
 
-  const featuredList = lists && lists.find(list => list.featured_list);
-  
+  const featuredList = lists.find(list => list.featured_list);
+
   const main = isLoading
   ? <Loader />
   : (
