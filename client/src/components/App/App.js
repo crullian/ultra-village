@@ -35,14 +35,14 @@ const App = () => {
     isLoading: true
   }
   const stateReducer = (state, newState) => ({...state, ...newState});
-  const [state, dispatch] = useReducer(stateReducer, initialState);
+  const [state, setState] = useReducer(stateReducer, initialState);
 
   useEffect(() => {
     const itemsRef = firebase.database().ref('/');
     itemsRef.on('value', snapshot => {
       let items = snapshot.val();
       window.pages = items.pages;
-      dispatch({
+      setState({
         items: items.pages,
         lists: items.lists,
         about: items.about,
@@ -53,75 +53,13 @@ const App = () => {
 
   const { isLoading, items, lists, about, filterTerm, sortByTerm } = state;
 
-  const handleSearch = term => dispatch({filterTerm: term.toLowerCase()});
+  const handleSearch = term => setState({filterTerm: term.toLowerCase()});
 
-  const setSortByMethod = term => dispatch({sortByTerm: term});
+  const setSortByMethod = term => setState({sortByTerm: term});
+
+  const kababCase = str => str.toLowerCase().replace(/[. ,:-]+/g, "-");
 
   const featuredList = lists.find(list => list.featured_list);
-
-  const main = isLoading
-  ? <Loader />
-  : (
-      <main className="App-panel">   
-        <Switch>
-          <Route exact path="/auth">
-            <AuthPage
-              user={user}
-            />
-          </Route>
-
-          <Route exact path="/">
-            <ArtistList
-              filterTerm={filterTerm}
-              items={handleSortByMethod(items, sortByTerm)}
-              featuredList={featuredList}
-            />
-          </Route>
-
-          <Route exact path="/about">
-            <AboutPage
-              content={about}
-            />
-          </Route>
-
-          <Route exact path="/lists">
-            <ListsPage />
-          </Route>
-
-          {items.map((item, i) => (
-            <Route
-              exact
-              key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${i}`}
-              path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-            >
-              <ArtistPage
-                artistId={i}
-                artist={item}
-              />
-            </Route>
-          ))}
-
-          {items.map(item =>
-            item.albums.map((item, i) =>
-              item.albums.map((album, i) => (
-                <Route
-                  exact
-                  key={`${album.title}-${i}`}
-                  path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}/${album.title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-                >
-                  <RecordPage
-                    record={album}
-                  />
-                </Route>
-              ))
-            )
-          )}
-
-          <Redirect to="/" />
-          <Route path="/*" render={props => <ErrorPage />} />
-        </Switch>
-      </main>
-    );
 
   return (
     <div className="App">
@@ -131,7 +69,74 @@ const App = () => {
         sortBy={sortByTerm}
         sortByMethod={setSortByMethod}
       />
-      { main }
+      {
+        isLoading
+        ? (
+          <Loader />
+        ) : (
+          <main className="App-panel">   
+            <Switch>
+              <Route exact path="/auth">
+                <AuthPage
+                  user={user}
+                />
+              </Route>
+
+              <Route exact path="/">
+                <ArtistList
+                  filterTerm={filterTerm}
+                  items={handleSortByMethod(items, sortByTerm)}
+                  featuredList={featuredList}
+                />
+              </Route>
+
+              <Route exact path="/about">
+                <AboutPage
+                  content={about}
+                />
+              </Route>
+
+              <Route exact path="/lists">
+                <ListsPage />
+              </Route>
+
+              {items.map((item, i) => (
+                <Route
+                  exact
+                  key={`${kababCase(item.artist_name)}-${i}`}
+                  path={`/${kababCase(item.artist_name)}`}
+                >
+                  <ArtistPage
+                    artistId={i}
+                    artist={item}
+                  />
+                </Route>
+              ))}
+
+              {items.map(item =>
+                item.albums.map((item, i) =>
+                  item.albums.map((album, i) => (
+                    <Route
+                      exact
+                      key={`${kababCase(album.title)}-${i}`}
+                      path={`/${kababCase(item.artist_name)}/${kababCase(album.title)}`}
+                    >
+                      <RecordPage
+                        record={album}
+                      />
+                    </Route>
+                  ))
+                )
+              )}
+
+              <Redirect to="/" />
+              <Route path="/*">
+                <ErrorPage />
+              </Route>
+            </Switch>
+          </main>
+        )
+      }
       <footer className={`App-footer ${isLoading ? 'hide' : ''} center-text`}></footer>
     </div>
   );

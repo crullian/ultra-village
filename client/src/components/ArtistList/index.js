@@ -11,7 +11,7 @@ import './ArtistList.css'
 const ArtistList = ({ items, featuredList, filterTerm }) => {
   useEffect(() => {
     document.title = 'Ultravillage';
-  }, [])
+  }, []);
 
   const featured = items.find(item => item.featured);
 
@@ -29,7 +29,7 @@ const ArtistList = ({ items, featuredList, filterTerm }) => {
       {filteredOutFeaturedItems.filter(item =>
         item.artist_name.toLowerCase().indexOf(filterTerm) !== -1).map((item, i) => (
           <LazyLoad key={i} height={110} offset={100} placeholder={<LoadingCard />}>
-            <ArtistCard key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${i}`} item={item} />
+            <ArtistCard item={item} />
           </LazyLoad>
         )
       )}
