@@ -19,10 +19,20 @@ const ArtistList = ({ items, featuredList, filterTerm }) => {
   return (
     <div className="ArtistList-flex-container">
       {featuredList && !filterTerm && (
-        <FeaturedCard title={featuredList.title} image={featuredList.image} body={featuredList.body} />
+        <FeaturedCard 
+          title={featuredList.title} 
+          image={featuredList.image} 
+          body={featuredList.body} 
+          category={'List'}
+        />
       )}
       {featured && !filterTerm && (
-        <FeaturedCard title={featured.artist_name} image={featured.image} body={featured.body.split('. ')[0] + '.'} />
+        <FeaturedCard 
+          title={featured.artist_name} 
+          image={featured.image} 
+          body={featured.body.split('. ')[0] + '.'} 
+          category={'Artist'}
+        />
       )}
 
       {filteredOutFeaturedItems.filter(item =>

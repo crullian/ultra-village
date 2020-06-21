@@ -15,7 +15,16 @@ const theme = createMuiTheme({
   },
   palette: {
     brandBlue: 'rgb(14, 97, 253)'
-  }
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 380,
+      md: 808,
+      lg: 1475,
+      xl: 1920,
+    },
+  },
 });
 
 ReactDOM.render(

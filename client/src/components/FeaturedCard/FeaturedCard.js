@@ -6,33 +6,39 @@ import { withStyles } from '@material-ui/core/styles';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 
-import '../ArtistList/ArtistList.css'
+import './FeaturedCard.css'
 
 const md = new Remarkable({breaks:true});
 
-const styles = theme => ({
-  avatar: {
-    alignItems: 'end'
-  },
-  content: {
-    alignSelf: 'center'
-  }
-});
+const styles = theme => {
+  console.log('THEME', theme.breakpoints);
+  return ({
+    avatar: {
+      [theme.breakpoints.down('sm')]:{
+        display: 'block'
+      },
+      [theme.breakpoints.up('md')]:{
+        display: 'flex'
+      },
+      alignItems: 'end'
+    }
+  });
+}
 
-const FeaturedCard = ({ classes, title, image, body }) => (
+const FeaturedCard = ({ classes, title, image, body, category }) => (
 	<Link
     to={`/${title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-    className="ArtistList-item-container featured"
+    className="FeaturedCard-container featured"
   >
-    <h3 style={{padding: '0 24px'}}>Featured Artist: {title}</h3>
+    <h3 style={{padding: '0 24px'}}>Featured {category}: {title}</h3>
 
     <CardHeader
-      className={{...classes.avatar,...classes.content }}
+      className={classes.avatar}
       avatar={
         <img
-          alt="artist"
+          alt={category}
           src={image}
-          className="ArtistPage-img"
+          className="FeaturedCard-image"
         />
       }
       subheader={
