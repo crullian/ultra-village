@@ -8,8 +8,6 @@ const ListsPage = ({ lists }) => {
     document.title = 'Ultravillage | lists';
   }, []);
 
-  console.log('lists', lists);
-
   return (
   	<div className="ListsPage-flex-container">
   		{lists.map(list => <ListCard item={list} />)}

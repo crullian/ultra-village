@@ -15,6 +15,7 @@ import Header from '../Header/';
 import ArtistList from '../ArtistList/';
 import ArtistPage from '../ArtistPage/';
 import ListsPage from '../ListsPage';
+import ListPage from '../ListPage';
 import RecordPage from '../RecordPage/';
 import AuthPage from '../AuthPage/';
 import AboutPage from '../AboutPage/';
@@ -100,6 +101,19 @@ const App = () => {
                 <ListsPage lists={lists} />
               </Route>
 
+              {lists.map((list, i) => (
+                <Route
+                  exact
+                  key={`${kababCase(list.title)}-${i}`}
+                  path={`/${kababCase(list.title)}`}
+                >
+                  <ListPage
+                    listId={i}
+                    list={list}
+                  />
+                </Route>
+              ))}
+
               {items.map((item, i) => (
                 <Route
                   exact
@@ -129,7 +143,7 @@ const App = () => {
                 )
               )}
 
-              <Redirect to="/" />
+              
               <Route path="/*">
                 <ErrorPage />
               </Route>
