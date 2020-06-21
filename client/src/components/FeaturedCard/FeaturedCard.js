@@ -6,36 +6,39 @@ import { withStyles } from '@material-ui/core/styles';
 import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 
-import './ArtistList.css'
+import '../ArtistList/ArtistList.css'
 
 const md = new Remarkable({breaks:true});
 
 const styles = theme => ({
   avatar: {
     alignItems: 'end'
+  },
+  content: {
+    alignSelf: 'center'
   }
 });
 
-const FeaturedListCard = ({ classes, featuredList }) => (
+const FeaturedCard = ({ classes, title, image, body }) => (
 	<Link
-    to={`/${featuredList.list_title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
+    to={`/${title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
     className="ArtistList-item-container featured"
   >
-    <h3 style={{padding: '0 24px'}}>Featured List: {featuredList.list_title}</h3>
+    <h3 style={{padding: '0 24px'}}>Featured Artist: {title}</h3>
 
     <CardHeader
-      className={classes.avatar}
+      className={{...classes.avatar,...classes.content }}
       avatar={
         <img
-          alt="list"
-          src={featuredList.list_image}
+          alt="artist"
+          src={image}
           className="ArtistPage-img"
         />
       }
       subheader={
         <Typography
-          component="p"
-          dangerouslySetInnerHTML={{ __html: md.render(featuredList.body.split('. ')[0] + '.') }}
+          component="div"
+          dangerouslySetInnerHTML={{ __html: md.render(body) }}
         >
         </Typography>
       }
@@ -43,4 +46,4 @@ const FeaturedListCard = ({ classes, featuredList }) => (
   </Link>
 );
 
-export default withStyles(styles)(FeaturedListCard);
+export default withStyles(styles)(FeaturedCard);

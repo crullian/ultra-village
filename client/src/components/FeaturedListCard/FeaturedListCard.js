@@ -13,29 +13,33 @@ const md = new Remarkable({breaks:true});
 const styles = theme => ({
   avatar: {
     alignItems: 'end'
+  },
+  content: {
+    alignSelf: 'center'
   }
 });
 
-const FeaturedArtistCard = ({ classes, featuredArtist }) => (
+const FeaturedListCard = ({ classes, featuredList }) => (
 	<Link
-    to={`/${featuredArtist.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
+    to={`/${featuredList.title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
     className="ArtistList-item-container featured"
   >
-    <h3 style={{padding: '0 24px'}}>Featured Artist: {featuredArtist.artist_name}</h3>
+    <h3 style={{padding: '0 24px'}}>Featured List: {featuredList.title}</h3>
 
     <CardHeader
       className={classes.avatar}
       avatar={
         <img
-          alt="artist"
-          src={featuredArtist.image}
+          alt="list"
+          src={featuredList.image}
           className="ArtistPage-img"
         />
       }
       subheader={
         <Typography
+          className={classes.content}
           component="p"
-          dangerouslySetInnerHTML={{ __html: md.render(featuredArtist.body.split('. ')[0] + '.') }}
+          dangerouslySetInnerHTML={{ __html: md.render(featuredList.body.split('. ')[0] + '.') }}
         >
         </Typography>
       }
@@ -43,4 +47,4 @@ const FeaturedArtistCard = ({ classes, featuredArtist }) => (
   </Link>
 );
 
-export default withStyles(styles)(FeaturedArtistCard);
+export default withStyles(styles)(FeaturedListCard);

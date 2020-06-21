@@ -1,4 +1,4 @@
-.ListsPage-container {
+.ListsPage-flex-container {
 	margin: 0 0 10px;
   padding: 0px;
   border-radius: 3px;
@@ -7,4 +7,41 @@
   animation-duration: .5s;
   animation-timing-function: ease-in;
   animation-fill-mode: forwards;
+}
+
+.ListsPage-item-container {
+  width: 100%;
+  margin: 0 0 10px 0;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px,
+              rgba(0, 0, 0, 0.12) 0px 1px 4px;
+  border-radius: 3px;
+  transition: box-shadow .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.ListsPage-item-image {
+  width: 160px;
+  height: 160px;
+  align-self: center;
+  object-fit: cover;
+}
+
+.ListsPage-item-name {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+/****************** Media Query *****************/
+
+@media only screen and (min-width: 380px) {
+  .ListsPage-item-container {
+    width: 380px;
+  }
+}
+
+@media only screen and (min-width: 792px) {
+  .ListsPage-item-container {
+    margin: 8px;
+  }
 }

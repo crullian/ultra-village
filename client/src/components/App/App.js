@@ -59,7 +59,7 @@ const App = () => {
 
   const kababCase = str => str.toLowerCase().replace(/[. ,:-]+/g, "-");
 
-  const featuredList = lists.find(list => list.featured_list);
+  const featuredList = lists.find(list => list.featured);
 
   return (
     <div className="App">
@@ -97,7 +97,7 @@ const App = () => {
               </Route>
 
               <Route exact path="/lists">
-                <ListsPage />
+                <ListsPage lists={lists} />
               </Route>
 
               {items.map((item, i) => (
