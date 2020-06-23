@@ -25,6 +25,7 @@ const ArtistPage = ({ artist, artistId }) => {
   });
 
   const handleUpdateBody = e => {
+    console.log('Da fuq', e.target.value, '/pages/', artistId)
     firebase.database().ref('/pages/' + artistId).update({
       body: e.target.value
     });
@@ -41,7 +42,7 @@ const ArtistPage = ({ artist, artistId }) => {
       setReviewExpanded(expanded ? album.title : false)
     }
   };
-
+console.log('ARTIST', artist.artist_name, artistId)
   return (
     <div className="ArtistPage-container">
       <CardHeader
@@ -64,43 +65,45 @@ const ArtistPage = ({ artist, artistId }) => {
         content={artist.body}
       />
 
-      <section className="ArtistPage-disco">
-        <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
-        <div>
-        {artist.albums.map((albumList, i) => {
-          return (
-            <div key={`album-index-${i}`} style={{padding: '0 8px'}}>
-              <h4 className="ArtistPage-disco-heading">{albumList.artist_name}</h4>
-              {albumList.albums.map((album, j) => {
-                const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
-                return (
-                  <ExpansionPanel
-                    key={`${album.title}-${j}`}
-                    expanded={reviewExpanded === album.title}
-                    onChange={handleReviewExpandChange(album)}
-                  >
-                    <ExpansionPanelSummary
-                      style={{cursor: album.review ? 'pointer' : 'default'}}
-                      expandIcon={album.review ? <ExpandMoreIcon /> : null}
+      {artist.albums && 
+        <section className="ArtistPage-disco">
+          <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
+          <div>
+          {artist.albums.map((albumList, i) => {
+            return (
+              <div key={`album-index-${i}`} style={{padding: '0 8px'}}>
+                <h4 className="ArtistPage-disco-heading">{albumList.artist_name}</h4>
+                {albumList.albums.map((album, j) => {
+                  const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
+                  return (
+                    <ExpansionPanel
+                      key={`${album.title}-${j}`}
+                      expanded={reviewExpanded === album.title}
+                      onChange={handleReviewExpandChange(album)}
                     >
-                      <Typography>
-                        {heading}
-                      </Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                      <EditableContent
-                        changeHandler={handleUpdateReview(i, j)}
-                        content={album.review}
-                      />
-                    </ExpansionPanelDetails>
-                  </ExpansionPanel>
-                )
-              })}
-              </div>
-            )
-          })}
-        </div>
-      </section>
+                      <ExpansionPanelSummary
+                        style={{cursor: album.review ? 'pointer' : 'default'}}
+                        expandIcon={album.review ? <ExpandMoreIcon /> : null}
+                      >
+                        <Typography>
+                          {heading}
+                        </Typography>
+                      </ExpansionPanelSummary>
+                      <ExpansionPanelDetails>
+                        <EditableContent
+                          changeHandler={handleUpdateReview(i, j)}
+                          content={album.review}
+                        />
+                      </ExpansionPanelDetails>
+                    </ExpansionPanel>
+                  )
+                })}
+                </div>
+              )
+            })}
+          </div>
+        </section>
+      }
 
       <Dialog
         open={open}

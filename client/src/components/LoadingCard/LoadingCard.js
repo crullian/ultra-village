@@ -1,8 +1,10 @@
 import React from 'react';
 import ContentLoader from "react-content-loader";
 
+import './LoadingCard.css';
+
 const LoadingCard = () => (
-  <div className="ArtistList-item-container">
+  <div className="LoadingCard-container">
     <ContentLoader
       speed={2}
       width={380}

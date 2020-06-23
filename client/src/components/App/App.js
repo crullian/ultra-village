@@ -28,7 +28,7 @@ const App = () => {
   const user = useAuth();
 
   const initialState = {
-    items: [],
+    items: null,
     about: '',
     lists: [],
     filterTerm: '',
@@ -42,10 +42,14 @@ const App = () => {
     const itemsRef = firebase.database().ref('/');
     itemsRef.on('value', snapshot => {
       let items = snapshot.val();
-      window.pages = items.pages;
+      window.pages = items;
+      // .reduce((acc, curr) => {
+      //   acc[curr.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")] = curr;
+      //   return acc;
+      // }, {});
       setState({
         items: items.pages,
-        lists: items.lists,
+        lists: Object.values(items.lists),
         about: items.about,
         isLoading: false
       });
@@ -61,6 +65,8 @@ const App = () => {
   const kababCase = str => str.toLowerCase().replace(/[. ,:-]+/g, "-");
 
   const featuredList = lists.find(list => list.featured);
+
+  console.log('ITEMS', items)
 
   return (
     <div className="App">
@@ -108,7 +114,6 @@ const App = () => {
                   path={`/${kababCase(list.title)}`}
                 >
                   <ListPage
-                    listId={i}
                     list={list}
                   />
                 </Route>
@@ -121,18 +126,18 @@ const App = () => {
                   path={`/${kababCase(item.artist_name)}`}
                 >
                   <ArtistPage
-                    artistId={i}
+                    artistId={item.entry_number -1}
                     artist={item}
                   />
                 </Route>
               ))}
 
               {items.map(item =>
-                item.albums.map((item, i) =>
-                  item.albums.map((album, i) => (
+                item.albums.map(thing =>
+                  thing.albums.map((album, j) => (
                     <Route
                       exact
-                      key={`${kababCase(album.title)}-${i}`}
+                      key={`${kababCase(album.title)}-${j}`}
                       path={`/${kababCase(item.artist_name)}/${kababCase(album.title)}`}
                     >
                       <RecordPage

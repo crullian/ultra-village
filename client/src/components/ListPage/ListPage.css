@@ -1,0 +1,32 @@
+.ListPage-container {
+  margin: 0 0 10px;
+  padding: 0px;
+  border-radius: 3px;
+  
+  animation-name: fade-up;
+  animation-duration: .5s;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+
+.ListPage-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+.ListPage-disco-heading {
+  padding: 0 20px;
+  margin: 10px 0;
+}
+
+/****************** Media Query *****************/ 
+
+@media only screen and (min-width: 768px) {
+  .ListPage-img {
+    width: 160px;
+    height: 160px;
+    align-self: flex-start;
+  }
+}
