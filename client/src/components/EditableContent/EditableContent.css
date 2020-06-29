@@ -8,8 +8,8 @@
 }
 
 #Page-markdown-content {
+  overflow: scroll !important;
   width: 100%;
-  height: 250px;
   background-color: rgba(255,255,255, 0);
   margin-bottom: 5px;
   border: 1px #ddd solid;
@@ -45,5 +45,5 @@
 }
 
 .Editable-content-review-expand-btn .expanded {
-  transition: all 1s ease;
+  transition: all 1s ease-in-out;
 }

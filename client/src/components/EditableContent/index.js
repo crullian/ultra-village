@@ -21,6 +21,7 @@ const EditableContent = ({ changeHandler, content, collapsible }) => {
 			<div className="Editable-content-flex-container">
 			{isEditing ? (
 		    <TextareaAutosize
+		    	autoFocus
 		      id="Page-markdown-content"
 		      className="Editable-content-review Editable-content-review-content"
 		      onChange={changeHandler}

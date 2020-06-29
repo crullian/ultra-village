@@ -25,8 +25,8 @@ const ArtistPage = ({ artist, artistId }) => {
   });
 
   const handleUpdateBody = e => {
-    console.log('Da fuq', e.target.value, '/pages/', artistId)
-    firebase.database().ref('/pages/' + artistId).update({
+    console.log('Da fuq', e.target.value, '/artists/', artist.id)
+    firebase.database().ref('/artists/' + artist.id).update({
       body: e.target.value
     });
   }
