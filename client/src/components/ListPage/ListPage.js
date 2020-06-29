@@ -18,7 +18,7 @@ import './ListPage.css';
 const ListPage = ({ list, listId }) => {
 	return (
 		<div className="ListPage-container">
-			{list.title}
+			List Page for {list.title}
 		</div>
 	)
 };

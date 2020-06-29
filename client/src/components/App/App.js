@@ -28,8 +28,9 @@ const App = () => {
   const user = useAuth();
 
   const initialState = {
-    items: null,
     about: '',
+    artists: [],
+    items: null,
     lists: [],
     filterTerm: '',
     sortByTerm: '',
@@ -41,22 +42,28 @@ const App = () => {
   useEffect(() => {
     const itemsRef = firebase.database().ref('/');
     itemsRef.on('value', snapshot => {
-      let items = snapshot.val();
-      window.pages = items;
+      let db = snapshot.val();
+      window.pages = db;
       // .reduce((acc, curr) => {
       //   acc[curr.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")] = curr;
       //   return acc;
       // }, {});
+      console.log('ENTRIES', Object.entries(db.lists).map(entry => ({...entry[1], ...{id: entry[0]}})));
       setState({
-        items: items.pages,
-        lists: Object.values(items.lists),
-        about: items.about,
+        about: db.about,
+        artists: massageEntries(db.artists),
+        items: massageEntries(db.artists), //db.pages,
+        lists: massageEntries(db.lists),
         isLoading: false
       });
     });
   }, []);
 
-  const { isLoading, items, lists, about, filterTerm, sortByTerm } = state;
+  const massageEntries = entries => {
+    return Object.entries(entries).map(entry => ({...entry[1], ...{id: entry[0]}}))
+  }
+
+  const { isLoading, artists, items, lists, about, filterTerm, sortByTerm } = state;
 
   const handleSearch = term => setState({filterTerm: term.toLowerCase()});
 
@@ -133,8 +140,8 @@ const App = () => {
               ))}
 
               {items.map(item =>
-                item.albums.map(thing =>
-                  thing.albums.map((album, j) => (
+                item.discograpy && Object.values(item.discograpy).map(thing =>
+                  thing.albums && Object.values(thing.albums).map((album, j) => (
                     <Route
                       exact
                       key={`${kababCase(album.title)}-${j}`}
@@ -148,7 +155,7 @@ const App = () => {
                 )
               )}
 
-              
+              <Redirect to="/" />
               <Route path="/*">
                 <ErrorPage />
               </Route>

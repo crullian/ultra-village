@@ -65,15 +65,15 @@ console.log('ARTIST', artist.artist_name, artistId)
         content={artist.body}
       />
 
-      {artist.albums && 
+      {artist.discography && 
         <section className="ArtistPage-disco">
           <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
           <div>
-          {artist.albums.map((albumList, i) => {
+          {Object.values(artist.discography).map((albumList, i) => {
             return (
               <div key={`album-index-${i}`} style={{padding: '0 8px'}}>
                 <h4 className="ArtistPage-disco-heading">{albumList.artist_name}</h4>
-                {albumList.albums.map((album, j) => {
+                {Object.values(albumList.albums).map((album, j) => {
                   const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
                   return (
                     <ExpansionPanel

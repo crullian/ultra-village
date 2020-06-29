@@ -36,7 +36,8 @@ const ArtistList = ({ items, featuredList, filterTerm }) => {
       )}
 
       {filteredOutFeaturedItems.filter(item =>
-        item.artist_name.toLowerCase().indexOf(filterTerm) !== -1).map((item, i) => (
+        item.artist_name.toLowerCase().indexOf(filterTerm) !== -1 /*|| item.body.toLowerCase().indexOf(filterTerm) !== -1*/
+        ).map((item, i) => (
           <LazyLoad key={i} height={110} offset={100} placeholder={<LoadingCard />}>
             <ArtistCard item={item} />
           </LazyLoad>

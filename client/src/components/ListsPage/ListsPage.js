@@ -10,7 +10,7 @@ const ListsPage = ({ lists }) => {
 
   return (
   	<div className="ListsPage-flex-container">
-  		{lists.map(list => <ListCard item={list} />)}
+  		{lists.map(list => <ListCard key={list.id} item={list} />)}
   	</div>
 	);
 };
