@@ -16,7 +16,7 @@ import firebase from '../../firebase.js';
 import './ArtistPage.css';
 
 
-const ArtistPage = ({ artist, artistId }) => {
+const ArtistPage = ({ artist }) => {
   const [open, setOpen] = useState(false);
   const [reviewExpanded, setReviewExpanded] = useState(false);
 
@@ -25,14 +25,13 @@ const ArtistPage = ({ artist, artistId }) => {
   });
 
   const handleUpdateBody = e => {
-    console.log('Da fuq', e.target.value, '/artists/', artist.id)
     firebase.database().ref('/artists/' + artist.id).update({
       body: e.target.value
     });
   }
 
-  const handleUpdateReview = (albumIndex, albumId) => e => {
-    firebase.database().ref(`/pages/${artistId}/albums/${albumIndex}/albums/${albumId}`).update({
+  const handleUpdateReview = (discographyId, album) => e => {
+    firebase.database().ref(`/artists/${artist.id}/discography/${discographyId}/albums/${album.id}`).update({
       review: e.target.value
     });
   }
@@ -42,7 +41,13 @@ const ArtistPage = ({ artist, artistId }) => {
       setReviewExpanded(expanded ? album.title : false)
     }
   };
-console.log('ARTIST', artist.artist_name, artistId)
+
+  const massageEntries = entries =>
+    Object.entries(entries).map(entry => ({
+      ...entry[1],
+      ...{id: entry[0]}
+    }));
+  
   return (
     <div className="ArtistPage-container">
       <CardHeader
@@ -69,38 +74,36 @@ console.log('ARTIST', artist.artist_name, artistId)
         <section className="ArtistPage-disco">
           <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
           <div>
-          {Object.values(artist.discography).map((albumList, i) => {
-            return (
-              <div key={`album-index-${i}`} style={{padding: '0 8px'}}>
-                <h4 className="ArtistPage-disco-heading">{albumList.artist_name}</h4>
-                {Object.values(albumList.albums).map((album, j) => {
-                  const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
-                  return (
-                    <ExpansionPanel
-                      key={`${album.title}-${j}`}
-                      expanded={reviewExpanded === album.title}
-                      onChange={handleReviewExpandChange(album)}
+          {massageEntries(artist.discography).map((albumList, i) => (
+            <div key={`album-index-${i}`} style={{padding: '0 8px'}}>
+              <h4 className="ArtistPage-disco-heading">{albumList.artist_name}</h4>
+              {massageEntries(albumList.albums).map((album, j) => {
+                const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
+                return (
+                  <ExpansionPanel
+                    key={`${album.title}-${j}`}
+                    expanded={reviewExpanded === album.title}
+                    onChange={handleReviewExpandChange(album)}
+                  >
+                    <ExpansionPanelSummary
+                      style={{cursor: album.review ? 'pointer' : 'default'}}
+                      expandIcon={album.review ? <ExpandMoreIcon /> : null}
                     >
-                      <ExpansionPanelSummary
-                        style={{cursor: album.review ? 'pointer' : 'default'}}
-                        expandIcon={album.review ? <ExpandMoreIcon /> : null}
-                      >
-                        <Typography>
-                          {heading}
-                        </Typography>
-                      </ExpansionPanelSummary>
-                      <ExpansionPanelDetails>
-                        <EditableContent
-                          changeHandler={handleUpdateReview(i, j)}
-                          content={album.review}
-                        />
-                      </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                  )
-                })}
-                </div>
-              )
-            })}
+                      <Typography>
+                        {heading}
+                      </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                      <EditableContent
+                        changeHandler={handleUpdateReview(albumList.id, album)}
+                        content={album.review}
+                      />
+                    </ExpansionPanelDetails>
+                  </ExpansionPanel>
+                )
+              })}
+              </div>
+            ))}
           </div>
         </section>
       }

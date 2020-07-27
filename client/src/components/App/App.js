@@ -29,7 +29,6 @@ const App = () => {
 
   const initialState = {
     about: '',
-    artists: [],
     items: null,
     lists: [],
     filterTerm: '',
@@ -48,10 +47,9 @@ const App = () => {
       //   acc[curr.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")] = curr;
       //   return acc;
       // }, {});
-      console.log('ENTRIES', Object.entries(db.lists).map(entry => ({...entry[1], ...{id: entry[0]}})));
+      // console.log('ENTRIES', Object.entries(db.lists).map(entry => ({...entry[1], ...{id: entry[0]}})));
       setState({
         about: db.about,
-        artists: massageEntries(db.artists),
         items: massageEntries(db.artists), //db.pages,
         lists: massageEntries(db.lists),
         isLoading: false
@@ -59,11 +57,10 @@ const App = () => {
     });
   }, []);
 
-  const massageEntries = entries => {
-    return Object.entries(entries).map(entry => ({...entry[1], ...{id: entry[0]}}))
-  }
+  const massageEntries = entries =>
+    Object.entries(entries).map(entry => ({...entry[1], ...{id: entry[0]}}));
 
-  const { isLoading, artists, items, lists, about, filterTerm, sortByTerm } = state;
+  const { isLoading, items, lists, about, filterTerm, sortByTerm } = state;
 
   const handleSearch = term => setState({filterTerm: term.toLowerCase()});
 
@@ -72,8 +69,6 @@ const App = () => {
   const kababCase = str => str.toLowerCase().replace(/[. ,:-]+/g, "-");
 
   const featuredList = lists.find(list => list.featured);
-
-  console.log('ITEMS', items)
 
   return (
     <div className="App">
