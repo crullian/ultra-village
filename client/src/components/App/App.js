@@ -47,10 +47,9 @@ const App = () => {
       //   acc[curr.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")] = curr;
       //   return acc;
       // }, {});
-      // console.log('ENTRIES', Object.entries(db.lists).map(entry => ({...entry[1], ...{id: entry[0]}})));
       setState({
         about: db.about,
-        items: massageEntries(db.artists), //db.pages,
+        items: massageEntries(db.artists),
         lists: massageEntries(db.lists),
         isLoading: false
       });
