@@ -7,7 +7,7 @@ import {
 import { withRouter } from 'react-router';
 import firebase from '../../firebase.js';
 
-import handleSortByMethod from '../sortFunctions';
+import { handleSortByMethod } from '../sortFunctions';
 
 import useAuth from '../../hooks/useAuth';
 

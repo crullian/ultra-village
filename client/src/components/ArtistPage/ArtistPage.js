@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import EditableContent from '../EditableContent';
+import { byYear, byEntryNumber } from '../sortFunctions';
 
 import CardHeader from '@material-ui/core/CardHeader';
 import Dialog from '@material-ui/core/Dialog';
@@ -74,10 +75,10 @@ const ArtistPage = ({ artist }) => {
         <section className="ArtistPage-disco">
           <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
           <div>
-          {massageEntries(artist.discography).map((albumList, i) => (
+          {massageEntries(artist.discography).sort(byEntryNumber).map((albumList, i) => (
             <div key={`album-index-${i}`} style={{padding: '0 8px'}}>
               <h4 className="ArtistPage-disco-heading">{albumList.artist_name}</h4>
-              {massageEntries(albumList.albums).map((album, j) => {
+              {massageEntries(albumList.albums).sort(byYear).map((album, j) => {
                 const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
                 return (
                   <ExpansionPanel
