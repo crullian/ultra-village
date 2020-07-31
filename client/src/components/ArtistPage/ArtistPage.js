@@ -46,7 +46,7 @@ const ArtistPage = ({ artist }) => {
   const massageEntries = entries =>
     Object.entries(entries).map(entry => ({
       ...entry[1],
-      ...{id: entry[0]}
+      id: entry[0]
     }));
   
   return (
