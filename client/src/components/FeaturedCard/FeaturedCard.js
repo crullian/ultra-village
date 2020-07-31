@@ -10,25 +10,22 @@ import './FeaturedCard.css'
 
 const md = new Remarkable({breaks:true});
 
-const styles = theme => {
-  console.log('THEME', theme.breakpoints);
-  return ({
-    avatar: {
-      [theme.breakpoints.down('sm')]:{
-        display: 'block'
-      },
-      [theme.breakpoints.up('md')]:{
-        display: 'flex'
-      },
-      alignItems: 'end'
-    }
-  });
-}
+const styles = theme => ({
+  avatar: {
+    [theme.breakpoints.down('sm')]:{
+      display: 'block'
+    },
+    [theme.breakpoints.up('md')]:{
+      display: 'flex'
+    },
+    alignItems: 'end'
+  }
+});
 
 const FeaturedCard = ({ classes, title, image, body, category }) => (
 	<Link
     to={`/${title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-    className="FeaturedCard-container featured"
+    className="FeaturedCard-container"
   >
     <h3 style={{padding: '0 24px'}}>Featured {category}: {title}</h3>
 
