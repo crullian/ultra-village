@@ -1,0 +1,49 @@
+.Editable-content-container {
+	width: 100%;
+}
+
+.Editable-content-flex-container {
+	display: flex;
+  flex-flow: column;
+}
+
+#Page-markdown-content {
+  overflow: scroll !important;
+  width: 100%;
+  background-color: rgba(255,255,255, 0);
+  margin-bottom: 5px;
+  border: 1px #ddd solid;
+  font-family: 'Google Sans', sans-serif;
+}
+
+.Editable-content-review {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  padding: 0 8px;
+  flex-grow: 1;
+  font-size: 100%;
+}
+
+.Editable-content-review-content {
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.46429em;
+}
+
+.Editable-content-review-content.hide > :not(:first-child) {
+  display: none;
+}
+
+.Editable-content-review-content a {
+  color: #0d5ffc;
+}
+
+.Editable-content-review-expand-btn {
+  align-self: flex-end;
+}
+
+.Editable-content-review-expand-btn .expanded {
+  transition: all 1s ease-in-out;
+}

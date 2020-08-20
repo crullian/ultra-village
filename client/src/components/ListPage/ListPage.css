@@ -1,4 +1,4 @@
-.ArtistPage-container {
+.ListPage-container {
   margin: 0 0 10px;
   padding: 0px;
   border-radius: 3px;
@@ -9,14 +9,14 @@
   animation-fill-mode: forwards;
 }
 
-.ArtistPage-img {
+.ListPage-img {
   width: 80px;
   height: 80px;
   object-fit: cover;
   border-radius: 3px;
 }
 
-.ArtistPage-disco-heading {
+.ListPage-disco-heading {
   padding: 0 20px;
   margin: 10px 0;
 }
@@ -24,7 +24,7 @@
 /****************** Media Query *****************/ 
 
 @media only screen and (min-width: 768px) {
-  .ArtistPage-img {
+  .ListPage-img {
     width: 160px;
     height: 160px;
     align-self: flex-start;

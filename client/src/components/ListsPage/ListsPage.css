@@ -1,9 +1,9 @@
-.ArtistList-flex-container {
-  display: flex;
+.ListsPage-flex-container {
+	display: flex;
   flex-flow: wrap;
   justify-content: center;
-
-  animation-name: fade-up;
+  
+	animation-name: fade-up;
   animation-duration: .5s;
   animation-timing-function: ease-in;
   animation-fill-mode: forwards;

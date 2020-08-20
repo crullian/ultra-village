@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import {
   Route,
   Switch,
@@ -6,15 +6,16 @@ import {
 } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import firebase from '../../firebase.js';
-import values from 'object.values';
 
-import handleSortByMethod from '../sortFunctions';
+import { handleSortByMethod } from '../sortFunctions';
 
 import useAuth from '../../hooks/useAuth';
 
 import Header from '../Header/';
 import ArtistList from '../ArtistList/';
 import ArtistPage from '../ArtistPage/';
+import ListsPage from '../ListsPage';
+import ListPage from '../ListPage';
 import RecordPage from '../RecordPage/';
 import AuthPage from '../AuthPage/';
 import AboutPage from '../AboutPage/';
@@ -25,126 +26,48 @@ import './App.css';
 
 const App = () => {
   const user = useAuth();
-  const [items, setItems] = useState(null);
-  const [about, setAbout] = useState(null);
-  const [users, setUsers] = useState(null);
-  const [filterTerm, setFilterTerm] = useState('');
-  const [sortByTerm, setSortByTerm] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+
+  const initialState = {
+    about: '',
+    items: null,
+    lists: [],
+    filterTerm: '',
+    sortByTerm: '',
+    isLoading: true
+  }
+  const stateReducer = (state, newState) => ({...state, ...newState});
+  const [state, setState] = useReducer(stateReducer, initialState);
 
   useEffect(() => {
     const itemsRef = firebase.database().ref('/');
     itemsRef.on('value', snapshot => {
-      let items = snapshot.val();
-      window.pages = items.pages;
-      setItems(values(items.pages).map((item, i) => {
-        // assign page id
-        if (!item.id) {
-          item.id = i;
-        }
-        return item;
-      }));
-      setUsers(items.users);
-      setAbout(items.about);
-      setIsLoading(false);
+      let db = snapshot.val();
+      window.pages = db;
+      // .reduce((acc, curr) => {
+      //   acc[curr.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")] = curr;
+      //   return acc;
+      // }, {});
+      setState({
+        about: db.about,
+        items: massageEntries(db.artists),
+        lists: massageEntries(db.lists),
+        isLoading: false
+      });
     });
   }, []);
 
-  const handleSearch = term => setFilterTerm(term.toLowerCase());
+  const massageEntries = entries =>
+    Object.entries(entries).map(entry => ({...entry[1], ...{id: entry[0]}}));
 
-  const setSortByMethod = term => setSortByTerm(term);
+  const { isLoading, items, lists, about, filterTerm, sortByTerm } = state;
 
-  let identified = items;
+  const handleSearch = term => setState({filterTerm: term.toLowerCase()});
 
-  if (filterTerm && identified) {
-    identified = identified.filter((item) => {
-      let searchString = filterTerm;
-      let strTofind = item.artist_name.toLowerCase();
-      return strTofind.indexOf(searchString) !== -1;
-    })
-  }
-  const isAdmin = user && users && users[user.uid].isAdmin;
-  const main = isLoading
-  ? <Loader />
-  : (
-      <main className="App-panel">   
-        <Switch>
-          <Route
-            exact
-            path="/auth"
-            render={ props => (
-              <AuthPage
-                {...props}
-                user={user}
-              />
-            )}
-          />
+  const setSortByMethod = term => setState({sortByTerm: term});
 
-          <Route
-            exact
-            path="/"
-            render={props => (
-              <ArtistList
-                items={handleSortByMethod(identified, sortByTerm)}
-              />
-            )}
-          />
+  const kababCase = str => str.toLowerCase().replace(/[. ,:-]+/g, "-");
 
-          <Route
-            exact
-            path="/about"
-            render={props => (
-              <AboutPage
-                {...props}
-                content={about} 
-                userIsAdmin={isAdmin}
-              />
-            )}
-          />
-
-          {items.map((item, i) => {
-            return (
-              <Route
-                key={`${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}-${i}`}
-                exact
-                path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-                render={props => (
-                  <ArtistPage
-                    {...props}
-                    artistId={i}
-                    userIsAdmin={isAdmin}
-                    artist={item}
-                  />
-                )}
-              />
-            )
-          })}
-
-          {items.map(item => (
-            item.albums.map((item, i) => {
-              return item.albums.map((album, i) => {
-                return (
-                  <Route
-                    key={`${album.title}-${i}`}
-                    exact
-                    path={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}/${album.title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-                    render={props => (
-                      <RecordPage
-                        {...props}
-                        record={album}
-                      />
-                    )}
-                  />
-                )
-              })
-            })
-          ))}
-
-          <Redirect to="/" />
-          <Route path="/*" render={props => <ErrorPage />} />
-        </Switch>
-      </main>
-    );
+  const featuredList = lists.find(list => list.featured);
 
   return (
     <div className="App">
@@ -154,7 +77,86 @@ const App = () => {
         sortBy={sortByTerm}
         sortByMethod={setSortByMethod}
       />
-      { main }
+      {
+        isLoading
+        ? (
+          <Loader />
+        ) : (
+          <main className="App-panel">   
+            <Switch>
+              <Route exact path="/auth">
+                <AuthPage
+                  user={user}
+                />
+              </Route>
+
+              <Route exact path="/">
+                <ArtistList
+                  filterTerm={filterTerm}
+                  items={handleSortByMethod(items, sortByTerm)}
+                  featuredList={featuredList}
+                />
+              </Route>
+
+              <Route exact path="/about">
+                <AboutPage
+                  content={about}
+                />
+              </Route>
+
+              <Route exact path="/lists">
+                <ListsPage lists={lists} />
+              </Route>
+
+              {lists.map((list, i) => (
+                <Route
+                  exact
+                  key={`${kababCase(list.title)}-${i}`}
+                  path={`/${kababCase(list.title)}`}
+                >
+                  <ListPage
+                    list={list}
+                  />
+                </Route>
+              ))}
+
+              {items.map((item, i) => (
+                <Route
+                  exact
+                  key={`${kababCase(item.artist_name)}-${i}`}
+                  path={`/${kababCase(item.artist_name)}`}
+                >
+                  <ArtistPage
+                    artistId={item.entry_number -1}
+                    artist={item}
+                  />
+                </Route>
+              ))}
+
+              {items.map(item =>
+                item.discograpy && Object.values(item.discograpy).map(thing =>
+                  thing.albums && Object.values(thing.albums).map((album, j) => (
+                    <Route
+                      exact
+                      key={`${kababCase(album.title)}-${j}`}
+                      path={`/${kababCase(item.artist_name)}/${kababCase(album.title)}`}
+                    >
+                      <RecordPage
+                        record={album}
+                      />
+                    </Route>
+                  ))
+                )
+              )}
+
+              <Redirect to="/" />
+              <Route path="/*">
+                <ErrorPage />
+              </Route>
+            </Switch>
+          </main>
+        )
+      }
       <footer className={`App-footer ${isLoading ? 'hide' : ''} center-text`}></footer>
     </div>
   );

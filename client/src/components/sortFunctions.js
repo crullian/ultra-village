@@ -34,7 +34,11 @@
     }
   }
 
-  const handleSortByMethod = (identified, sortByTerm) => {
+  export const byYear = (a, b) => a.year - b.year;
+
+  export const byEntryNumber = (a, b) => a.entry_number - b.entry_number
+
+  export const handleSortByMethod = (identified, sortByTerm) => {
     if (sortByTerm === '' || sortByTerm === 'mostRecent') {
       return identified.sort(sortByMostRecent).reverse();
     }
@@ -46,5 +50,3 @@
     }
     return null;
   }
-
-export default handleSortByMethod;

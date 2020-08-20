@@ -6,6 +6,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
+import './ArtistCard.css'
+
 const styles = theme => ({
   card: {
     display: 'flex',
@@ -30,7 +32,7 @@ const styles = theme => ({
 const ArtistCard = ({ classes, item }) => (
   <Link
     to={`/${item.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
-    className="ArtistList-item-container"
+    className="ArtistCard-container"
    >
     <Card className={classes.card}>
       <div className={classes.details}>

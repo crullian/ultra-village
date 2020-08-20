@@ -1,40 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import Remarkable from 'remarkable';
-import EditToggle from '../EditToggle';
+import React, { useEffect } from 'react';
+import EditableContent from '../EditableContent';
 
 import firebase from '../../firebase.js';
 
 import './AboutPage.css';
 
-const md = new Remarkable({breaks:true});
-
-const AboutPage = ({ userIsAdmin, content }) => {
-  const [isEditing, setIsEditing] = useState(false);
+const AboutPage = ({ content }) => {
   useEffect(() => {
     document.title = `Ultravillage | about`;
   });
-
-  const toggleEditMode = () => setIsEditing(!isEditing);
 
   const handleUpdateContent = e => firebase.database().ref('/').update({about: e.target.value});
 
   return (
     <div className="AboutPage-container">
-      <EditToggle show={userIsAdmin} isEditing={isEditing} toggleHandler={toggleEditMode} />
-      {isEditing ?
-        <textarea
-          id="Page-markdown-content"
-          className="ArtistPage-review"
-          onChange={handleUpdateContent}
-          onBlur={toggleEditMode}
-          defaultValue={content}
-        />
-        :
-        <div
-          onClick={toggleEditMode}
-          dangerouslySetInnerHTML={{ __html: md.render(content) }}
-        />
-      }
+      <EditableContent
+        changeHandler={handleUpdateContent}
+        content={content}
+      />
     </div>
   );
 };
