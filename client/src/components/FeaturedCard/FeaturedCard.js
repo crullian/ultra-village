@@ -30,6 +30,7 @@ const FeaturedCard = ({ classes, title, image, body, category }) => (
     <h3 style={{padding: '0 24px'}}>Featured {category}: {title}</h3>
 
     <CardHeader
+      classes={{avatar: 'avatar-class'}}
       className={classes.avatar}
       avatar={
         <img

@@ -43,10 +43,6 @@ const App = () => {
     itemsRef.on('value', snapshot => {
       let db = snapshot.val();
       window.pages = db;
-      // .reduce((acc, curr) => {
-      //   acc[curr.artist_name.toLowerCase().replace(/[. ,:-]+/g, "-")] = curr;
-      //   return acc;
-      // }, {});
       setState({
         about: db.about,
         items: massageEntries(db.artists),
@@ -157,7 +153,6 @@ const App = () => {
           </main>
         )
       }
-      <footer className={`App-footer ${isLoading ? 'hide' : ''} center-text`}></footer>
     </div>
   );
 }

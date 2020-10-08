@@ -1,7 +1,7 @@
 .FeaturedCard-container {
   width: 100%;
   margin: 0 0 10px 0;
-  padding: 32px 0px;
+  padding: 16px 0 8px;
   background: #fff;
   overflow: hidden;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px,
@@ -15,9 +15,13 @@
               0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
+.avatar-class {
+  margin-right: 0 !important;
+}
+
 .FeaturedCard-image {
   width: 100%;
-  height: 150px;
+  height: auto;
   object-fit: cover;
   border-radius: 3px;
 }
@@ -27,6 +31,9 @@
 @media only screen and (min-width: 792px) {
   .FeaturedCard-container {
     margin: 8px;
+  }
+  .avatar-class {
+    margin-right: 16px !important;
   }
   .FeaturedCard-image {
     width: 160px;
