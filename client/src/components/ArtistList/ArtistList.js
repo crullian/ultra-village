@@ -18,14 +18,14 @@ const ArtistList = ({ items, featuredList, filterTerm }) => {
 
   return (
     <div className="ArtistList-flex-container">
-      {/*featuredList && !filterTerm && (
+      {featuredList && !filterTerm && (
         <FeaturedCard 
           title={featuredList.title} 
           image={featuredList.image} 
           body={featuredList.body} 
           category={'List'}
         />
-      )*/}
+      )}
       {featured && !filterTerm && (
         <FeaturedCard 
           title={featured.artist_name} 

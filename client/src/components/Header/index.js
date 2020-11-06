@@ -29,12 +29,12 @@ const Header = (props) => {
         >
           <h1 className="App-title">Ultravillage</h1>
         </Link>
-        {/*<Link
+        {<Link
           to="/lists"
           className="App-header-link"
         >
           <h4>lists</h4>
-        </Link>*/}
+        </Link>}
         <Link
           to="/about"
           className="App-header-link"
