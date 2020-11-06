@@ -11,12 +11,20 @@ import Dialog from '@material-ui/core/Dialog';
 // import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 // import Typography from '@material-ui/core/Typography';
 
-// import firebase from '../../firebase.js';
+import useAuth from '../../hooks/useAuth';
+
+import firebase from '../../firebase.js';
 
 import './ListPage.css';
 
-const ListPage = ({ list, listId }) => {
+const ListPage = ({ list }) => {
+	const user = useAuth();
 	const [open, setOpen] = useState(false);
+	const handleUpdateBody = e => {
+    firebase.database().ref('/lists/' + list.id).update({
+      body: e.target.value
+    });
+  }
 	return (
 		<div className="ListPage-container">
 			<CardHeader
@@ -32,10 +40,12 @@ const ListPage = ({ list, listId }) => {
           />
         }
       />
-      
-      <EditableContent
-        content={list.body}
-      />
+      {user &&
+	      <EditableContent
+	        content={list.body}
+	        changeHandler={handleUpdateBody}
+	      />
+	    }
       <Dialog
         open={open}
         onClose={() => setOpen(false)}

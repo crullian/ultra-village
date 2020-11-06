@@ -12,10 +12,10 @@ const ListsPage = ({ lists }) => {
   	<div className="ListsPage-flex-container">
   	{lists.map(list => (
       <FeaturedCard title={list.title}
-          image={list.image}
-          body={list.body}
-          category={'List'}
-        />
+        image={list.image}
+        body={list.body.split('. ')[0] + '.'}
+        category={'List'}
+      />
       ))}
   	</div>
 	);

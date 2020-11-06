@@ -22,7 +22,7 @@ const ArtistList = ({ items, featuredList, filterTerm }) => {
         <FeaturedCard 
           title={featuredList.title} 
           image={featuredList.image} 
-          body={featuredList.body} 
+          body={featuredList.body.split('. ')[0] + '.'} 
           category={'List'}
         />
       )}
