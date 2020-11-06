@@ -22,12 +22,12 @@ const styles = theme => ({
   }
 });
 
-const FeaturedCard = ({ classes, title, image, body, category }) => (
+const FeaturedCard = ({ classes, title, image, body, category, featured }) => (
 	<Link
     to={`/${title.toLowerCase().replace(/[. ,:-]+/g, "-")}`}
     className="FeaturedCard-container"
   >
-    <h3 style={{padding: '0 24px'}}>Featured {category}: {title}</h3>
+    <h3 style={{padding: '0 24px'}}>{featured ? `Featured ${category}:` : ''} {title}</h3>
 
     <CardHeader
       classes={{avatar: 'avatar-class'}}

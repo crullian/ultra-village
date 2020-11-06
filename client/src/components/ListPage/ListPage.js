@@ -11,14 +11,11 @@ import Dialog from '@material-ui/core/Dialog';
 // import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 // import Typography from '@material-ui/core/Typography';
 
-import useAuth from '../../hooks/useAuth';
-
 import firebase from '../../firebase.js';
 
 import './ListPage.css';
 
 const ListPage = ({ list }) => {
-	const user = useAuth();
 	const [open, setOpen] = useState(false);
 	const handleUpdateBody = e => {
     firebase.database().ref('/lists/' + list.id).update({
@@ -40,12 +37,10 @@ const ListPage = ({ list }) => {
           />
         }
       />
-      {user &&
-	      <EditableContent
-	        content={list.body}
-	        changeHandler={handleUpdateBody}
-	      />
-	    }
+      <EditableContent
+        content={list.body}
+        changeHandler={handleUpdateBody}
+      />
       <Dialog
         open={open}
         onClose={() => setOpen(false)}
