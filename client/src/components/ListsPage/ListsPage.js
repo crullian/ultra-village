@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import ListCard from '../ListCard';
+import FeaturedCard from '../FeaturedCard';
 
 import './ListsPage.css';
 
@@ -10,7 +10,15 @@ const ListsPage = ({ lists }) => {
 
   return (
   	<div className="ListsPage-flex-container">
-  		{lists.map(list => <ListCard key={list.id} item={list} />)}
+  	{lists.map(list => (
+      <FeaturedCard
+      	featured={list.featured}
+      	title={list.title}
+        image={list.image}
+        body={list.body.split('. ')[0] + '.'}
+        category={'List'}
+      />
+      ))}
   	</div>
 	);
 };

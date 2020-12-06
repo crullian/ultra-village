@@ -16,18 +16,24 @@ const ArtistList = ({ items, featuredList, filterTerm }) => {
 
   const filteredOutFeaturedItems = items.filter(item => !item.featured);
 
+  const byArtistName = item => item.artist_name.toLowerCase().indexOf(filterTerm) !== -1 /*|| item.body.toLowerCase().indexOf(filterTerm) !== -1*/
+
+  const filteredItems = filteredOutFeaturedItems.filter(byArtistName);
+
   return (
     <div className="ArtistList-flex-container">
-      {/*featuredList && !filterTerm && (
-        <FeaturedCard 
+      {featuredList && !filterTerm && (
+        <FeaturedCard
+          featured={featuredList.featured}
           title={featuredList.title} 
           image={featuredList.image} 
-          body={featuredList.body} 
+          body={featuredList.body.split('. ')[0] + '.'} 
           category={'List'}
         />
-      )*/}
+      )}
       {featured && !filterTerm && (
-        <FeaturedCard 
+        <FeaturedCard
+          featured={featured.featured}
           title={featured.artist_name} 
           image={featured.image} 
           body={featured.body.split('. ')[0] + '.'} 
@@ -35,14 +41,12 @@ const ArtistList = ({ items, featuredList, filterTerm }) => {
         />
       )}
 
-      {filteredOutFeaturedItems.filter(item =>
-        item.artist_name.toLowerCase().indexOf(filterTerm) !== -1 /*|| item.body.toLowerCase().indexOf(filterTerm) !== -1*/
-        ).map((item, i) => (
+      {filteredItems.length > 0 ? filteredItems.map((item, i) => (
           <LazyLoad key={i} height={110} offset={100} placeholder={<LoadingCard />}>
             <ArtistCard item={item} />
           </LazyLoad>
         )
-      )}
+      ) : `We couldn't find '${filterTerm}'`}
     </div>
   );
 };
