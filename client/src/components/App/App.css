@@ -10,6 +10,11 @@
   margin: 10px auto 0;
   width: 96%;
   border-radius: 3px;
+
+  animation-name: fade-up;
+  animation-duration: .5s;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
 }
 
 li {

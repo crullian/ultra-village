@@ -21,6 +21,7 @@ import AuthPage from '../AuthPage/';
 import AboutPage from '../AboutPage/';
 import ErrorPage from '../ErrorPage/';
 import Loader from '../Loader/';
+import LoadingCard from '../LoadingCard';
 
 import './App.css';
 
@@ -76,7 +77,20 @@ const App = () => {
       {
         isLoading
         ? (
-          <Loader />
+          <main className="App-panel">
+            <div style={{
+              display: 'flex',
+              flexFlow: 'wrap',
+              justifyContent: 'center'
+            }}>
+              <LoadingCard />
+              <LoadingCard />
+              <LoadingCard />
+              <LoadingCard />
+              <LoadingCard />
+              <LoadingCard />
+            </div>
+          </main>
         ) : (
           <main className="App-panel">   
             <Switch>
