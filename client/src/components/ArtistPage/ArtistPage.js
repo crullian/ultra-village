@@ -66,7 +66,7 @@ const ArtistPage = ({ artist }) => {
       />
       
       <EditableContent
-        collapsible
+        expandable={/\r|\n/.exec(artist.body)}
         changeHandler={handleUpdateBody}
         content={artist.body}
       />

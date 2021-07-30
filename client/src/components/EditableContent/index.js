@@ -11,7 +11,7 @@ import './EditableContent.css';
 
 const md = new Remarkable({ breaks:true });
 
-const EditableContent = ({ changeHandler, content, collapsible }) => {
+const EditableContent = ({ changeHandler, content, expandable }) => {
 	const user = useAuth();
 	const [expanded, setExpanded] = useState(false);
 	const [isEditing, setIsEditing] = useState(false);
@@ -30,12 +30,12 @@ const EditableContent = ({ changeHandler, content, collapsible }) => {
 		 	) : (
 		   	<div className="Editable-content-review">
 			    <div
-			    	className={`Editable-content-review-content${collapsible && !expanded ? ' hide' : ''}`}
+			    	className={`Editable-content-review-content${expandable && !expanded ? ' hide' : ''}`}
 			      dangerouslySetInnerHTML={{ __html: md.render(content) }}
 			    />
 		  	</div>
 		  )}
-		  {collapsible && !isEditing && (
+		  {expandable && !isEditing && (
 	      <Button
 	        className="Editable-content-review-expand-btn"
 	        onClick={() => setExpanded(!expanded)}
