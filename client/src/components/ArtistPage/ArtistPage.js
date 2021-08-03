@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { useGetArtistByIdQuery } from '../../services/pokemon'
+
 import EditableContent from '../EditableContent';
 import { byYear, byEntryNumber } from '../sortFunctions';
 
@@ -20,6 +22,8 @@ import './ArtistPage.css';
 const ArtistPage = ({ artist }) => {
   const [open, setOpen] = useState(false);
   const [reviewExpanded, setReviewExpanded] = useState(false);
+
+  const { data, error, isLoading } = useGetArtistByIdQuery(`/artists/${artist.id}`);
 
   useEffect(() => {
     document.title = `Ultravillage | ${artist.artist_name}`;
@@ -48,16 +52,18 @@ const ArtistPage = ({ artist }) => {
       ...entry[1],
       id: entry[0]
     }));
-  
+
+  if (isLoading) return <h1>loading</h1>
+
   return (
     <div className="ArtistPage-container">
       <CardHeader
-        title={<h2>{artist.artist_name}</h2>}
+        title={<h2>{data.artist_name}</h2>}
         style={{padding: '16px 8px'}}
         avatar={
           <img
             alt="artist"
-            src={artist.image}
+            src={data.image}
             className="ArtistPage-img"
             width="60"
             onClick={() => setOpen(true)}
@@ -66,16 +72,16 @@ const ArtistPage = ({ artist }) => {
       />
       
       <EditableContent
-        expandable={/\r|\n/.exec(artist.body)}
+        expandable={/\r|\n/.exec(data.body)}
         changeHandler={handleUpdateBody}
-        content={artist.body}
+        content={data.body}
       />
 
-      {artist.discography && 
+      {data.discography && 
         <section className="ArtistPage-disco">
           <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
           <div>
-          {massageEntries(artist.discography).sort(byEntryNumber).map((albumList, i) => (
+          {massageEntries(data.discography).sort(byEntryNumber).map((albumList, i) => (
             <div key={`album-index-${i}`} style={{padding: '0 8px'}}>
               <h4 className="ArtistPage-disco-heading">{albumList.artist_name}</h4>
               {massageEntries(albumList.albums).sort(byYear).map((album, j) => {
@@ -116,7 +122,7 @@ const ArtistPage = ({ artist }) => {
       >
         <img
           alt="artist"
-          src={artist.image}
+          src={data.image}
           style={{width: '100%', borderRadius: '3px'}}
         />
       </Dialog>

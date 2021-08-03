@@ -1,6 +1,8 @@
 import 'react-app-polyfill/ie9';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { store } from './store'; 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import './index.css';
 import App from './components/App/App';
@@ -29,11 +31,13 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
-    <Router>
-      <ScrollToTop>
-        <App />
-      </ScrollToTop>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <ScrollToTop>
+          <App />
+        </ScrollToTop>
+      </Router>
+    </Provider>
   </MuiThemeProvider>,
   document.getElementById('root')
 );

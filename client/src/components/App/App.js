@@ -7,6 +7,8 @@ import {
 import { withRouter } from 'react-router';
 import firebase from '../../firebase.js';
 
+import { useGetArtistListQuery } from '../../services/pokemon'
+
 import { handleSortByMethod } from '../sortFunctions';
 
 import useAuth from '../../hooks/useAuth';
@@ -35,6 +37,8 @@ const App = () => {
     sortByTerm: '',
     isLoading: true
   }
+  const { data } = useGetArtistListQuery();
+  console.log('DATA', data)
   const stateReducer = (state, newState) => ({...state, ...newState});
   const [state, setState] = useReducer(stateReducer, initialState);
 
