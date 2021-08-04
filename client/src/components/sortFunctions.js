@@ -40,13 +40,13 @@
 
   export const handleSortByMethod = (identified, sortByTerm) => {
     if (sortByTerm === '' || sortByTerm === 'mostRecent') {
-      return identified.sort(sortByMostRecent).reverse();
+      return identified.slice().sort(sortByMostRecent).reverse();
     }
     if (sortByTerm === 'firstName') {
-      return identified.sort(sortByFirstName);
+      return identified.slice().sort(sortByFirstName);
     }
     if (sortByTerm === 'lastName') {
-      return identified.sort(sortByLastName);
+      return identified.slice().sort(sortByLastName);
     }
     return null;
   }

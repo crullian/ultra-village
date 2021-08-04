@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useGetArtistByIdQuery } from '../../services/pokemon'
+import { useGetArtistByIdQuery, useGetArtistListQuery } from '../../services/artist'
 
 import EditableContent from '../EditableContent';
 import { byYear, byEntryNumber } from '../sortFunctions';
@@ -23,20 +23,20 @@ const ArtistPage = ({ artist }) => {
   const [open, setOpen] = useState(false);
   const [reviewExpanded, setReviewExpanded] = useState(false);
 
-  const { data, error, isLoading } = useGetArtistByIdQuery(`/artists/${artist.id}`);
+  const { data, error, isLoading } = useGetArtistByIdQuery(`/artists${window.location.pathname}`);
 
   useEffect(() => {
-    document.title = `Ultravillage | ${artist.artist_name}`;
-  });
+    document.title = `Ultravillage | ${data && data.artist_name}`;
+  }, [data]);
 
   const handleUpdateBody = e => {
-    firebase.database().ref('/artists/' + artist.id).update({
+    firebase.database().ref('/artists/' + data.id).update({
       body: e.target.value
     });
   }
 
   const handleUpdateReview = (discographyId, album) => e => {
-    firebase.database().ref(`/artists/${artist.id}/discography/${discographyId}/albums/${album.id}`).update({
+    firebase.database().ref(`/artists/${data.id}/discography/${discographyId}/albums/${album.id}`).update({
       review: e.target.value
     });
   }

@@ -7,7 +7,7 @@ import {
 import { withRouter } from 'react-router';
 import firebase from '../../firebase.js';
 
-import { useGetArtistListQuery } from '../../services/pokemon'
+import { useGetArtistListQuery, useGetPokemonByNameQuery } from '../../services/artist'
 
 import { handleSortByMethod } from '../sortFunctions';
 
@@ -30,44 +30,24 @@ const App = () => {
   const user = useAuth();
 
   const initialState = {
-    about: '',
-    items: null,
-    lists: [],
     filterTerm: '',
     sortByTerm: '',
-    isLoading: true
   }
-  const { data } = useGetArtistListQuery();
-  console.log('DATA', data)
+  const { data, isLoading, error } = useGetArtistListQuery();
+
   const stateReducer = (state, newState) => ({...state, ...newState});
   const [state, setState] = useReducer(stateReducer, initialState);
-
-  useEffect(() => {
-    const itemsRef = firebase.database().ref('/');
-    itemsRef.on('value', snapshot => {
-      let db = snapshot.val();
-      window.pages = db;
-      setState({
-        about: db.about,
-        items: massageEntries(db.artists),
-        lists: massageEntries(db.lists),
-        isLoading: false
-      });
-    });
-  }, []);
 
   const massageEntries = entries =>
     Object.entries(entries).map(entry => ({...entry[1], ...{id: entry[0]}}));
 
-  const { isLoading, items, lists, about, filterTerm, sortByTerm } = state;
+  const { filterTerm, sortByTerm } = state;
 
   const handleSearch = term => setState({filterTerm: term.toLowerCase()});
 
   const setSortByMethod = term => setState({sortByTerm: term});
 
   const kababCase = str => str.toLowerCase().replace(/[. ,:-]+/g, "-");
-
-  const featuredList = lists.find(list => list.featured);
 
   return (
     <div className="App">
@@ -78,11 +58,11 @@ const App = () => {
         sortByMethod={setSortByMethod}
       />
       {
-        isLoading
+        isLoading && !data
         ? (
           <Loader />
         ) : (
-          <main className="App-panel">   
+          data && <main className="App-panel">   
             <Switch>
               <Route exact path="/auth">
                 <AuthPage
@@ -93,22 +73,22 @@ const App = () => {
               <Route exact path="/">
                 <ArtistList
                   filterTerm={filterTerm}
-                  items={handleSortByMethod(items, sortByTerm)}
-                  featuredList={featuredList}
+                  items={data.items ? handleSortByMethod(data.items, sortByTerm) : []}
+                  featuredList={data.lists.find(list => list.featured)}
                 />
               </Route>
 
               <Route exact path="/about">
                 <AboutPage
-                  content={about}
+                  content={data.about}
                 />
               </Route>
 
               <Route exact path="/lists">
-                <ListsPage lists={lists} />
+                <ListsPage lists={data.lists} />
               </Route>
 
-              {lists.map((list, i) => (
+              {data.lists.map((list, i) => (
                 <Route
                   exact
                   key={`${kababCase(list.title)}-${i}`}
@@ -120,20 +100,19 @@ const App = () => {
                 </Route>
               ))}
 
-              {items.map((item, i) => (
+              {data.items.map((item, i) => (
                 <Route
                   exact
                   key={`${kababCase(item.artist_name)}-${i}`}
                   path={`/${kababCase(item.artist_name)}`}
                 >
                   <ArtistPage
-                    artistId={item.entry_number -1}
                     artist={item}
                   />
                 </Route>
               ))}
 
-              {items.map(item =>
+              {data.items.map(item =>
                 item.discograpy && Object.values(item.discograpy).map(thing =>
                   thing.albums && Object.values(thing.albums).map((album, j) => (
                     <Route

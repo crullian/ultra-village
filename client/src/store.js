@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { pokemonApi } from './services/pokemon'
+import { artistApi } from './services/artist'
 
 export const store = configureStore({
 	reducer: {
-		[pokemonApi.reducerPath]: pokemonApi.reducer,
+		[artistApi.reducerPath]: artistApi.reducer,
 	},
 	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(pokemonApi.middleware)
+		getDefaultMiddleware().concat(artistApi.middleware)
 })
