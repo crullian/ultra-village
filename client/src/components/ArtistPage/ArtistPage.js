@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { useGetArtistByIdQuery, useGetArtistListQuery } from '../../services/artist'
+import { useGetArtistByIdQuery } from '../../services/artist'
 
 import EditableContent from '../EditableContent';
 import { byYear, byEntryNumber } from '../sortFunctions';
@@ -23,7 +23,7 @@ const ArtistPage = ({ artist }) => {
   const [open, setOpen] = useState(false);
   const [reviewExpanded, setReviewExpanded] = useState(false);
 
-  const { data, error, isLoading } = useGetArtistByIdQuery(`/artists${window.location.pathname}`);
+  const { data, isLoading } = useGetArtistByIdQuery(`/artists${window.location.pathname}`);
 
   useEffect(() => {
     document.title = `Ultravillage | ${data && data.artist_name}`;

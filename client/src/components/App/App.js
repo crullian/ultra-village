@@ -1,13 +1,12 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import {
   Route,
   Switch,
   Redirect
 } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import firebase from '../../firebase.js';
 
-import { useGetArtistListQuery, useGetPokemonByNameQuery } from '../../services/artist'
+import { useGetArtistListQuery } from '../../services/artist'
 
 import { handleSortByMethod } from '../sortFunctions';
 
@@ -33,13 +32,10 @@ const App = () => {
     filterTerm: '',
     sortByTerm: '',
   }
-  const { data, isLoading, error } = useGetArtistListQuery();
+  const { data, isLoading } = useGetArtistListQuery();
 
   const stateReducer = (state, newState) => ({...state, ...newState});
   const [state, setState] = useReducer(stateReducer, initialState);
-
-  const massageEntries = entries =>
-    Object.entries(entries).map(entry => ({...entry[1], ...{id: entry[0]}}));
 
   const { filterTerm, sortByTerm } = state;
 

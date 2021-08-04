@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery, fakeBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import firebase from '../firebase.js'
 
 const massageEntries = entries =>
