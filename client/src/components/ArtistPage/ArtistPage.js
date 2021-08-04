@@ -55,13 +55,16 @@ const ArtistPage = ({ artist }) => {
         title={<h2>{artist.artist_name}</h2>}
         style={{padding: '16px 8px'}}
         avatar={
-          <img
-            alt="artist"
-            src={artist.image}
-            className="ArtistPage-img"
-            width="60"
-            onClick={() => setOpen(true)}
-          />
+          <div style={{display: 'flex', alignItems: 'flex-end', flexDirection: 'column'}}>
+            <img
+              alt="artist"
+              src={artist.image}
+              className="ArtistPage-img"
+              width="60"
+              onClick={() => setOpen(true)}
+            />
+            {artist.image_credit && <span style={{fontSize: 10}}>{artist.image_credit}</span>}
+          </div>
         }
       />
       
