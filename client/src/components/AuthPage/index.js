@@ -1,9 +1,11 @@
 import React from 'react';
+import { useHistory } from "react-router-dom";
 import { auth, provider } from '../../firebase.js';
 
 import './AuthPage.css'
 
-const AuthPage = ({history, user}) => {
+const AuthPage = ({ user }) => {
+  const history = useHistory();
 
   async function handleSignInClick() {
     try {
