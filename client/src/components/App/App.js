@@ -103,7 +103,7 @@ const App = () => {
                   path={`/${kababCase(item.artist_name)}`}
                 >
                   <ArtistPage
-                    artist={item}
+                    artistId={item.id}
                   />
                 </Route>
               ))}

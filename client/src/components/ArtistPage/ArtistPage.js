@@ -19,24 +19,24 @@ import firebase from '../../firebase.js';
 import './ArtistPage.css';
 
 
-const ArtistPage = ({ artist }) => {
+const ArtistPage = ({ artistId }) => {
   const [open, setOpen] = useState(false);
   const [reviewExpanded, setReviewExpanded] = useState(false);
 
-  const { data, isLoading } = useGetArtistByIdQuery(`/artists${window.location.pathname}`);
+  const { data, isLoading } = useGetArtistByIdQuery(`/artists/${artistId}`);
 
   useEffect(() => {
     document.title = `Ultravillage | ${data && data.artist_name}`;
   }, [data]);
 
   const handleUpdateBody = e => {
-    firebase.database().ref('/artists/' + data.id).update({
+    firebase.database().ref(`/artists/${artistId}`).update({
       body: e.target.value
     });
   }
 
   const handleUpdateReview = (discographyId, album) => e => {
-    firebase.database().ref(`/artists/${data.id}/discography/${discographyId}/albums/${album.id}`).update({
+    firebase.database().ref(`/artists/${artistId}/discography/${discographyId}/albums/${album.id}`).update({
       review: e.target.value
     });
   }
@@ -84,10 +84,10 @@ const ArtistPage = ({ artist }) => {
         <section className="ArtistPage-disco">
           <h4 className="ArtistPage-disco-heading">Selected Discography</h4>
           <div>
-          {massageEntries(data.discography).sort(byEntryNumber).map((albumList, i) => (
+          {data.discography.slice().sort(byEntryNumber).map((albumList, i) => (
             <div key={`album-index-${i}`} style={{padding: '0 8px'}}>
               <h4 className="ArtistPage-disco-heading">{albumList.artist_name}</h4>
-              {massageEntries(albumList.albums).sort(byYear).map((album, j) => {
+              {albumList.albums.slice().sort(byYear).map((album, j) => {
                 const heading = album.year && album.label ? `${album.title} - ${album.year}, ${album.label}` : album.title;
                 return (
                   <ExpansionPanel

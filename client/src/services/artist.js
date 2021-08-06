@@ -28,7 +28,15 @@ export const artistApi = createApi({
 				return new Promise((resolve, reject) => {
 					const itemsRef = firebase.database().ref(`/${route}`);
 			    itemsRef.on('value', snapshot => {
-			      resolve({data: snapshot.val()});
+			    	const artistObj = snapshot.val();
+			    	const discography = massageEntries(artistObj.discography).map(discography => ({
+		    			...discography,
+		    			albums: massageEntries(discography.albums)
+		    		}));
+			      resolve({data: {
+			      	...artistObj,
+			      	discography,
+			      }});
 			    });
 				})
       }
