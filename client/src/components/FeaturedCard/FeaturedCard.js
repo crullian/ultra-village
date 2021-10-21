@@ -19,6 +19,9 @@ const styles = theme => ({
       display: 'flex'
     },
     alignItems: 'end'
+  },
+  cardHeaderRoot: {
+    alignItems: 'flex-start'
   }
 });
 
@@ -30,7 +33,7 @@ const FeaturedCard = ({ classes, title, image, body, category, featured }) => (
     <h3 style={{padding: '0 24px'}}>{featured ? `Featured ${category}:` : ''} {title}</h3>
 
     <CardHeader
-      classes={{avatar: 'avatar-class'}}
+      classes={{avatar: 'avatar-class', root: classes.cardHeaderRoot,}}
       className={classes.avatar}
       avatar={
         <img
