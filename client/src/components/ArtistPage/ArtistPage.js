@@ -18,7 +18,7 @@ import './ArtistPage.css';
 
 
 const ArtistPage = ({ artist }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(null);
   const [reviewExpanded, setReviewExpanded] = useState(false);
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const ArtistPage = ({ artist }) => {
               src={artist.image}
               className="ArtistPage-img"
               width="60"
-              onClick={() => setOpen(true)}
+              onClick={() => setOpen(artist.image)}
             />
             {artist.image_credit && <span style={{fontSize: 10}}>{artist.image_credit}</span>}
           </div>
@@ -98,6 +98,14 @@ const ArtistPage = ({ artist }) => {
                       </Typography>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
+                      {album.image && (
+                        <img 
+                          src={album.image} 
+                          width="12%" 
+                          height="12%" 
+                          onClick={() => setOpen(album.image)}
+                        />
+                      )}
                       <EditableContent
                         changeHandler={handleUpdateReview(albumList.id, album)}
                         content={album.review}
@@ -114,12 +122,12 @@ const ArtistPage = ({ artist }) => {
 
       <Dialog
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={() => setOpen(null)}
         aria-labelledby="simple-dialog-title"
       >
         <img
           alt="artist"
-          src={artist.image}
+          src={open}
           style={{width: '100%', borderRadius: '3px'}}
         />
       </Dialog>
