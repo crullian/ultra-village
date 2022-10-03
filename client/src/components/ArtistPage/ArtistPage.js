@@ -99,7 +99,8 @@ const ArtistPage = ({ artist }) => {
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                       {album.image && (
-                        <img 
+                        <img
+                          alt="album image"
                           src={album.image} 
                           width="12%" 
                           height="12%" 
